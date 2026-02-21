@@ -1,54 +1,59 @@
 # RSIS-GitNexus
 
-A Relational Science Inquiry System built on GitNexus — transforming a zero-server code intelligence engine into a **relational code elder** that witnesses, weaves, and returns the relationships within codebases in service of ceremonial inquiry, Indigenous research paradigms, and multi-agent creative orientation workflows.
+Extends GitNexus (zero-server code intelligence engine) into a **relational code elder** — indexing git repos into a knowledge graph that speaks the relational science vocabulary already defined in the `medicine-wheel-*` npm packages.
 
 ## Desired Outcome
 
-A forked GitNexus that extends its knowledge graph beyond conventional code intelligence to serve as the **Embodied Practice organ** (Sun 5) of the Ceremonial Inquiry Ecosystem — enabling humans and AI agents to see, tend, and deepen relationships in code through relational science lenses (Wilson, Kaupapa Māori) rather than Western productivity metrics.
+When a human or AI agent runs `rsis-gitnexus analyze` on any repo, the resulting MCP server exposes relational views (kinship, ceremony provenance, reciprocity, directional alignment) alongside standard code intelligence. These views use the **exact types from `medicine-wheel-ontology-core`** so that `mcp-medicine-wheel-ui` can render them directly — no translation layer needed.
 
 ## Current Reality
 
-- GitNexus exists as a working zero-server code intelligence engine with KuzuDB graph, Tree-sitter parsing, MCP tools, 9 language support, and multi-repo architecture
-- The Ceremonial Inquiry Ecosystem framework defines 6 Thematic Suns, 18 inquiries, Four Directions cadence, Wisdom Ledger, Reciprocity Register, and Steward's Compass
-- No integration exists between GitNexus's graph capabilities and the relational/ceremonial constructs
-- The existing graph schema knows: File, Function, Class, Interface, Method, Community, Process
-- The existing graph schema does NOT know: Person, Inquiry, Sun, Ceremony, Artifact, Kinship, Reciprocity, Direction
+- GitNexus indexes code into KuzuDB: File, Function, Class, Interface, Method, Community, Process
+- Five `medicine-wheel-*` packages exist and are **published on npm** (v0.1.0), with real source in `/workspace/repos/jgwill/medicine-wheel/src/`
+- `mcp-medicine-wheel-ui` (Next.js app) **already depends on all 5 packages**
+- RSIS-GitNexus currently imports **zero** medicine-wheel packages — types are duplicated inline
 
-## System Architecture
+## Architecture
 
-RSIS-GitNexus extends GitNexus in three layers:
+```
+jgwill/medicine-wheel/src/          ← shared npm packages (source of truth)
+  ontology-core                     ← types, schemas, vocabulary, query helpers
+  relational-query                  ← traversal, filters, accountability audit
+  narrative-engine                  ← beat sequencing, arc validation, cadence
+  graph-viz                         ← MWGraphNode, MWGraphLink, wheel layout
+  ui-components                     ← DirectionCard, BeatTimeline, WilsonMeter
 
-### Layer 1: Relational Schema Extension (`rispecs/relational-schema.spec.md`)
-Extends KuzuDB graph with relational science entities and edges
+miadisabelle/RSIS-GitNexus          ← THIS REPO (fork of GitNexus)
+  rsis-gitnexus/src/
+    core/rsis/                      ← RSIS indexing pipeline (populates graph)
+    mcp/tools.ts                    ← 5 new MCP tools returning medicine-wheel types
+    mcp/resources.ts                ← 3 new MCP resources
+  .rsis/config.json                 ← per-repo activation
 
-### Layer 2: Ceremonial Views & Tools (`rispecs/ceremonial-tools.spec.md`)
-New MCP tools that project git history and code relationships through relational science lenses
+/src/mcp-medicine-wheel-ui          ← visual surface (already consumes packages)
+  renders MWGraphData, DirectionCard, BeatTimeline from package imports
+  NEW: consumes rsis-gitnexus MCP views to show code-relational intelligence
+```
 
-### Layer 3: Ecosystem Integration (`rispecs/ecosystem-integration.spec.md`)
-Connectors to Structural Tension Charts (coaia-narrative), IAIP-MCP (Four Directions), Kinship Hub protocol, and Medicine Wheel UI
+## Critical Rule
 
-## Specification Files
+**Do NOT duplicate types from `medicine-wheel-ontology-core`.** Import them. If a type is missing from ontology-core, open a PR on `jgwill/medicine-wheel` to add it — or note it in `rispecs/ontology-gaps.md` for the local agent.
 
-| Spec | Purpose |
-|------|---------|
-| `app.spec.md` | This file — system overview and how specs relate |
-| `relational-schema.spec.md` | Extended graph schema for relational science entities |
-| `ceremonial-tools.spec.md` | New MCP tools exposing relational/ceremonial views |
-| `ecosystem-integration.spec.md` | Integration with IAIP ecosystem (charts, kinship, directions) |
-| `governance-sovereignty.spec.md` | Indigenous data sovereignty and governance metadata layer |
+## Spec Files
 
-## Guiding Principles
+| File | What It Specifies |
+|------|-------------------|
+| `app.spec.md` | This file — system overview, architecture, rules |
+| `dependency-contracts.spec.md` | Exact imports from each medicine-wheel package and what rsis-gitnexus uses them for |
+| `relational-schema.spec.md` | KuzuDB schema extension using ontology-core types |
+| `ceremonial-tools.spec.md` | 5 new MCP tools — inputs, outputs typed with medicine-wheel types |
+| `ecosystem-integration.spec.md` | How rsis-gitnexus feeds data to mcp-medicine-wheel-ui |
+| `governance-sovereignty.spec.md` | Indigenous data sovereignty via OcapFlags from ontology-core |
+| `ontology-gaps.md` | Types rsis-gitnexus needs that don't exist in ontology-core yet — PRs needed on jgwill/medicine-wheel |
 
-1. **Relational Accountability over Efficiency Metrics** — Every feature judged by what relationships it honors, not what velocity it produces
-2. **Creative Orientation** — Focus on what the system enables users to create (relational understanding) not what problems it eliminates
-3. **Zero-Server Sovereignty** — Intelligence stays local with the code and community; no external aggregation
-4. **Wilson's Research-as-Ceremony** — The tool itself is a participant in ceremony, not a neutral instrument
-5. **Advancing Patterns** — Each use of RSIS-GitNexus deepens relational understanding rather than oscillating between fragmentation and temporary organization
+## Non-Goals
 
-## Non-Goals (Guardrails)
-
-- Never rank individuals by productivity metrics
-- Never treat code relationships as ownership/blame graphs
+- Never reinvent types that exist in medicine-wheel-ontology-core
+- Never rank individuals by productivity
 - Never aggregate data to external services
-- Never bypass community governance on Indigenous knowledge repos
-- Never substitute automated views for ceremonial dialogue
+- Never bypass OCAP® governance flags

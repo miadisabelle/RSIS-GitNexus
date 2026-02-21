@@ -1,75 +1,56 @@
 # Relational Schema Extension
 
-Extends GitNexus's KuzuDB graph with entities and relationships grounded in Wilson's relational ontology and the Ceremonial Inquiry Ecosystem.
+Extends GitNexus's KuzuDB graph with entities from `medicine-wheel-ontology-core` types.
 
 ## Desired Outcome
 
-A graph schema where code artifacts exist in relationship with people, inquiries, ceremonies, directions, and kinship — enabling queries like "What ceremonies birthed this module?" or "Which inquiries does this code path serve?" alongside the existing "What calls this function?"
+The KuzuDB graph stores relational science entities using the same type vocabulary that `mcp-medicine-wheel-ui` renders. A `RelationalNode` in the graph IS the `RelationalNode` from ontology-core.
 
 ## Current Reality
 
-GitNexus graph knows: `File, Function, Class, Interface, Method, Community, Process` with edges `CALLS, IMPORTS, EXTENDS, IMPLEMENTS, DEFINES, MEMBER_OF, STEP_IN_PROCESS`. These are purely code-structural. No relational science entities exist in the schema.
+GitNexus graph: `File, Function, Class, Interface, Method, Community, Process` with code-structural edges. ontology-core defines `RelationalNode`, `Relation`, `CeremonyLog`, `NarrativeBeat`, `StructuralTensionChart` — none are in the graph yet.
 
-## New Node Types
+## New KuzuDB Node Tables
 
-### `Person`
-A human contributor with relational identity (not just git author string).
-- **Properties**: `name`, `email`, `roles[]` (steward, contributor, elder, firekeeper), `communities[]`
-- **Behavior**: Created from git history enriched by governance metadata. A Person is not reducible to their commits.
+All map directly to ontology-core types:
+
+### `RelationalNode` (from ontology-core)
+Stores people, land, spirit, ancestor, future, knowledge entities.
+- Properties mirror `RelationalNode`: `id, name, type (NodeType), direction (DirectionName), metadata, created_at, updated_at`
+
+### `CeremonyLog` (from ontology-core)
+- Properties mirror `CeremonyLog`: `id, type (CeremonyType), direction, participants, medicines_used, intentions, timestamp, research_context`
 
 ### `Inquiry`
-A living question being explored across the ecosystem.
-- **Properties**: `id`, `title`, `sun` (thematic sun affiliation), `coreQuestion`, `status`, `createdAt`
-- **Behavior**: Linked to code artifacts that serve or emerged from the inquiry. Maps to Perplexity inquiry IDs and Structural Tension Chart IDs.
-
-### `Sun`
-One of the six Thematic Suns from the Ceremonial Inquiry Ecosystem.
-- **Properties**: `name`, `principle`, `coreQuestion`, `valueStatement`
-- **Enum values**: `NovelEmergence`, `CreativeActualization`, `WovenMeaning`, `FirstCause`, `EmbodiedPractice`, `SustainedPresence`
-
-### `Ceremony`
-A bounded ceremonial cycle with four phases (Opening, Council, Integration, Closure).
-- **Properties**: `id`, `hostSun`, `cycle`, `phase`, `startDate`, `endDate`, `intention`
-- **Behavior**: Commits made during a ceremony phase are linked to that ceremony.
-
-### `Direction`
-One of the Four Directions (East/South/West/North).
-- **Properties**: `name`, `indigenousName`, `focus`, `primaryAgent`
-- **Behavior**: Code changes, reviews, and architectural decisions can be tagged with directional alignment.
+- Properties: `id, title, sun (SunName), coreQuestion, status, created_at`
+- **Note**: `SunName` is NOT in ontology-core yet (see `ontology-gaps.md`). Use string until PR merges.
 
 ### `KinshipHub`
-A directory or repository treated as a relational accountability node per the Kinship Hub protocol.
-- **Properties**: `path`, `identity`, `lineage`, `humanAccountabilities[]`, `moreThanHumanAccountabilities[]`, `boundaries[]`
-- **Behavior**: Maps to `KINSHIP.md` files. Establishes relational boundaries for what code may access or modify.
+- Properties: `path, identity, lineage, humanAccountabilities[], moreThanHumanAccountabilities[], boundaries[]`
+- Parsed from `KINSHIP.md` files
 
-## New Edge Types
+## New KuzuDB Relation Tables
 
-### `STEWARDS`
-Person → (File | KinshipHub) — Who holds mana/authority over this code or knowledge space.
+### `RSISRelation` (maps to ontology-core `Relation`)
+A single relation table with `type` property discriminator, mirroring how CodeRelation works:
 
-### `BORN_FROM`
-(File | Function | Class) → (Inquiry | Ceremony) — Provenance linking code to the ceremonial/inquiry context that birthed it.
+| type | from → to | meaning |
+|------|-----------|---------|
+| `STEWARDS` | RelationalNode → File | Who holds authority |
+| `BORN_FROM` | File → CeremonyLog | Ceremonial provenance |
+| `SERVES` | File → Inquiry | What inquiry this code serves |
+| `GIVES_BACK_TO` | RelationalNode → RelationalNode | Reciprocity |
+| `ALIGNED_WITH` | File → DirectionName (stored as property) | Four Directions alignment |
+| `KINSHIP_OF` | KinshipHub → KinshipHub | Inter-hub relations |
 
-### `SERVES`
-(File | Function | Class) → (Inquiry | Sun) — What inquiry or thematic sun does this code serve?
-
-### `GIVES_BACK_TO`
-Person → (Community | KinshipHub) — Reciprocity tracking: documentation, mentoring, refactoring as acts of giving.
-
-### `ALIGNED_WITH`
-(Commit | File) → Direction — Directional alignment of work (East=vision, South=architecture, West=implementation, North=reflection).
-
-### `KINSHIP_OF`
-KinshipHub → KinshipHub — Relational links between directories/repos per Kinship Hub protocol.
+Properties on RSISRelation: `type, strength, ceremony_honored, direction, ocap (JSON-serialized OcapFlags from ontology-core)`
 
 ## Schema Migration
 
-**Behavior**: The schema extension is additive — all existing GitNexus node types and edges remain unchanged. New types are added via KuzuDB `CREATE NODE TABLE` and `CREATE REL TABLE` statements. A migration script runs after `rsis-gitnexus analyze` when RSIS mode is enabled.
+Additive. Runs after `rsis-gitnexus analyze` when `.rsis/config.json` exists. Uses `CREATE NODE TABLE IF NOT EXISTS` and `CREATE REL TABLE IF NOT EXISTS`.
 
-**Configuration**: RSIS extensions activate when a `.rsis/config.json` exists in the repo root, or when `--rsis` flag is passed to `rsis-gitnexus analyze`.
+## Implementation
 
-## Implementation Reference
-
-- Existing schema definition: `rsis-gitnexus/src/storage/` (KuzuDB interface)
-- Graph population: `rsis-gitnexus/src/core/graph/`
-- Type definitions: `rsis-gitnexus/src/types/pipeline.ts`
+- Schema DDL: `rsis-gitnexus/src/core/kuzu/schema.ts`
+- Type imports: `from 'medicine-wheel-ontology-core'` — not inline
+- OcapFlags stored as JSON string in KuzuDB (no native complex type), parsed on read via `OcapFlagsSchema.parse()`

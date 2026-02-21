@@ -45,7 +45,7 @@ async function findRepoForCwd(cwd: string): Promise<{
       
       // Check if cwd is inside repo OR repo is inside cwd
       // Must match at a path separator boundary to avoid false positives
-      // (e.g. /projects/gitnexusv2 should NOT match /projects/gitnexus)
+      // (e.g. /projects/rsis-gitnexusv2 should NOT match /projects/rsis-gitnexus)
       let matched = false;
       if (normalizedCwd === normalizedRepo) {
         matched = true;

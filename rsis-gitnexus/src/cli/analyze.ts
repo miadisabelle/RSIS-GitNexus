@@ -1,7 +1,7 @@
 /**
  * Analyze Command
  *
- * Indexes a repository and stores the knowledge graph in .gitnexus/
+ * Indexes a repository and stores the knowledge graph in .rsis-gitnexus/
  */
 
 import path from 'path';
@@ -271,7 +271,7 @@ export const analyzeCommand = async (
   try {
     await fs.access(getGlobalRegistryPath());
   } catch {
-    console.log('\n  Tip: Run `gitnexus setup` to configure MCP for your editor.');
+    console.log('\n  Tip: Run `rsis-gitnexus setup` to configure MCP for your editor.');
   }
 
   console.log('');

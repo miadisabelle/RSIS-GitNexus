@@ -30,7 +30,7 @@ export const mcpCommand = async () => {
     console.error('');
     console.error('  To get started:');
     console.error('    1. cd into a git repository');
-    console.error('    2. Run: gitnexus analyze');
+    console.error('    2. Run: rsis-gitnexus analyze');
     console.error('    3. Restart your editor');
     console.error('');
     process.exit(1);

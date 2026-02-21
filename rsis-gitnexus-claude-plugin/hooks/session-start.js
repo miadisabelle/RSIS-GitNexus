@@ -8,7 +8,7 @@ const path = require('path');
 let dir = process.cwd();
 let found = false;
 for (let i = 0; i < 5; i++) {
-  if (fs.existsSync(path.join(dir, '.gitnexus'))) {
+  if (fs.existsSync(path.join(dir, '.rsis-gitnexus'))) {
     found = true;
     break;
   }
@@ -34,8 +34,8 @@ This codebase is indexed by GitNexus, providing a knowledge graph with execution
 - \`cypher\` — Raw graph queries
 - \`list_repos\` — Discover indexed repos
 
-**Quick Start:** READ \`gitnexus://repo/{name}/context\` for codebase overview, then use \`query\` to find execution flows.
+**Quick Start:** READ \`rsis-gitnexus://repo/{name}/context\` for codebase overview, then use \`query\` to find execution flows.
 
-**Resources:** \`gitnexus://repo/{name}/context\` (overview), \`/processes\` (execution flows), \`/schema\` (for Cypher)
+**Resources:** \`rsis-gitnexus://repo/{name}/context\` (overview), \`/processes\` (execution flows), \`/schema\` (for Cypher)
 `);
 process.exit(0);

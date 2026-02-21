@@ -26,12 +26,12 @@ function readInput() {
 }
 
 /**
- * Check if a directory (or ancestor) has a .gitnexus index.
+ * Check if a directory (or ancestor) has a .rsis-gitnexus index.
  */
 function findGitNexusIndex(startDir) {
   let dir = startDir || process.cwd();
   for (let i = 0; i < 5; i++) {
-    if (fs.existsSync(path.join(dir, '.gitnexus'))) {
+    if (fs.existsSync(path.join(dir, '.rsis-gitnexus'))) {
       return true;
     }
     const parent = path.dirname(dir);
@@ -102,7 +102,7 @@ function main() {
     if (!pattern || pattern.length < 3) return;
 
     const result = execFileSync(
-      'gitnexus',
+      'rsis-gitnexus',
       ['augment', pattern],
       { encoding: 'utf-8', timeout: 8000, cwd, stdio: ['pipe', 'pipe', 'pipe'] }
     );

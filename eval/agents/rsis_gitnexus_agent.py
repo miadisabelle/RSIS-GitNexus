@@ -25,7 +25,7 @@ from pathlib import Path
 from minisweagent import Environment, Model
 from minisweagent.agents.default import AgentConfig, DefaultAgent
 
-logger = logging.getLogger("gitnexus_agent")
+logger = logging.getLogger("rsis-gitnexus_agent")
 
 PROMPTS_DIR = Path(__file__).parent.parent / "prompts"
 
@@ -39,10 +39,10 @@ class GitNexusMode(str, Enum):
 
 class GitNexusAgentConfig(AgentConfig):
     """Extended config for GitNexus evaluation agent."""
-    gitnexus_mode: GitNexusMode = GitNexusMode.BASELINE
+    rsis-gitnexus_mode: GitNexusMode = GitNexusMode.BASELINE
     augment_timeout: float = 5.0
     augment_min_pattern_length: int = 3
-    track_gitnexus_usage: bool = True
+    track_rsis-gitnexus_usage: bool = True
 
 
 class GitNexusAgent(DefaultAgent):
@@ -55,7 +55,7 @@ class GitNexusAgent(DefaultAgent):
     """
 
     def __init__(self, model: Model, env: Environment, *, config_class: type = GitNexusAgentConfig, **kwargs):
-        mode = kwargs.get("gitnexus_mode", GitNexusMode.BASELINE)
+        mode = kwargs.get("rsis-gitnexus_mode", GitNexusMode.BASELINE)
         if isinstance(mode, str):
             mode = GitNexusMode(mode)
 
@@ -70,18 +70,18 @@ class GitNexusAgent(DefaultAgent):
             kwargs["instance_template"] = instance_file.read_text()
 
         super().__init__(model, env, config_class=config_class, **kwargs)
-        self.gitnexus_mode = mode
-        self.gitnexus_metrics = GitNexusMetrics()
+        self.rsis-gitnexus_mode = mode
+        self.rsis-gitnexus_metrics = GitNexusMetrics()
 
     def execute_actions(self, message: dict) -> list[dict]:
         """Execute actions with optional GitNexus augmentation and tracking."""
-        if self.config.track_gitnexus_usage:
+        if self.config.track_rsis-gitnexus_usage:
             self._track_tool_usage(message)
 
         outputs = [self.env.execute(action) for action in message.get("extra", {}).get("actions", [])]
 
         # Augment grep/find observations in NATIVE_AUGMENT mode
-        if self.gitnexus_mode == GitNexusMode.NATIVE_AUGMENT:
+        if self.rsis-gitnexus_mode == GitNexusMode.NATIVE_AUGMENT:
             actions = message.get("extra", {}).get("actions", [])
             for i, (action, output) in enumerate(zip(actions, outputs)):
                 augmented = self._maybe_augment(action, output)
@@ -108,23 +108,23 @@ class GitNexusAgent(DefaultAgent):
         start = time.time()
         try:
             augment_result = self.env.execute({
-                "command": f'gitnexus-augment "{pattern}" 2>&1 || true',
+                "command": f'rsis-gitnexus-augment "{pattern}" 2>&1 || true',
                 "timeout": self.config.augment_timeout,
             })
             elapsed = time.time() - start
-            self.gitnexus_metrics.augmentation_calls += 1
-            self.gitnexus_metrics.augmentation_time += elapsed
+            self.rsis-gitnexus_metrics.augmentation_calls += 1
+            self.rsis-gitnexus_metrics.augmentation_time += elapsed
 
             augment_text = augment_result.get("output", "").strip()
             if augment_text and "[GitNexus]" in augment_text:
                 original_output = output.get("output", "")
                 output = dict(output)
                 output["output"] = f"{original_output}\n\n{augment_text}"
-                self.gitnexus_metrics.augmentation_hits += 1
+                self.rsis-gitnexus_metrics.augmentation_hits += 1
                 return output
         except Exception as e:
             logger.debug(f"Augmentation failed for pattern '{pattern}': {e}")
-            self.gitnexus_metrics.augmentation_errors += 1
+            self.rsis-gitnexus_metrics.augmentation_errors += 1
 
         return None
 
@@ -152,28 +152,28 @@ class GitNexusAgent(DefaultAgent):
         """Track which GitNexus tools the agent uses."""
         for action in message.get("extra", {}).get("actions", []):
             command = action.get("command", "")
-            if "gitnexus-query" in command:
-                self.gitnexus_metrics.tool_calls["query"] += 1
-            elif "gitnexus-context" in command:
-                self.gitnexus_metrics.tool_calls["context"] += 1
-            elif "gitnexus-impact" in command:
-                self.gitnexus_metrics.tool_calls["impact"] += 1
-            elif "gitnexus-cypher" in command:
-                self.gitnexus_metrics.tool_calls["cypher"] += 1
-            elif "gitnexus-overview" in command:
-                self.gitnexus_metrics.tool_calls["overview"] += 1
+            if "rsis-gitnexus-query" in command:
+                self.rsis-gitnexus_metrics.tool_calls["query"] += 1
+            elif "rsis-gitnexus-context" in command:
+                self.rsis-gitnexus_metrics.tool_calls["context"] += 1
+            elif "rsis-gitnexus-impact" in command:
+                self.rsis-gitnexus_metrics.tool_calls["impact"] += 1
+            elif "rsis-gitnexus-cypher" in command:
+                self.rsis-gitnexus_metrics.tool_calls["cypher"] += 1
+            elif "rsis-gitnexus-overview" in command:
+                self.rsis-gitnexus_metrics.tool_calls["overview"] += 1
 
     def serialize(self, *extra_dicts) -> dict:
         """Serialize with GitNexus-specific metrics."""
-        gitnexus_data = {
+        rsis-gitnexus_data = {
             "info": {
-                "gitnexus": {
-                    "mode": self.gitnexus_mode.value,
-                    "metrics": self.gitnexus_metrics.to_dict(),
+                "rsis-gitnexus": {
+                    "mode": self.rsis-gitnexus_mode.value,
+                    "metrics": self.rsis-gitnexus_metrics.to_dict(),
                 },
             },
         }
-        return super().serialize(gitnexus_data, *extra_dicts)
+        return super().serialize(rsis-gitnexus_data, *extra_dicts)
 
 
 class GitNexusMetrics:

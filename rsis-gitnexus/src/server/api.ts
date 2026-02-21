@@ -1,7 +1,7 @@
 /**
  * HTTP API Server
  * 
- * REST API for browser-based clients to query the local .gitnexus/ index.
+ * REST API for browser-based clients to query the local .rsis-gitnexus/ index.
  */
 
 import express from 'express';
@@ -89,7 +89,7 @@ export const createServer = async (port: number) => {
   app.get('/api/repo', async (_req, res) => {
     const repo = await findRepo(process.cwd());
     if (!repo) {
-      res.status(404).json({ error: 'Repository not indexed. Run: gitnexus analyze' });
+      res.status(404).json({ error: 'Repository not indexed. Run: rsis-gitnexus analyze' });
       return;
     }
     res.json({

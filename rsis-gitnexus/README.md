@@ -4,7 +4,7 @@
 
 Works with **Cursor**, **Claude Code**, **Windsurf**, **Cline**, **OpenCode**, and any MCP-compatible tool.
 
-[![npm version](https://img.shields.io/npm/v/gitnexus.svg)](https://www.npmjs.com/package/gitnexus)
+[![npm version](https://img.shields.io/npm/v/rsis-gitnexus.svg)](https://www.npmjs.com/package/rsis-gitnexus)
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/License-PolyForm%20Noncommercial-blue.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 
 ---
@@ -19,14 +19,14 @@ AI coding tools don't understand your codebase structure. They edit a function w
 
 ```bash
 # Index your repo (run from repo root)
-npx gitnexus analyze
+npx rsis-gitnexus analyze
 ```
 
 That's it. This indexes the codebase, installs agent skills, registers Claude Code hooks, and creates `AGENTS.md` / `CLAUDE.md` context files — all in one command.
 
-To configure MCP for your editor, run `npx gitnexus setup` once — or set it up manually below.
+To configure MCP for your editor, run `npx rsis-gitnexus setup` once — or set it up manually below.
 
-`gitnexus setup` auto-detects your editors and writes the correct global MCP config. You only need to run it once.
+`rsis-gitnexus setup` auto-detects your editors and writes the correct global MCP config. You only need to run it once.
 
 ### Editor Support
 
@@ -41,12 +41,12 @@ To configure MCP for your editor, run `npx gitnexus setup` once — or set it up
 
 ## MCP Setup (manual)
 
-If you prefer to configure manually instead of using `gitnexus setup`:
+If you prefer to configure manually instead of using `rsis-gitnexus setup`:
 
 ### Claude Code (full support — MCP + skills + hooks)
 
 ```bash
-claude mcp add gitnexus -- npx -y gitnexus@latest mcp
+claude mcp add rsis-gitnexus -- npx -y rsis-gitnexus@latest mcp
 ```
 
 ### Cursor / Windsurf
@@ -56,9 +56,9 @@ Add to `~/.cursor/mcp.json` (global — works for all projects):
 ```json
 {
   "mcpServers": {
-    "gitnexus": {
+    "rsis-gitnexus": {
       "command": "npx",
-      "args": ["-y", "gitnexus@latest", "mcp"]
+      "args": ["-y", "rsis-gitnexus@latest", "mcp"]
     }
   }
 }
@@ -71,9 +71,9 @@ Add to `~/.config/opencode/config.json`:
 ```json
 {
   "mcp": {
-    "gitnexus": {
+    "rsis-gitnexus": {
       "command": "npx",
-      "args": ["-y", "gitnexus@latest", "mcp"]
+      "args": ["-y", "rsis-gitnexus@latest", "mcp"]
     }
   }
 }
@@ -90,7 +90,7 @@ GitNexus builds a complete knowledge graph of your codebase through a multi-phas
 5. **Processes** — Traces execution flows from entry points through call chains
 6. **Search** — Builds hybrid search indexes for fast retrieval
 
-The result is a **KuzuDB graph database** stored locally in `.gitnexus/` with full-text search and semantic embeddings.
+The result is a **KuzuDB graph database** stored locally in `.rsis-gitnexus/` with full-text search and semantic embeddings.
 
 ## MCP Tools
 
@@ -112,13 +112,13 @@ Your AI agent gets these tools automatically:
 
 | Resource | Purpose |
 |----------|---------|
-| `gitnexus://repos` | List all indexed repositories (read first) |
-| `gitnexus://repo/{name}/context` | Codebase stats, staleness check, and available tools |
-| `gitnexus://repo/{name}/clusters` | All functional clusters with cohesion scores |
-| `gitnexus://repo/{name}/cluster/{name}` | Cluster members and details |
-| `gitnexus://repo/{name}/processes` | All execution flows |
-| `gitnexus://repo/{name}/process/{name}` | Full process trace with steps |
-| `gitnexus://repo/{name}/schema` | Graph schema for Cypher queries |
+| `rsis-gitnexus://repos` | List all indexed repositories (read first) |
+| `rsis-gitnexus://repo/{name}/context` | Codebase stats, staleness check, and available tools |
+| `rsis-gitnexus://repo/{name}/clusters` | All functional clusters with cohesion scores |
+| `rsis-gitnexus://repo/{name}/cluster/{name}` | Cluster members and details |
+| `rsis-gitnexus://repo/{name}/processes` | All execution flows |
+| `rsis-gitnexus://repo/{name}/process/{name}` | Full process trace with steps |
+| `rsis-gitnexus://repo/{name}/schema` | Graph schema for Cypher queries |
 
 ## MCP Prompts
 
@@ -130,23 +130,23 @@ Your AI agent gets these tools automatically:
 ## CLI Commands
 
 ```bash
-gitnexus setup                    # Configure MCP for your editors (one-time)
-gitnexus analyze [path]           # Index a repository (or update stale index)
-gitnexus analyze --force          # Force full re-index
-gitnexus analyze --skip-embeddings  # Skip embedding generation (faster)
-gitnexus mcp                     # Start MCP server (stdio) — serves all indexed repos
-gitnexus serve                   # Start HTTP server for web UI
-gitnexus list                    # List all indexed repositories
-gitnexus status                  # Show index status for current repo
-gitnexus clean                   # Delete index for current repo
-gitnexus clean --all --force     # Delete all indexes
-gitnexus wiki [path]             # Generate LLM-powered docs from knowledge graph
-gitnexus wiki --model <model>    # Wiki with custom LLM model (default: gpt-4o-mini)
+rsis-gitnexus setup                    # Configure MCP for your editors (one-time)
+rsis-gitnexus analyze [path]           # Index a repository (or update stale index)
+rsis-gitnexus analyze --force          # Force full re-index
+rsis-gitnexus analyze --skip-embeddings  # Skip embedding generation (faster)
+rsis-gitnexus mcp                     # Start MCP server (stdio) — serves all indexed repos
+rsis-gitnexus serve                   # Start HTTP server for web UI
+rsis-gitnexus list                    # List all indexed repositories
+rsis-gitnexus status                  # Show index status for current repo
+rsis-gitnexus clean                   # Delete index for current repo
+rsis-gitnexus clean --all --force     # Delete all indexes
+rsis-gitnexus wiki [path]             # Generate LLM-powered docs from knowledge graph
+rsis-gitnexus wiki --model <model>    # Wiki with custom LLM model (default: gpt-4o-mini)
 ```
 
 ## Multi-Repo Support
 
-GitNexus supports indexing multiple repositories. Each `gitnexus analyze` registers the repo in a global registry (`~/.gitnexus/registry.json`). The MCP server serves all indexed repos automatically.
+GitNexus supports indexing multiple repositories. Each `rsis-gitnexus analyze` registers the repo in a global registry (`~/.rsis-gitnexus/registry.json`). The MCP server serves all indexed repos automatically.
 
 ## Supported Languages
 
@@ -161,7 +161,7 @@ GitNexus ships with skill files that teach AI agents how to use the tools effect
 - **Impact Analysis** — Analyze blast radius before changes
 - **Refactoring** — Plan safe refactors using dependency mapping
 
-Installed automatically by both `gitnexus analyze` (per-repo) and `gitnexus setup` (global).
+Installed automatically by both `rsis-gitnexus analyze` (per-repo) and `rsis-gitnexus setup` (global).
 
 ## Requirements
 
@@ -172,12 +172,12 @@ Installed automatically by both `gitnexus analyze` (per-repo) and `gitnexus setu
 
 - All processing happens locally on your machine
 - No code is sent to any server
-- Index stored in `.gitnexus/` inside your repo (gitignored)
-- Global registry at `~/.gitnexus/` stores only paths and metadata
+- Index stored in `.rsis-gitnexus/` inside your repo (gitignored)
+- Global registry at `~/.rsis-gitnexus/` stores only paths and metadata
 
 ## Web UI
 
-GitNexus also has a browser-based UI at [gitnexus.vercel.app](https://gitnexus.vercel.app) — 100% client-side, your code never leaves the browser.
+GitNexus also has a browser-based UI at [rsis-gitnexus.vercel.app](https://rsis-gitnexus.vercel.app) — 100% client-side, your code never leaves the browser.
 
 ## License
 

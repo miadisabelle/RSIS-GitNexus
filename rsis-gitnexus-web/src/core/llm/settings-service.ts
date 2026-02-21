@@ -18,7 +18,7 @@ import {
   ProviderConfig,
 } from './types';
 
-const STORAGE_KEY = 'gitnexus-llm-settings';
+const STORAGE_KEY = 'rsis-gitnexus-llm-settings';
 
 /**
  * Load settings from localStorage

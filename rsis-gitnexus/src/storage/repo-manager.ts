@@ -1,8 +1,8 @@
 /**
  * Repository Manager
  * 
- * Manages GitNexus index storage in .gitnexus/ at repo root.
- * Also maintains a global registry at ~/.gitnexus/registry.json
+ * Manages GitNexus index storage in .rsis-gitnexus/ at repo root.
+ * Also maintains a global registry at ~/.rsis-gitnexus/registry.json
  * so the MCP server can discover indexed repos from any cwd.
  */
 
@@ -33,7 +33,7 @@ export interface IndexedRepo {
 }
 
 /**
- * Shape of an entry in the global registry (~/.gitnexus/registry.json)
+ * Shape of an entry in the global registry (~/.rsis-gitnexus/registry.json)
  */
 export interface RegistryEntry {
   name: string;
@@ -44,12 +44,12 @@ export interface RegistryEntry {
   stats?: RepoMeta['stats'];
 }
 
-const GITNEXUS_DIR = '.gitnexus';
+const GITNEXUS_DIR = '.rsis-gitnexus';
 
 // ─── Local Storage Helpers ─────────────────────────────────────────────
 
 /**
- * Get the .gitnexus storage path for a repository
+ * Get the .rsis-gitnexus storage path for a repository
  */
 export const getStoragePath = (repoPath: string): string => {
   return path.join(path.resolve(repoPath), GITNEXUS_DIR);
@@ -118,7 +118,7 @@ export const loadRepo = async (repoPath: string): Promise<IndexedRepo | null> =>
 };
 
 /**
- * Find .gitnexus by walking up from a starting path
+ * Find .rsis-gitnexus by walking up from a starting path
  */
 export const findRepo = async (startPath: string): Promise<IndexedRepo | null> => {
   let current = path.resolve(startPath);
@@ -134,7 +134,7 @@ export const findRepo = async (startPath: string): Promise<IndexedRepo | null> =
 };
 
 /**
- * Add .gitnexus to .gitignore if not already present
+ * Add .rsis-gitnexus to .gitignore if not already present
  */
 export const addToGitignore = async (repoPath: string): Promise<void> => {
   const gitignorePath = path.join(repoPath, '.gitignore');
@@ -153,13 +153,13 @@ export const addToGitignore = async (repoPath: string): Promise<void> => {
   }
 };
 
-// ─── Global Registry (~/.gitnexus/registry.json) ───────────────────────
+// ─── Global Registry (~/.rsis-gitnexus/registry.json) ───────────────────────
 
 /**
  * Get the path to the global GitNexus directory
  */
 export const getGlobalDir = (): string => {
-  return path.join(os.homedir(), '.gitnexus');
+  return path.join(os.homedir(), '.rsis-gitnexus');
 };
 
 /**
@@ -193,7 +193,7 @@ const writeRegistry = async (entries: RegistryEntry[]): Promise<void> => {
 
 /**
  * Register (add or update) a repo in the global registry.
- * Called after `gitnexus analyze` completes.
+ * Called after `rsis-gitnexus analyze` completes.
  */
 export const registerRepo = async (repoPath: string, meta: RepoMeta): Promise<void> => {
   const resolved = path.resolve(repoPath);
@@ -225,7 +225,7 @@ export const registerRepo = async (repoPath: string, meta: RepoMeta): Promise<vo
 
 /**
  * Remove a repo from the global registry.
- * Called after `gitnexus clean`.
+ * Called after `rsis-gitnexus clean`.
  */
 export const unregisterRepo = async (repoPath: string): Promise<void> => {
   const resolved = path.resolve(repoPath);
@@ -238,13 +238,13 @@ export const unregisterRepo = async (repoPath: string): Promise<void> => {
 
 /**
  * List all registered repos from the global registry.
- * Optionally validates that each entry's .gitnexus/ still exists.
+ * Optionally validates that each entry's .rsis-gitnexus/ still exists.
  */
 export const listRegisteredRepos = async (opts?: { validate?: boolean }): Promise<RegistryEntry[]> => {
   const entries = await readRegistry();
   if (!opts?.validate) return entries;
 
-  // Validate each entry still has a .gitnexus/ directory
+  // Validate each entry still has a .rsis-gitnexus/ directory
   const valid: RegistryEntry[] = [];
   for (const entry of entries) {
     try {
@@ -263,7 +263,7 @@ export const listRegisteredRepos = async (opts?: { validate?: boolean }): Promis
   return valid;
 };
 
-// ─── Global CLI Config (~/.gitnexus/config.json) ─────────────────────────
+// ─── Global CLI Config (~/.rsis-gitnexus/config.json) ─────────────────────────
 
 export interface CLIConfig {
   apiKey?: string;
@@ -279,7 +279,7 @@ export const getGlobalConfigPath = (): string => {
 };
 
 /**
- * Load CLI config from ~/.gitnexus/config.json
+ * Load CLI config from ~/.rsis-gitnexus/config.json
  */
 export const loadCLIConfig = async (): Promise<CLIConfig> => {
   try {
@@ -291,7 +291,7 @@ export const loadCLIConfig = async (): Promise<CLIConfig> => {
 };
 
 /**
- * Save CLI config to ~/.gitnexus/config.json
+ * Save CLI config to ~/.rsis-gitnexus/config.json
  */
 export const saveCLIConfig = async (config: CLIConfig): Promise<void> => {
   const dir = getGlobalDir();

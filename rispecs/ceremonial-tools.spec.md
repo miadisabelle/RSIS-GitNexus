@@ -94,8 +94,8 @@ Returns the full kinship graph for the repository.
 
 ## Implementation Notes
 
-- New tools are registered in `gitnexus/src/mcp/tools.ts` alongside existing tools
-- New resources are registered in `gitnexus/src/mcp/resources.ts`
+- New tools are registered in `rsis-gitnexus/src/mcp/tools.ts` alongside existing tools
+- New resources are registered in `rsis-gitnexus/src/mcp/resources.ts`
 - All new tools query the extended relational schema (see `relational-schema.spec.md`)
 - The `relational_context` tool composes with the existing `context` tool — it calls `context` internally then enriches the result
 - Reciprocity framing enforced at the tool output layer — raw data never exposed as rankings

@@ -1,5 +1,5 @@
 {
-  "name": "gitnexus",
+  "name": "rsis-gitnexus",
   "version": "1.2.7",
   "description": "Graph-powered code intelligence for AI agents. Index any codebase, query via MCP or CLI.",
   "author": "Abhigyan Patwari",
@@ -8,7 +8,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abhigyanpatwari/GitNexus.git",
-    "directory": "gitnexus"
+    "directory": "rsis-gitnexus"
   },
   "bugs": {
     "url": "https://github.com/abhigyanpatwari/GitNexus/issues"
@@ -21,13 +21,13 @@
     "cursor",
     "claude",
     "ai-agent",
-    "gitnexus",
+    "rsis-gitnexus",
     "static-analysis",
     "codebase-indexing"
   ],
   "type": "module",
   "bin": {
-    "gitnexus": "dist/cli/index.js"
+    "rsis-gitnexus": "dist/cli/index.js"
   },
   "files": [
     "dist",

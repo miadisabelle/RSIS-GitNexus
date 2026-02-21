@@ -23,7 +23,7 @@ export interface LLMResponse {
 
 /**
  * Resolve LLM configuration from env vars, saved config, and optional overrides.
- * Priority: overrides (CLI flags) > env vars > ~/.gitnexus/config.json > error
+ * Priority: overrides (CLI flags) > env vars > ~/.rsis-gitnexus/config.json > error
  * 
  * If no API key is found, returns config with empty apiKey (caller should handle).
  */

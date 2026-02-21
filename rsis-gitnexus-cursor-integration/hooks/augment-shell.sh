@@ -3,7 +3,7 @@
 # Receives JSON on stdin with { command, cwd, timeout }
 # Returns JSON on stdout with { permission, agent_message }
 #
-# Extracts search pattern from grep/rg commands, runs gitnexus augment,
+# Extracts search pattern from grep/rg commands, runs rsis-gitnexus augment,
 # and injects the enriched context via agent_message.
 
 INPUT=$(cat)
@@ -36,8 +36,8 @@ if [ -z "$PATTERN" ] || [ ${#PATTERN} -lt 3 ]; then
   exit 0
 fi
 
-# Run gitnexus augment
-RESULT=$(npx -y gitnexus augment "$PATTERN" 2>/dev/null)
+# Run rsis-gitnexus augment
+RESULT=$(npx -y rsis-gitnexus augment "$PATTERN" 2>/dev/null)
 
 if [ -n "$RESULT" ]; then
   # Escape for JSON

@@ -18,7 +18,7 @@ export const statusCommand = async () => {
   const repo = await findRepo(cwd);
   if (!repo) {
     console.log('Repository not indexed.');
-    console.log('Run: gitnexus analyze');
+    console.log('Run: rsis-gitnexus analyze');
     return;
   }
 
@@ -29,5 +29,5 @@ export const statusCommand = async () => {
   console.log(`Indexed: ${new Date(repo.meta.indexedAt).toLocaleString()}`);
   console.log(`Indexed commit: ${repo.meta.lastCommit?.slice(0, 7)}`);
   console.log(`Current commit: ${currentCommit?.slice(0, 7)}`);
-  console.log(`Status: ${isUpToDate ? '✅ up-to-date' : '⚠️ stale (re-run gitnexus analyze)'}`);
+  console.log(`Status: ${isUpToDate ? '✅ up-to-date' : '⚠️ stale (re-run rsis-gitnexus analyze)'}`);
 };

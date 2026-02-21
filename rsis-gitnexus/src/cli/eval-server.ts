@@ -14,9 +14,9 @@
  *   Agent bash cmd → curl localhost:PORT/tool/query → eval-server → LocalBackend → format → text
  * 
  * Usage:
- *   gitnexus eval-server                    # default port 4848
- *   gitnexus eval-server --port 4848        # explicit port
- *   gitnexus eval-server --idle-timeout 300 # auto-shutdown after 300s idle
+ *   rsis-gitnexus eval-server                    # default port 4848
+ *   rsis-gitnexus eval-server --port 4848        # explicit port
+ *   rsis-gitnexus eval-server --idle-timeout 300 # auto-shutdown after 300s idle
  * 
  * API:
  *   POST /tool/:name   — Call a tool. Body is JSON arguments. Returns formatted text.
@@ -85,7 +85,7 @@ function formatContextResult(result: any): string {
     for (const c of result.candidates || []) {
       lines.push(`  ${c.kind} ${c.name} → ${c.filePath}:${c.line || '?'}  (uid: ${c.uid})`);
     }
-    lines.push(`\nRe-run: gitnexus-context "${result.candidates?.[0]?.name}" "<file_path>"`);
+    lines.push(`\nRe-run: rsis-gitnexus-context "${result.candidates?.[0]?.name}" "<file_path>"`);
     return lines.join('\n');
   }
 
@@ -275,19 +275,19 @@ function formatToolResult(toolName: string, result: any): string {
 function getNextStepHint(toolName: string): string {
   switch (toolName) {
     case 'query':
-      return '\n---\nNext: Pick a symbol above and run gitnexus-context "<name>" to see all its callers, callees, and execution flows.';
+      return '\n---\nNext: Pick a symbol above and run rsis-gitnexus-context "<name>" to see all its callers, callees, and execution flows.';
 
     case 'context':
-      return '\n---\nNext: To check what breaks if you change this, run gitnexus-impact "<name>" upstream';
+      return '\n---\nNext: To check what breaks if you change this, run rsis-gitnexus-impact "<name>" upstream';
 
     case 'impact':
       return '\n---\nNext: Review d=1 items first (WILL BREAK). Read the source with cat to understand the code, then make your fix.';
 
     case 'cypher':
-      return '\n---\nNext: To explore a result symbol in depth, run gitnexus-context "<name>"';
+      return '\n---\nNext: To explore a result symbol in depth, run rsis-gitnexus-context "<name>"';
 
     case 'detect_changes':
-      return '\n---\nNext: Run gitnexus-context "<symbol>" on high-risk changed symbols to check their callers.';
+      return '\n---\nNext: Run rsis-gitnexus-context "<symbol>" on high-risk changed symbols to check their callers.';
 
     default:
       return '';
@@ -304,7 +304,7 @@ export async function evalServerCommand(options?: EvalServerOptions): Promise<vo
   const ok = await backend.init();
 
   if (!ok) {
-    console.error('GitNexus eval-server: No indexed repositories found. Run: gitnexus analyze');
+    console.error('GitNexus eval-server: No indexed repositories found. Run: rsis-gitnexus analyze');
     process.exit(1);
   }
 

@@ -17,13 +17,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Get the absolute path to the gitnexus-hook.js file.
+ * Get the absolute path to the rsis-gitnexus-hook.js file.
  * Works for both local dev and npm-installed packages.
  */
 function getHookScriptPath(): string {
-  // From dist/cli/claude-hooks.js → hooks/claude/gitnexus-hook.js
+  // From dist/cli/claude-hooks.js → hooks/claude/rsis-gitnexus-hook.js
   const packageRoot = path.resolve(__dirname, '..', '..');
-  return path.join(packageRoot, 'hooks', 'claude', 'gitnexus-hook.cjs');
+  return path.join(packageRoot, 'hooks', 'claude', 'rsis-gitnexus-hook.cjs');
 }
 
 /**
@@ -80,8 +80,8 @@ export async function registerClaudeHook(): Promise<{ registered: boolean; messa
     if (!entry.hooks || !Array.isArray(entry.hooks)) return false;
     return entry.hooks.some((h: any) => 
       h.command && (
-        h.command.includes('gitnexus-hook') || 
-        h.command.includes('gitnexus augment')
+        h.command.includes('rsis-gitnexus-hook') || 
+        h.command.includes('rsis-gitnexus augment')
       )
     );
   });

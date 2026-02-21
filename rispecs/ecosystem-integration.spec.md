@@ -56,7 +56,7 @@ RSIS-GitNexus participates as a living organ within the Ceremonial Inquiry Ecosy
 
 ### 4. Medicine Wheel UI Data Feed
 
-**Behavior**: RSIS-GitNexus exposes a JSON endpoint (via MCP resource or HTTP when `gitnexus serve` runs) that Medicine Wheel UI consumes for visualization.
+**Behavior**: RSIS-GitNexus exposes a JSON endpoint (via MCP resource or HTTP when `rsis-gitnexus serve` runs) that Medicine Wheel UI consumes for visualization.
 
 **Data Shape**:
 ```
@@ -122,7 +122,7 @@ RSIS-GitNexus participates as a living organ within the Ceremonial Inquiry Ecosy
 
 ## Implementation Notes
 
-- Integration layer lives in new `gitnexus/src/core/rsis/` directory
+- Integration layer lives in new `rsis-gitnexus/src/core/rsis/` directory
 - Does not modify existing GitNexus core — extends via hooks in the indexing pipeline
 - Chart parsing uses line-delimited JSON reader (same as coaia-narrative)
 - Kinship parsing uses markdown frontmatter + section extraction

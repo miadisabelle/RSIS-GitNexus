@@ -5,10 +5,10 @@
  * Bypasses MCP entirely — invokes LocalBackend directly for minimal overhead.
  * 
  * Usage:
- *   gitnexus query "authentication flow"
- *   gitnexus context --name "validateUser"
- *   gitnexus impact --target "AuthService" --direction upstream
- *   gitnexus cypher "MATCH (n:Function) RETURN n.name LIMIT 10"
+ *   rsis-gitnexus query "authentication flow"
+ *   rsis-gitnexus context --name "validateUser"
+ *   rsis-gitnexus impact --target "AuthService" --direction upstream
+ *   rsis-gitnexus cypher "MATCH (n:Function) RETURN n.name LIMIT 10"
  * 
  * Note: Output goes to stderr because KuzuDB's native module captures stdout
  * at the OS level during init. This is consistent with augment.ts.
@@ -23,7 +23,7 @@ async function getBackend(): Promise<LocalBackend> {
   _backend = new LocalBackend();
   const ok = await _backend.init();
   if (!ok) {
-    console.error('GitNexus: No indexed repositories found. Run: gitnexus analyze');
+    console.error('GitNexus: No indexed repositories found. Run: rsis-gitnexus analyze');
     process.exit(1);
   }
   return _backend;
@@ -43,7 +43,7 @@ export async function queryCommand(queryText: string, options?: {
   content?: boolean;
 }): Promise<void> {
   if (!queryText?.trim()) {
-    console.error('Usage: gitnexus query <search_query>');
+    console.error('Usage: rsis-gitnexus query <search_query>');
     process.exit(1);
   }
 
@@ -66,7 +66,7 @@ export async function contextCommand(name: string, options?: {
   content?: boolean;
 }): Promise<void> {
   if (!name?.trim() && !options?.uid) {
-    console.error('Usage: gitnexus context <symbol_name> [--uid <uid>] [--file <path>]');
+    console.error('Usage: rsis-gitnexus context <symbol_name> [--uid <uid>] [--file <path>]');
     process.exit(1);
   }
 
@@ -88,7 +88,7 @@ export async function impactCommand(target: string, options?: {
   includeTests?: boolean;
 }): Promise<void> {
   if (!target?.trim()) {
-    console.error('Usage: gitnexus impact <symbol_name> [--direction upstream|downstream]');
+    console.error('Usage: rsis-gitnexus impact <symbol_name> [--direction upstream|downstream]');
     process.exit(1);
   }
 
@@ -107,7 +107,7 @@ export async function cypherCommand(query: string, options?: {
   repo?: string;
 }): Promise<void> {
   if (!query?.trim()) {
-    console.error('Usage: gitnexus cypher <cypher_query>');
+    console.error('Usage: rsis-gitnexus cypher <cypher_query>');
     process.exit(1);
   }
 

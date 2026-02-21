@@ -2,7 +2,7 @@
  * MCP Resources (Multi-Repo)
  * 
  * Provides structured on-demand data to AI agents.
- * All resources use repo-scoped URIs: gitnexus://repo/{name}/context
+ * All resources use repo-scoped URIs: rsis-gitnexus://repo/{name}/context
  */
 
 import type { LocalBackend } from './local/local-backend.js';
@@ -28,13 +28,13 @@ export interface ResourceTemplate {
 export function getResourceDefinitions(): ResourceDefinition[] {
   return [
     {
-      uri: 'gitnexus://repos',
+      uri: 'rsis-gitnexus://repos',
       name: 'All Indexed Repositories',
       description: 'List of all indexed repos with stats. Read this first to discover available repos.',
       mimeType: 'text/yaml',
     },
     {
-      uri: 'gitnexus://setup',
+      uri: 'rsis-gitnexus://setup',
       name: 'GitNexus Setup Content',
       description: 'Returns AGENTS.md content for all indexed repos. Useful for setup/onboarding.',
       mimeType: 'text/markdown',
@@ -48,37 +48,37 @@ export function getResourceDefinitions(): ResourceDefinition[] {
 export function getResourceTemplates(): ResourceTemplate[] {
   return [
     {
-      uriTemplate: 'gitnexus://repo/{name}/context',
+      uriTemplate: 'rsis-gitnexus://repo/{name}/context',
       name: 'Repo Overview',
       description: 'Codebase stats, staleness check, and available tools',
       mimeType: 'text/yaml',
     },
     {
-      uriTemplate: 'gitnexus://repo/{name}/clusters',
+      uriTemplate: 'rsis-gitnexus://repo/{name}/clusters',
       name: 'Repo Modules',
       description: 'All functional areas (Leiden clusters)',
       mimeType: 'text/yaml',
     },
     {
-      uriTemplate: 'gitnexus://repo/{name}/processes',
+      uriTemplate: 'rsis-gitnexus://repo/{name}/processes',
       name: 'Repo Processes',
       description: 'All execution flows',
       mimeType: 'text/yaml',
     },
     {
-      uriTemplate: 'gitnexus://repo/{name}/schema',
+      uriTemplate: 'rsis-gitnexus://repo/{name}/schema',
       name: 'Graph Schema',
       description: 'Node/edge schema for Cypher queries',
       mimeType: 'text/yaml',
     },
     {
-      uriTemplate: 'gitnexus://repo/{name}/cluster/{clusterName}',
+      uriTemplate: 'rsis-gitnexus://repo/{name}/cluster/{clusterName}',
       name: 'Module Detail',
       description: 'Deep dive into a specific functional area',
       mimeType: 'text/yaml',
     },
     {
-      uriTemplate: 'gitnexus://repo/{name}/process/{processName}',
+      uriTemplate: 'rsis-gitnexus://repo/{name}/process/{processName}',
       name: 'Process Trace',
       description: 'Step-by-step execution trace',
       mimeType: 'text/yaml',
@@ -90,11 +90,11 @@ export function getResourceTemplates(): ResourceTemplate[] {
  * Parse a resource URI to extract the repo name and resource type.
  */
 function parseUri(uri: string): { repoName?: string; resourceType: string; param?: string } {
-  if (uri === 'gitnexus://repos') return { resourceType: 'repos' };
-  if (uri === 'gitnexus://setup') return { resourceType: 'setup' };
+  if (uri === 'rsis-gitnexus://repos') return { resourceType: 'repos' };
+  if (uri === 'rsis-gitnexus://setup') return { resourceType: 'setup' };
 
-  // Repo-scoped: gitnexus://repo/{name}/context
-  const repoMatch = uri.match(/^gitnexus:\/\/repo\/([^/]+)\/(.+)$/);
+  // Repo-scoped: rsis-gitnexus://repo/{name}/context
+  const repoMatch = uri.match(/^rsis-gitnexus:\/\/repo\/([^/]+)\/(.+)$/);
   if (repoMatch) {
     const repoName = decodeURIComponent(repoMatch[1]);
     const rest = repoMatch[2];
@@ -157,7 +157,7 @@ async function getReposResource(backend: LocalBackend): Promise<string> {
   const repos = await backend.listRepos();
 
   if (repos.length === 0) {
-    return 'repos: []\n# No repositories indexed. Run: gitnexus analyze';
+    return 'repos: []\n# No repositories indexed. Run: rsis-gitnexus analyze';
   }
 
   const lines: string[] = ['repos:'];
@@ -176,7 +176,7 @@ async function getReposResource(backend: LocalBackend): Promise<string> {
   if (repos.length > 1) {
     lines.push('');
     lines.push('# Multiple repos indexed. Use repo parameter in tool calls:');
-    lines.push(`# gitnexus_search({query: "auth", repo: "${repos[0].name}"})`);
+    lines.push(`# rsis-gitnexus_search({query: "auth", repo: "${repos[0].name}"})`);
   }
 
   return lines.join('\n');
@@ -192,7 +192,7 @@ async function getContextResource(backend: LocalBackend, repoName?: string): Pro
   const context = backend.getContext(repoId) || backend.getContext();
 
   if (!context) {
-    return 'error: No codebase loaded. Run: gitnexus analyze';
+    return 'error: No codebase loaded. Run: rsis-gitnexus analyze';
   }
   
   // Check staleness
@@ -224,14 +224,14 @@ async function getContextResource(backend: LocalBackend, repoName?: string): Pro
   lines.push('  - cypher: Raw graph queries');
   lines.push('  - list_repos: Discover all indexed repositories');
   lines.push('');
-  lines.push('re_index: Run `npx gitnexus analyze` in terminal if data is stale');
+  lines.push('re_index: Run `npx rsis-gitnexus analyze` in terminal if data is stale');
   lines.push('');
   lines.push('resources_available:');
-  lines.push('  - gitnexus://repos: All indexed repositories');
-  lines.push(`  - gitnexus://repo/${context.projectName}/clusters: All functional areas`);
-  lines.push(`  - gitnexus://repo/${context.projectName}/processes: All execution flows`);
-  lines.push(`  - gitnexus://repo/${context.projectName}/cluster/{name}: Module details`);
-  lines.push(`  - gitnexus://repo/${context.projectName}/process/{name}: Process trace`);
+  lines.push('  - rsis-gitnexus://repos: All indexed repositories');
+  lines.push(`  - rsis-gitnexus://repo/${context.projectName}/clusters: All functional areas`);
+  lines.push(`  - rsis-gitnexus://repo/${context.projectName}/processes: All execution flows`);
+  lines.push(`  - rsis-gitnexus://repo/${context.projectName}/cluster/{name}: Module details`);
+  lines.push(`  - rsis-gitnexus://repo/${context.projectName}/process/{name}: Process trace`);
   
   return lines.join('\n');
 }
@@ -244,7 +244,7 @@ async function getClustersResource(backend: LocalBackend, repoName?: string): Pr
     const result = await backend.queryClusters(repoName, 100);
 
     if (!result.clusters || result.clusters.length === 0) {
-      return 'modules: []\n# No functional areas detected. Run: gitnexus analyze';
+      return 'modules: []\n# No functional areas detected. Run: rsis-gitnexus analyze';
     }
 
     const displayLimit = 20;
@@ -261,7 +261,7 @@ async function getClustersResource(backend: LocalBackend, repoName?: string): Pr
     }
 
     if (result.clusters.length > displayLimit) {
-      lines.push(`\n# Showing top ${displayLimit} of ${result.clusters.length} modules. Use gitnexus_query for deeper search.`);
+      lines.push(`\n# Showing top ${displayLimit} of ${result.clusters.length} modules. Use rsis-gitnexus_query for deeper search.`);
     }
 
     return lines.join('\n');
@@ -278,7 +278,7 @@ async function getProcessesResource(backend: LocalBackend, repoName?: string): P
     const result = await backend.queryProcesses(repoName, 50);
 
     if (!result.processes || result.processes.length === 0) {
-      return 'processes: []\n# No processes detected. Run: gitnexus analyze';
+      return 'processes: []\n# No processes detected. Run: rsis-gitnexus analyze';
     }
 
     const displayLimit = 20;
@@ -293,7 +293,7 @@ async function getProcessesResource(backend: LocalBackend, repoName?: string): P
     }
 
     if (result.processes.length > displayLimit) {
-      lines.push(`\n# Showing top ${displayLimit} of ${result.processes.length} processes. Use gitnexus_query for deeper search.`);
+      lines.push(`\n# Showing top ${displayLimit} of ${result.processes.length} processes. Use rsis-gitnexus_query for deeper search.`);
     }
 
     return lines.join('\n');
@@ -429,13 +429,13 @@ async function getProcessDetailResource(name: string, backend: LocalBackend, rep
 
 /**
  * Setup resource — generates AGENTS.md content for all indexed repos.
- * Useful for `gitnexus setup` onboarding or dynamic content injection.
+ * Useful for `rsis-gitnexus setup` onboarding or dynamic content injection.
  */
 async function getSetupResource(backend: LocalBackend): Promise<string> {
   const repos = await backend.listRepos();
 
   if (repos.length === 0) {
-    return '# GitNexus\n\nNo repositories indexed. Run: `npx gitnexus analyze` in a repository.';
+    return '# GitNexus\n\nNo repositories indexed. Run: `npx rsis-gitnexus analyze` in a repository.';
   }
   
   const sections: string[] = [];
@@ -461,10 +461,10 @@ async function getSetupResource(backend: LocalBackend): Promise<string> {
       '',
       '## Resources',
       '',
-      `- \`gitnexus://repo/${repo.name}/context\` — Stats, staleness check`,
-      `- \`gitnexus://repo/${repo.name}/clusters\` — All functional areas`,
-      `- \`gitnexus://repo/${repo.name}/processes\` — All execution flows`,
-      `- \`gitnexus://repo/${repo.name}/schema\` — Graph schema for Cypher`,
+      `- \`rsis-gitnexus://repo/${repo.name}/context\` — Stats, staleness check`,
+      `- \`rsis-gitnexus://repo/${repo.name}/clusters\` — All functional areas`,
+      `- \`rsis-gitnexus://repo/${repo.name}/processes\` — All execution flows`,
+      `- \`rsis-gitnexus://repo/${repo.name}/schema\` — Graph schema for Cypher`,
     ];
     sections.push(lines.join('\n'));
   }

@@ -49,7 +49,7 @@ if _env_file.exists():
             if value and key not in os.environ:  # Don't override existing env vars
                 os.environ[key] = value
 
-logger = logging.getLogger("gitnexus_eval")
+logger = logging.getLogger("rsis-gitnexus_eval")
 console = Console()
 app = typer.Typer(rich_markup_mode="rich", add_completion=False)
 
@@ -164,7 +164,7 @@ def process_instance(
         "submission": "",
         "cost": 0.0,
         "n_calls": 0,
-        "gitnexus_metrics": {},
+        "rsis-gitnexus_metrics": {},
     }
 
     agent = None
@@ -177,8 +177,8 @@ def process_instance(
         env_config = dict(config.get("environment", {}))
         env_class_name = env_config.pop("environment_class", "docker")
 
-        if env_class_name == "eval.environments.gitnexus_docker.GitNexusDockerEnvironment":
-            from eval.environments.gitnexus_docker import GitNexusDockerEnvironment
+        if env_class_name == "eval.environments.rsis-gitnexus_docker.GitNexusDockerEnvironment":
+            from eval.environments.rsis-gitnexus_docker import GitNexusDockerEnvironment
             env_config["image"] = get_swebench_docker_image(instance)
             env = GitNexusDockerEnvironment(**env_config)
         else:
@@ -187,9 +187,9 @@ def process_instance(
 
         # Build agent
         agent_config = dict(config.get("agent", {}))
-        agent_class_name = agent_config.pop("agent_class", "eval.agents.gitnexus_agent.GitNexusAgent")
+        agent_class_name = agent_config.pop("agent_class", "eval.agents.rsis-gitnexus_agent.GitNexusAgent")
 
-        from eval.agents.gitnexus_agent import GitNexusAgent
+        from eval.agents.rsis-gitnexus_agent import GitNexusAgent
         traj_path = instance_dir / f"{instance_id}.traj.json"
         agent_config["output_path"] = traj_path
         agent = GitNexusAgent(model, env, **agent_config)
@@ -202,7 +202,7 @@ def process_instance(
         result["submission"] = info.get("submission", "")
         result["cost"] = agent.cost
         result["n_calls"] = agent.n_calls
-        result["gitnexus_metrics"] = agent.gitnexus_metrics.to_dict()
+        result["rsis-gitnexus_metrics"] = agent.rsis-gitnexus_metrics.to_dict()
 
     except Exception as e:
         logger.error(f"[{run_id}] Error on {instance_id}: {e}")
@@ -428,8 +428,8 @@ def list_configs():
     console.print("\n[bold]Available Modes:[/bold]")
     for name in AVAILABLE_MODES:
         config = load_yaml_config(MODES_DIR / f"{name}.yaml")
-        gn_mode = config.get("agent", {}).get("gitnexus_mode", "baseline")
-        console.print(f"  {name:<20} gitnexus_mode={gn_mode}")
+        gn_mode = config.get("agent", {}).get("rsis-gitnexus_mode", "baseline")
+        console.print(f"  {name:<20} rsis-gitnexus_mode={gn_mode}")
 
     console.print(f"\n[bold]Matrix:[/bold] {len(AVAILABLE_MODELS)} models x {len(AVAILABLE_MODES)} modes = {len(AVAILABLE_MODELS) * len(AVAILABLE_MODES)} configurations")
 
@@ -461,10 +461,10 @@ def _print_summary(results: list[dict], model: str, mode: str):
 
     # GitNexus-specific metrics
     gn_tool_calls = sum(
-        r.get("gitnexus_metrics", {}).get("total_tool_calls", 0) for r in results
+        r.get("rsis-gitnexus_metrics", {}).get("total_tool_calls", 0) for r in results
     )
     gn_augment_hits = sum(
-        r.get("gitnexus_metrics", {}).get("augmentation_hits", 0) for r in results
+        r.get("rsis-gitnexus_metrics", {}).get("augmentation_hits", 0) for r in results
     )
     if gn_tool_calls > 0:
         table.add_row("GitNexus Tool Calls", str(gn_tool_calls))
@@ -489,7 +489,7 @@ def _print_matrix_summary(all_results: dict[str, list[dict]]):
         completed = sum(1 for r in results if r.get("submission"))
         cost = sum(r.get("cost", 0) for r in results)
         calls = sum(r.get("n_calls", 0) for r in results)
-        gn_calls = sum(r.get("gitnexus_metrics", {}).get("total_tool_calls", 0) for r in results)
+        gn_calls = sum(r.get("rsis-gitnexus_metrics", {}).get("total_tool_calls", 0) for r in results)
 
         table.add_row(
             run_id,

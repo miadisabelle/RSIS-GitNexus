@@ -29,7 +29,7 @@ export const GITNEXUS_TOOLS: ToolDefinition[] = [
 Returns each repo's name, path, indexed date, last commit, and stats.
 
 WHEN TO USE: First step when multiple repos are indexed, or to discover available repos.
-AFTER THIS: READ gitnexus://repo/{name}/context for the repo you want to work with.
+AFTER THIS: READ rsis-gitnexus://repo/{name}/context for the repo you want to work with.
 
 When multiple repos are indexed, you MUST specify the "repo" parameter
 on other tools (query, context, impact, etc.) to target the correct one.`,
@@ -71,7 +71,7 @@ Hybrid ranking: BM25 keyword + semantic vector search, ranked by Reciprocal Rank
     name: 'cypher',
     description: `Execute Cypher query against the code knowledge graph.
 
-WHEN TO USE: Complex structural queries that search/explore can't answer. READ gitnexus://repo/{name}/schema first for the full schema.
+WHEN TO USE: Complex structural queries that search/explore can't answer. READ rsis-gitnexus://repo/{name}/schema first for the full schema.
 AFTER THIS: Use context() on result symbols for deeper context.
 
 SCHEMA:
@@ -111,7 +111,7 @@ TIPS:
 Shows categorized incoming/outgoing references (calls, imports, extends, implements), process participation, and file location.
 
 WHEN TO USE: After query() to understand a specific symbol in depth. When you need to know all callers, callees, and what execution flows a symbol participates in.
-AFTER THIS: Use impact() if planning changes, or READ gitnexus://repo/{name}/process/{processName} for full execution trace.
+AFTER THIS: Use impact() if planning changes, or READ rsis-gitnexus://repo/{name}/process/{processName} for full execution trace.
 
 Handles disambiguation: if multiple symbols share the same name, returns candidates for you to pick from. Use uid param for zero-ambiguity lookup from prior results.`,
     inputSchema: {
@@ -132,7 +132,7 @@ Handles disambiguation: if multiple symbols share the same name, returns candida
 Maps git diff hunks to indexed symbols, then traces which processes are impacted.
 
 WHEN TO USE: Before committing — to understand what your changes affect. Pre-commit review, PR preparation.
-AFTER THIS: Review affected processes. Use context() on high-risk symbols. READ gitnexus://repo/{name}/process/{name} for full traces.
+AFTER THIS: Review affected processes. Use context() on high-risk symbols. READ rsis-gitnexus://repo/{name}/process/{name} for full traces.
 
 Returns: changed symbols, affected processes, and a risk summary.`,
     inputSchema: {
@@ -175,7 +175,7 @@ Each edit is tagged with confidence:
 Returns all symbols affected by modifying the target, grouped by depth with edge types and confidence.
 
 WHEN TO USE: Before making code changes — especially refactoring, renaming, or modifying shared code. Shows what would break.
-AFTER THIS: Review d=1 items (WILL BREAK). READ gitnexus://repo/{name}/processes to check affected execution flows.
+AFTER THIS: Review d=1 items (WILL BREAK). READ rsis-gitnexus://repo/{name}/processes to check affected execution flows.
 
 Depth groups:
 - d=1: WILL BREAK (direct callers/importers)

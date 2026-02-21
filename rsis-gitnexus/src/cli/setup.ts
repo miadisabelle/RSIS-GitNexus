@@ -27,12 +27,12 @@ interface SetupResult {
 function getMcpEntry() {
   return {
     command: 'npx',
-    args: ['-y', 'gitnexus@latest', 'mcp'],
+    args: ['-y', 'rsis-gitnexus@latest', 'mcp'],
   };
 }
 
 /**
- * Merge gitnexus entry into an existing MCP config JSON object.
+ * Merge rsis-gitnexus entry into an existing MCP config JSON object.
  * Returns the updated config.
  */
 function mergeMcpConfig(existing: any): any {
@@ -42,7 +42,7 @@ function mergeMcpConfig(existing: any): any {
   if (!existing.mcpServers || typeof existing.mcpServers !== 'object') {
     existing.mcpServers = {};
   }
-  existing.mcpServers.gitnexus = getMcpEntry();
+  existing.mcpServers.rsis-gitnexus = getMcpEntry();
   return existing;
 }
 
@@ -111,7 +111,7 @@ async function setupClaudeCode(result: SetupResult): Promise<void> {
   console.log('');
   console.log('  Claude Code detected. Run this command to add GitNexus MCP:');
   console.log('');
-  console.log('    claude mcp add gitnexus -- npx -y gitnexus mcp');
+  console.log('    claude mcp add rsis-gitnexus -- npx -y rsis-gitnexus mcp');
   console.log('');
   result.configured.push('Claude Code (MCP manual step printed)');
 }
@@ -144,17 +144,17 @@ async function installClaudeCodeHooks(result: SetupResult): Promise<void> {
 
   const settingsPath = path.join(claudeDir, 'settings.json');
 
-  // Source hooks bundled within the gitnexus package (hooks/claude/)
+  // Source hooks bundled within the rsis-gitnexus package (hooks/claude/)
   const pluginHooksPath = path.join(__dirname, '..', '..', 'hooks', 'claude');
 
-  // Copy unified hook script to ~/.claude/hooks/gitnexus/
-  const destHooksDir = path.join(claudeDir, 'hooks', 'gitnexus');
+  // Copy unified hook script to ~/.claude/hooks/rsis-gitnexus/
+  const destHooksDir = path.join(claudeDir, 'hooks', 'rsis-gitnexus');
 
   try {
     await fs.mkdir(destHooksDir, { recursive: true });
 
-    const src = path.join(pluginHooksPath, 'gitnexus-hook.cjs');
-    const dest = path.join(destHooksDir, 'gitnexus-hook.cjs');
+    const src = path.join(pluginHooksPath, 'rsis-gitnexus-hook.cjs');
+    const dest = path.join(destHooksDir, 'rsis-gitnexus-hook.cjs');
     try {
       const content = await fs.readFile(src, 'utf-8');
       await fs.writeFile(dest, content, 'utf-8');
@@ -162,7 +162,7 @@ async function installClaudeCodeHooks(result: SetupResult): Promise<void> {
       // Script not found in source — skip
     }
 
-    const hookCmd = `node "${path.join(destHooksDir, 'gitnexus-hook.cjs').replace(/\\/g, '/')}"`;
+    const hookCmd = `node "${path.join(destHooksDir, 'rsis-gitnexus-hook.cjs').replace(/\\/g, '/')}"`;
 
     // Merge hook config into ~/.claude/settings.json
     const existing = await readJsonFile(settingsPath) || {};
@@ -174,7 +174,7 @@ async function installClaudeCodeHooks(result: SetupResult): Promise<void> {
     // Add PreToolUse hook if not already present
     if (!existing.hooks.PreToolUse) existing.hooks.PreToolUse = [];
     const hasPreToolHook = existing.hooks.PreToolUse.some(
-      (h: any) => h.hooks?.some((hh: any) => hh.command?.includes('gitnexus'))
+      (h: any) => h.hooks?.some((hh: any) => hh.command?.includes('rsis-gitnexus'))
     );
     if (!hasPreToolHook) {
       existing.hooks.PreToolUse.push({
@@ -207,7 +207,7 @@ async function setupOpenCode(result: SetupResult): Promise<void> {
     const existing = await readJsonFile(configPath);
     const config = existing || {};
     if (!config.mcp) config.mcp = {};
-    config.mcp.gitnexus = getMcpEntry();
+    config.mcp.rsis-gitnexus = getMcpEntry();
     await writeJsonFile(configPath, config);
     result.configured.push('OpenCode');
   } catch (err: any) {
@@ -221,7 +221,7 @@ const SKILL_NAMES = ['exploring', 'debugging', 'impact-analysis', 'refactoring']
 
 /**
  * Install GitNexus skills to a target directory.
- * Each skill is installed as {targetDir}/gitnexus-{skillName}/SKILL.md
+ * Each skill is installed as {targetDir}/rsis-gitnexus-{skillName}/SKILL.md
  * following the Agent Skills standard (both Cursor and Claude Code).
  *
  * Supports two source layouts:
@@ -233,7 +233,7 @@ async function installSkillsTo(targetDir: string): Promise<string[]> {
   const skillsRoot = path.join(__dirname, '..', '..', 'skills');
 
   for (const skillName of SKILL_NAMES) {
-    const skillDir = path.join(targetDir, `gitnexus-${skillName}`);
+    const skillDir = path.join(targetDir, `rsis-gitnexus-${skillName}`);
 
     try {
       // Try directory-based skill first (skills/{name}/SKILL.md)
@@ -283,7 +283,7 @@ async function copyDirRecursive(src: string, dest: string): Promise<void> {
 }
 
 /**
- * Install global Cursor skills to ~/.cursor/skills/gitnexus/
+ * Install global Cursor skills to ~/.cursor/skills/rsis-gitnexus/
  */
 async function installCursorSkills(result: SetupResult): Promise<void> {
   const cursorDir = path.join(os.homedir(), '.cursor');
@@ -301,7 +301,7 @@ async function installCursorSkills(result: SetupResult): Promise<void> {
 }
 
 /**
- * Install global OpenCode skills to ~/.config/opencode/skill/gitnexus/
+ * Install global OpenCode skills to ~/.config/opencode/skill/rsis-gitnexus/
  */
 async function installOpenCodeSkills(result: SetupResult): Promise<void> {
   const opencodeDir = path.join(os.homedir(), '.config', 'opencode');
@@ -378,7 +378,7 @@ export const setupCommand = async () => {
   console.log('');
   console.log('  Next steps:');
   console.log('    1. cd into any git repo');
-  console.log('    2. Run: gitnexus analyze');
+  console.log('    2. Run: rsis-gitnexus analyze');
   console.log('    3. Open the repo in your editor — MCP is ready!');
   console.log('');
 };

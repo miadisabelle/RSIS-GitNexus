@@ -2,7 +2,7 @@
  * Wiki Command
  * 
  * Generates repository documentation from the knowledge graph.
- * Usage: gitnexus wiki [path] [options]
+ * Usage: rsis-gitnexus wiki [path] [options]
  */
 
 import path from 'path';
@@ -106,7 +106,7 @@ export const wikiCommand = async (
 
   if (!meta) {
     console.log('  Error: No GitNexus index found.');
-    console.log('  Run `gitnexus analyze` first to index this repository.\n');
+    console.log('  Run `rsis-gitnexus analyze` first to index this repository.\n');
     process.exitCode = 1;
     return;
   }
@@ -120,7 +120,7 @@ export const wikiCommand = async (
     if (options.model) updates.model = options.model;
     if (options.baseUrl) updates.baseUrl = options.baseUrl;
     await saveCLIConfig({ ...existing, ...updates });
-    console.log('  Config saved to ~/.gitnexus/config.json\n');
+    console.log('  Config saved to ~/.rsis-gitnexus/config.json\n');
   }
 
   const savedConfig = await loadCLIConfig();
@@ -202,7 +202,7 @@ export const wikiCommand = async (
 
       // Save
       await saveCLIConfig({ apiKey: key, baseUrl, model });
-      console.log('  Config saved to ~/.gitnexus/config.json\n');
+      console.log('  Config saved to ~/.rsis-gitnexus/config.json\n');
 
       llmConfig = { ...llmConfig, apiKey: key, baseUrl, model };
     }
@@ -317,7 +317,7 @@ export const wikiCommand = async (
         if (!answer || answer === 'y' || answer === 'yes') {
           // Clear saved config so next run triggers interactive setup
           await saveCLIConfig({});
-          console.log('  Config cleared. Run `gitnexus wiki` again to reconfigure.\n');
+          console.log('  Config cleared. Run `rsis-gitnexus wiki` again to reconfigure.\n');
         }
       }
     } else {

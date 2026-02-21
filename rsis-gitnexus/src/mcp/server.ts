@@ -42,25 +42,25 @@ function getNextStepHint(toolName: string, args: Record<string, any> | undefined
 
   switch (toolName) {
     case 'list_repos':
-      return `\n\n---\n**Next:** READ gitnexus://repo/{name}/context for any repo above to get its overview and check staleness.`;
+      return `\n\n---\n**Next:** READ rsis-gitnexus://repo/{name}/context for any repo above to get its overview and check staleness.`;
 
     case 'query':
       return `\n\n---\n**Next:** To understand a specific symbol in depth, use context({name: "<symbol_name>"${repoParam}}) to see categorized refs and process participation.`;
 
     case 'context':
-      return `\n\n---\n**Next:** If planning changes, use impact({target: "${args?.name || '<name>'}", direction: "upstream"${repoParam}}) to check blast radius. To see execution flows, READ gitnexus://repo/${repoPath}/processes.`;
+      return `\n\n---\n**Next:** If planning changes, use impact({target: "${args?.name || '<name>'}", direction: "upstream"${repoParam}}) to check blast radius. To see execution flows, READ rsis-gitnexus://repo/${repoPath}/processes.`;
 
     case 'impact':
-      return `\n\n---\n**Next:** Review d=1 items first (WILL BREAK). To check affected execution flows, READ gitnexus://repo/${repoPath}/processes.`;
+      return `\n\n---\n**Next:** Review d=1 items first (WILL BREAK). To check affected execution flows, READ rsis-gitnexus://repo/${repoPath}/processes.`;
 
     case 'detect_changes':
-      return `\n\n---\n**Next:** Review affected processes. Use context() on high-risk changed symbols. READ gitnexus://repo/${repoPath}/process/{name} for full execution traces.`;
+      return `\n\n---\n**Next:** Review affected processes. Use context() on high-risk changed symbols. READ rsis-gitnexus://repo/${repoPath}/process/{name} for full execution traces.`;
 
     case 'rename':
       return `\n\n---\n**Next:** Run detect_changes(${repoParam ? `{repo: "${repo}"}` : ''}) to verify no unexpected side effects from the rename.`;
 
     case 'cypher':
-      return `\n\n---\n**Next:** To explore a result symbol, use context({name: "<name>"${repoParam}}). For schema reference, READ gitnexus://repo/${repoPath}/schema.`;
+      return `\n\n---\n**Next:** To explore a result symbol, use context({name: "<name>"${repoParam}}). For schema reference, READ rsis-gitnexus://repo/${repoPath}/schema.`;
 
     // Legacy tool names — still return useful hints
     case 'search':
@@ -68,7 +68,7 @@ function getNextStepHint(toolName: string, args: Record<string, any> | undefined
     case 'explore':
       return `\n\n---\n**Next:** If planning changes, use impact({target: "<name>", direction: "upstream"${repoParam}}).`;
     case 'overview':
-      return `\n\n---\n**Next:** To drill into an area, READ gitnexus://repo/${repoPath}/cluster/{name}. To see execution flows, READ gitnexus://repo/${repoPath}/processes.`;
+      return `\n\n---\n**Next:** To drill into an area, READ rsis-gitnexus://repo/${repoPath}/cluster/{name}. To see execution flows, READ rsis-gitnexus://repo/${repoPath}/processes.`;
 
     default:
       return '';
@@ -78,7 +78,7 @@ function getNextStepHint(toolName: string, args: Record<string, any> | undefined
 export async function startMCPServer(backend: LocalBackend): Promise<void> {
   const server = new Server(
     {
-      name: 'gitnexus',
+      name: 'rsis-gitnexus',
       version: '1.1.9',
     },
     {
@@ -245,10 +245,10 @@ Present the analysis as a clear risk report.`,
               text: `Generate architecture documentation for this codebase using the knowledge graph.
 
 Follow these steps:
-1. READ \`gitnexus://repo/${repo || '{name}'}/context\` for codebase stats
-2. READ \`gitnexus://repo/${repo || '{name}'}/clusters\` to see all functional areas
-3. READ \`gitnexus://repo/${repo || '{name}'}/processes\` to see all execution flows  
-4. For the top 5 most important processes, READ \`gitnexus://repo/${repo || '{name}'}/process/{name}\` for step-by-step traces
+1. READ \`rsis-gitnexus://repo/${repo || '{name}'}/context\` for codebase stats
+2. READ \`rsis-gitnexus://repo/${repo || '{name}'}/clusters\` to see all functional areas
+3. READ \`rsis-gitnexus://repo/${repo || '{name}'}/processes\` to see all execution flows  
+4. For the top 5 most important processes, READ \`rsis-gitnexus://repo/${repo || '{name}'}/process/{name}\` for step-by-step traces
 5. Generate a mermaid architecture diagram showing the major areas and their connections
 6. Write an ARCHITECTURE.md file with: overview, functional areas, key execution flows, and the mermaid diagram`,
             },

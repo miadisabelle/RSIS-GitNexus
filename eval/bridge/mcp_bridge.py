@@ -44,14 +44,14 @@ class MCPBridge:
             return True
 
         try:
-            # Find gitnexus binary
-            gitnexus_bin = self._find_gitnexus()
-            if not gitnexus_bin:
-                logger.error("GitNexus not found. Install with: npm install -g gitnexus")
+            # Find rsis-gitnexus binary
+            rsis-gitnexus_bin = self._find_rsis-gitnexus()
+            if not rsis-gitnexus_bin:
+                logger.error("GitNexus not found. Install with: npm install -g rsis-gitnexus")
                 return False
 
             self.process = subprocess.Popen(
-                [gitnexus_bin, "mcp"],
+                [rsis-gitnexus_bin, "mcp"],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
@@ -63,7 +63,7 @@ class MCPBridge:
             init_result = self._send_request("initialize", {
                 "protocolVersion": "2024-11-05",
                 "capabilities": {},
-                "clientInfo": {"name": "gitnexus-eval", "version": "0.1.0"},
+                "clientInfo": {"name": "rsis-gitnexus-eval", "version": "0.1.0"},
             })
 
             if init_result is None:
@@ -139,29 +139,29 @@ class MCPBridge:
                 return contents[0].get("text", "")
         return None
 
-    def _find_gitnexus(self) -> str | None:
-        """Find the gitnexus CLI binary."""
+    def _find_rsis-gitnexus(self) -> str | None:
+        """Find the rsis-gitnexus CLI binary."""
         # Check if npx is available (preferred - uses local install)
         for cmd in ["npx"]:
             try:
                 result = subprocess.run(
-                    [cmd, "gitnexus", "--version"],
+                    [cmd, "rsis-gitnexus", "--version"],
                     capture_output=True, text=True, timeout=15,
                     cwd=self.repo_path,
                 )
                 if result.returncode == 0:
-                    return cmd  # Will use "npx gitnexus mcp"
+                    return cmd  # Will use "npx rsis-gitnexus mcp"
             except Exception:
                 continue
 
         # Check for global install
         try:
             result = subprocess.run(
-                ["gitnexus", "--version"],
+                ["rsis-gitnexus", "--version"],
                 capture_output=True, text=True, timeout=10,
             )
             if result.returncode == 0:
-                return "gitnexus"
+                return "rsis-gitnexus"
         except Exception:
             pass
 

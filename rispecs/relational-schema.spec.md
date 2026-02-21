@@ -64,12 +64,12 @@ KinshipHub → KinshipHub — Relational links between directories/repos per Kin
 
 ## Schema Migration
 
-**Behavior**: The schema extension is additive — all existing GitNexus node types and edges remain unchanged. New types are added via KuzuDB `CREATE NODE TABLE` and `CREATE REL TABLE` statements. A migration script runs after `gitnexus analyze` when RSIS mode is enabled.
+**Behavior**: The schema extension is additive — all existing GitNexus node types and edges remain unchanged. New types are added via KuzuDB `CREATE NODE TABLE` and `CREATE REL TABLE` statements. A migration script runs after `rsis-gitnexus analyze` when RSIS mode is enabled.
 
-**Configuration**: RSIS extensions activate when a `.rsis/config.json` exists in the repo root, or when `--rsis` flag is passed to `gitnexus analyze`.
+**Configuration**: RSIS extensions activate when a `.rsis/config.json` exists in the repo root, or when `--rsis` flag is passed to `rsis-gitnexus analyze`.
 
 ## Implementation Reference
 
-- Existing schema definition: `gitnexus/src/storage/` (KuzuDB interface)
-- Graph population: `gitnexus/src/core/graph/`
-- Type definitions: `gitnexus/src/types/pipeline.ts`
+- Existing schema definition: `rsis-gitnexus/src/storage/` (KuzuDB interface)
+- Graph population: `rsis-gitnexus/src/core/graph/`
+- Type definitions: `rsis-gitnexus/src/types/pipeline.ts`

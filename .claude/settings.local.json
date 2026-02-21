@@ -8,13 +8,13 @@
       "Bash(claude rename:*)",
       "Bash(npm run build:*)",
       "Bash(npm link:*)",
-      "Bash(gitnexus --version:*)",
-      "Bash(gitnexus --help:*)",
+      "Bash(rsis-gitnexus --version:*)",
+      "Bash(rsis-gitnexus --help:*)",
       "Bash(npm ls:*)",
-      "Bash(gitnexus augment:*)",
-      "Bash(node -e \"\nconst { augment } = await import\\(''./gitnexus/dist/core/augmentation/engine.js''\\);\ntry {\n  const r = await augment\\(''setup'', process.cwd\\(\\)\\);\n  console.log\\(''Result:'', r ? r.substring\\(0, 200\\) : ''null''\\);\n} catch\\(e\\) { console.error\\(''Error:'', e.message\\); }\nprocess.exit\\(0\\);\n\")",
-      "Bash(cmd.exe /c \"cd /d D:\\\\Projects\\\\GitnexusV2 && gitnexus augment setup\")",
-      "Bash(cmd.exe /c \"cd /d D:\\\\Projects\\\\GitnexusV2 && gitnexus status\")",
+      "Bash(rsis-gitnexus augment:*)",
+      "Bash(node -e \"\nconst { augment } = await import\\(''./rsis-gitnexus/dist/core/augmentation/engine.js''\\);\ntry {\n  const r = await augment\\(''setup'', process.cwd\\(\\)\\);\n  console.log\\(''Result:'', r ? r.substring\\(0, 200\\) : ''null''\\);\n} catch\\(e\\) { console.error\\(''Error:'', e.message\\); }\nprocess.exit\\(0\\);\n\")",
+      "Bash(cmd.exe /c \"cd /d D:\\\\Projects\\\\GitnexusV2 && rsis-gitnexus augment setup\")",
+      "Bash(cmd.exe /c \"cd /d D:\\\\Projects\\\\GitnexusV2 && rsis-gitnexus status\")",
       "Bash(gh repo clone:*)",
       "Bash(claude mcp:*)",
       "Bash(gh issue view:*)",
@@ -24,14 +24,14 @@
       "Bash(npm version:*)",
       "Bash(npm pack:*)",
       "Bash(npm publish:*)",
-      "Bash(npx gitnexus:*)",
-      "mcp__gitnexus__list_repos",
-      "mcp__gitnexus__query",
-      "mcp__gitnexus__context",
-      "mcp__gitnexus__impact",
+      "Bash(npx rsis-gitnexus:*)",
+      "mcp__rsis-gitnexus__list_repos",
+      "mcp__rsis-gitnexus__query",
+      "mcp__rsis-gitnexus__context",
+      "mcp__rsis-gitnexus__impact",
       "Bash(git add:*)",
       "Bash(Glob)",
-      "Bash(Bash\"\\) per new Claude Code schema\n- Rename gitnexus-hook.js → gitnexus-hook.cjs for CommonJS compatibility\n- Fix setup.ts: correct hook filename and timeout \\(8000ms instead of 10ms\\)\n- Bump to v1.1.9 and publish to npm\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(Bash\"\\) per new Claude Code schema\n- Rename rsis-gitnexus-hook.js → rsis-gitnexus-hook.cjs for CommonJS compatibility\n- Fix setup.ts: correct hook filename and timeout \\(8000ms instead of 10ms\\)\n- Bump to v1.1.9 and publish to npm\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git push:*)",
       "WebFetch(domain:docs.kuzudb.com)",
       "WebFetch(domain:github.com)",
@@ -51,7 +51,7 @@
       "WebFetch(domain:github.github.com)",
       "WebFetch(domain:gist.github.com)",
       "WebFetch(domain:fsoft-ai4code.github.io)",
-      "mcp__gitnexus__cypher",
+      "mcp__rsis-gitnexus__cypher",
       "WebFetch(domain:repomix.com)",
       "WebFetch(domain:www.humanlayer.dev)",
       "WebFetch(domain:agents.md)",
@@ -71,11 +71,11 @@
       "Bash(du:*)",
       "mcp__desktop-commander__list_directory",
       "Bash(python3 -c \":*)",
-      "mcp__gitnexus__detect_changes"
+      "mcp__rsis-gitnexus__detect_changes"
     ]
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
-    "gitnexus"
+    "rsis-gitnexus"
   ]
 }

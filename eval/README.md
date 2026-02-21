@@ -92,7 +92,7 @@ python -m analysis.analyze_results results/
 python -m analysis.analyze_results compare-modes results/ -m claude-sonnet
 
 # GitNexus tool usage analysis
-python -m analysis.analyze_results gitnexus-usage results/
+python -m analysis.analyze_results rsis-gitnexus-usage results/
 
 # Export as CSV for further analysis
 python -m analysis.analyze_results summary results/ --format csv > results.csv
@@ -113,11 +113,11 @@ python run_eval.py list-configs
 eval/
   run_eval.py              # Main entry point (single, matrix, debug commands)
   agents/
-    gitnexus_agent.py      # GitNexusAgent: extends DefaultAgent with augmentation + metrics
+    rsis-gitnexus_agent.py      # GitNexusAgent: extends DefaultAgent with augmentation + metrics
   environments/
-    gitnexus_docker.py     # Docker env with GitNexus + eval-server + standalone tool scripts
+    rsis-gitnexus_docker.py     # Docker env with GitNexus + eval-server + standalone tool scripts
   bridge/
-    gitnexus_tools.sh      # Bash wrappers (legacy — now standalone scripts are installed directly)
+    rsis-gitnexus_tools.sh      # Bash wrappers (legacy — now standalone scripts are installed directly)
     mcp_bridge.py          # Legacy MCP bridge (kept for reference)
   prompts/
     system_baseline.jinja          # System: persona + format rules
@@ -147,8 +147,8 @@ Each mode has a `system_{mode}.jinja` + `instance_{mode}.jinja` pair. The agent 
 ### Per-instance flow
 
 1. Docker container starts with SWE-bench instance (repo at specific commit)
-2. **GitNexus setup**: Node.js + gitnexus installed, `gitnexus analyze` runs (or restores from cache)
-3. **Eval-server starts**: `gitnexus eval-server` daemon (persistent HTTP server, keeps KuzuDB warm)
+2. **GitNexus setup**: Node.js + rsis-gitnexus installed, `rsis-gitnexus analyze` runs (or restores from cache)
+3. **Eval-server starts**: `rsis-gitnexus eval-server` daemon (persistent HTTP server, keeps KuzuDB warm)
 4. **Standalone tool scripts installed** in `/usr/local/bin/` — works with `subprocess.run` (no `.bashrc` needed)
 5. Agent runs with the configured model + system prompt + GitNexus tools
 6. Agent's patch is extracted as a git diff
@@ -157,9 +157,9 @@ Each mode has a `system_{mode}.jinja` + `instance_{mode}.jinja` pair. The agent 
 ### Tool architecture
 
 ```
-Agent → bash command → /usr/local/bin/gitnexus-query
+Agent → bash command → /usr/local/bin/rsis-gitnexus-query
   → curl localhost:4848/tool/query     (fast path: eval-server, ~100ms)
-  → npx gitnexus query                 (fallback: cold CLI, ~5-10s)
+  → npx rsis-gitnexus query                 (fallback: cold CLI, ~5-10s)
 ```
 
 Each tool script in `/usr/local/bin/` is standalone — no sourcing, no env inheritance needed. This is critical because mini-swe-agent runs every command via `subprocess.run` in a fresh subshell.
@@ -174,11 +174,11 @@ The eval-server is a lightweight HTTP daemon that:
 
 ### Index caching
 
-SWE-bench repos repeat (Django has 200+ instances at different commits). The harness caches GitNexus indexes per `(repo, commit)` hash in `~/.gitnexus-eval-cache/` to avoid redundant re-indexing.
+SWE-bench repos repeat (Django has 200+ instances at different commits). The harness caches GitNexus indexes per `(repo, commit)` hash in `~/.rsis-gitnexus-eval-cache/` to avoid redundant re-indexing.
 
 ### Grep augmentation (native_augment mode)
 
-When the agent runs `grep` or `rg`, the observation is post-processed: the agent class calls `gitnexus-augment` on the search pattern and appends `[GitNexus]` annotations showing callers, callees, and execution flows for matched symbols. This mirrors the Claude Code / Cursor hook integration.
+When the agent runs `grep` or `rg`, the observation is post-processed: the agent class calls `rsis-gitnexus-augment` on the search pattern and appends `[GitNexus]` annotations showing callers, callees, and execution flows for matched symbols. This mirrors the Claude Code / Cursor hook integration.
 
 ## Adding Models
 

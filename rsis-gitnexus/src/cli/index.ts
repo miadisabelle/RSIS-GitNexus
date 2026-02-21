@@ -14,7 +14,7 @@ import { evalServerCommand } from './eval-server.js';
 const program = new Command();
 
 program
-  .name('gitnexus')
+  .name('rsis-gitnexus')
   .description('GitNexus local CLI and MCP server')
   .version('1.2.0');
 
@@ -64,7 +64,7 @@ program
   .option('-f, --force', 'Force full regeneration even if up to date')
   .option('--model <model>', 'LLM model name (default: minimax/minimax-m2.5)')
   .option('--base-url <url>', 'LLM API base URL (default: OpenAI)')
-  .option('--api-key <key>', 'LLM API key (saved to ~/.gitnexus/config.json)')
+  .option('--api-key <key>', 'LLM API key (saved to ~/.rsis-gitnexus/config.json)')
   .option('--concurrency <n>', 'Parallel LLM calls (default: 3)', '3')
   .option('--gist', 'Publish wiki as a public GitHub Gist after generation')
   .action(wikiCommand);

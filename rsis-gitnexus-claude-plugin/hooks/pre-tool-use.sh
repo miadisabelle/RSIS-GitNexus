@@ -49,7 +49,7 @@ fi
 dir="${CWD:-$PWD}"
 found=false
 for i in 1 2 3 4 5; do
-  if [ -d "$dir/.gitnexus" ]; then
+  if [ -d "$dir/.rsis-gitnexus" ]; then
     found=true
     break
   fi
@@ -62,8 +62,8 @@ if [ "$found" = false ]; then
   exit 0
 fi
 
-# Run gitnexus augment — must be fast (<500ms target)
-RESULT=$(cd "$CWD" && npx -y gitnexus augment "$PATTERN" 2>/dev/null)
+# Run rsis-gitnexus augment — must be fast (<500ms target)
+RESULT=$(cd "$CWD" && npx -y rsis-gitnexus augment "$PATTERN" 2>/dev/null)
 
 if [ -n "$RESULT" ]; then
   ESCAPED=$(echo "$RESULT" | jq -Rs .)

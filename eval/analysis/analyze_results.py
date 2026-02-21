@@ -108,7 +108,7 @@ def compute_metrics(run_data: dict) -> dict:
         costs.append(model_stats.get("instance_cost", 0))
         api_calls.append(model_stats.get("api_calls", 0))
 
-        gn = info.get("gitnexus", {}).get("metrics", {})
+        gn = info.get("rsis-gitnexus", {}).get("metrics", {})
         if gn:
             gn_tool_calls.append(gn.get("total_tool_calls", 0))
             gn_augment_hits.append(gn.get("augmentation_hits", 0))
@@ -120,7 +120,7 @@ def compute_metrics(run_data: dict) -> dict:
         for r in results:
             costs.append(r.get("cost", 0))
             api_calls.append(r.get("n_calls", 0))
-            gn = r.get("gitnexus_metrics", {})
+            gn = r.get("rsis-gitnexus_metrics", {})
             if gn:
                 gn_tool_calls.append(gn.get("total_tool_calls", 0))
                 gn_augment_hits.append(gn.get("augmentation_hits", 0))
@@ -328,7 +328,7 @@ def compare_modes(
 
 
 @app.command()
-def gitnexus_usage(
+def rsis-gitnexus_usage(
     results_dir: str = typer.Argument(..., help="Path to results directory"),
 ):
     """Analyze GitNexus tool usage patterns across all runs."""
@@ -356,14 +356,14 @@ def gitnexus_usage(
         augment_hits = 0
 
         for traj in run_data.get("trajectories", {}).values():
-            gn = traj.get("info", {}).get("gitnexus", {}).get("metrics", {})
+            gn = traj.get("info", {}).get("rsis-gitnexus", {}).get("metrics", {})
             for tool, count in gn.get("tool_calls", {}).items():
                 tool_totals[tool] = tool_totals.get(tool, 0) + count
             augment_hits += gn.get("augmentation_hits", 0)
 
         # Also check summary
         for r in run_data.get("summary", {}).get("results", []):
-            gn = r.get("gitnexus_metrics", {})
+            gn = r.get("rsis-gitnexus_metrics", {})
             for tool, count in gn.get("tool_calls", {}).items():
                 tool_totals[tool] = tool_totals.get(tool, 0) + count
             augment_hits += gn.get("augmentation_hits", 0)

@@ -1,7 +1,7 @@
 /**
  * Local Backend (Multi-Repo)
  * 
- * Provides tool implementations using local .gitnexus/ indexes.
+ * Provides tool implementations using local .rsis-gitnexus/ indexes.
  * Supports multiple indexed repositories via a global registry.
  * KuzuDB connections are opened lazily per repo on first query.
  */
@@ -16,7 +16,7 @@ import {
   listRegisteredRepos,
   type RegistryEntry,
 } from '../../storage/repo-manager.js';
-// AI context generation is CLI-only (gitnexus analyze)
+// AI context generation is CLI-only (rsis-gitnexus analyze)
 // import { generateAIContextFiles } from '../../cli/ai-context.js';
 
 /**
@@ -171,7 +171,7 @@ export class LocalBackend {
 
     // Still no match — throw with helpful message
     if (this.repos.size === 0) {
-      throw new Error('No indexed repositories. Run: gitnexus analyze');
+      throw new Error('No indexed repositories. Run: rsis-gitnexus analyze');
     }
     if (repoParam) {
       const names = [...this.repos.values()].map(h => h.name);

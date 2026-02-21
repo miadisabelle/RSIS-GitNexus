@@ -4,7 +4,7 @@
 
 Indexes any codebase into a knowledge graph — every dependency, call chain, cluster, and execution flow — then exposes it through smart tools so AI agents never miss code.
 
-[![npm version](https://img.shields.io/npm/v/gitnexus.svg)](https://www.npmjs.com/package/gitnexus)
+[![npm version](https://img.shields.io/npm/v/rsis-gitnexus.svg)](https://www.npmjs.com/package/rsis-gitnexus)
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/License-PolyForm%20Noncommercial-blue.svg)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 
 
@@ -26,7 +26,7 @@ https://github.com/user-attachments/assets/172685ba-8e54-4ea7-9ad1-e31a3398da72
 | **What**    | Index repos locally, connect AI agents via MCP                 | Visual graph explorer + AI chat in browser                   |
 | **For**     | Daily development with Cursor, Claude Code, Windsurf, OpenCode | Quick exploration, demos, one-off analysis                   |
 | **Scale**   | Full repos, any size                                           | Limited by browser memory (~5k files)                        |
-| **Install** | `npm install -g gitnexus`                                    | No install —[gitnexus.vercel.app](https://gitnexus.vercel.app) |
+| **Install** | `npm install -g rsis-gitnexus`                                    | No install —[rsis-gitnexus.vercel.app](https://rsis-gitnexus.vercel.app) |
 | **Storage** | KuzuDB native (fast, persistent)                               | KuzuDB WASM (in-memory, per session)                         |
 | **Parsing** | Tree-sitter native bindings                                    | Tree-sitter WASM                                             |
 | **Privacy** | Everything local, no network                                   | Everything in-browser, no server                             |
@@ -41,16 +41,16 @@ The CLI indexes your repository and runs an MCP server that gives AI agents deep
 
 ```bash
 # Index your repo (run from repo root)
-npx gitnexus analyze
+npx rsis-gitnexus analyze
 ```
 
 That's it. This indexes the codebase, installs agent skills, registers Claude Code hooks, and creates `AGENTS.md` / `CLAUDE.md` context files — all in one command.
 
-To configure MCP for your editor, run `npx gitnexus setup` once — or set it up manually below.
+To configure MCP for your editor, run `npx rsis-gitnexus setup` once — or set it up manually below.
 
 ### MCP Setup
 
-`gitnexus setup` auto-detects your editors and writes the correct global MCP config. You only need to run it once.
+`rsis-gitnexus setup` auto-detects your editors and writes the correct global MCP config. You only need to run it once.
 
 ### Editor Support
 
@@ -68,7 +68,7 @@ If you prefer manual configuration:
 **Claude Code** (full support — MCP + skills + hooks):
 
 ```bash
-claude mcp add gitnexus -- npx -y gitnexus@latest mcp
+claude mcp add rsis-gitnexus -- npx -y rsis-gitnexus@latest mcp
 ```
 
 **Cursor** (`~/.cursor/mcp.json` — global, works for all projects):
@@ -76,9 +76,9 @@ claude mcp add gitnexus -- npx -y gitnexus@latest mcp
 ```json
 {
   "mcpServers": {
-    "gitnexus": {
+    "rsis-gitnexus": {
       "command": "npx",
-      "args": ["-y", "gitnexus@latest", "mcp"]
+      "args": ["-y", "rsis-gitnexus@latest", "mcp"]
     }
   }
 }
@@ -89,9 +89,9 @@ claude mcp add gitnexus -- npx -y gitnexus@latest mcp
 ```json
 {
   "mcp": {
-    "gitnexus": {
+    "rsis-gitnexus": {
       "command": "npx",
-      "args": ["-y", "gitnexus@latest", "mcp"]
+      "args": ["-y", "rsis-gitnexus@latest", "mcp"]
     }
   }
 }
@@ -100,19 +100,19 @@ claude mcp add gitnexus -- npx -y gitnexus@latest mcp
 ### CLI Commands
 
 ```bash
-gitnexus setup                    # Configure MCP for your editors (one-time)
-gitnexus analyze [path]           # Index a repository (or update stale index)
-gitnexus analyze --force          # Force full re-index
-gitnexus analyze --skip-embeddings  # Skip embedding generation (faster)
-gitnexus mcp                     # Start MCP server (stdio) — serves all indexed repos
-gitnexus serve                   # Start HTTP server for web UI connection
-gitnexus list                    # List all indexed repositories
-gitnexus status                  # Show index status for current repo
-gitnexus clean                   # Delete index for current repo
-gitnexus clean --all --force     # Delete all indexes
-gitnexus wiki [path]             # Generate repository wiki from knowledge graph
-gitnexus wiki --model <model>    # Wiki with custom LLM model (default: gpt-4o-mini)
-gitnexus wiki --base-url <url>   # Wiki with custom LLM API base URL
+rsis-gitnexus setup                    # Configure MCP for your editors (one-time)
+rsis-gitnexus analyze [path]           # Index a repository (or update stale index)
+rsis-gitnexus analyze --force          # Force full re-index
+rsis-gitnexus analyze --skip-embeddings  # Skip embedding generation (faster)
+rsis-gitnexus mcp                     # Start MCP server (stdio) — serves all indexed repos
+rsis-gitnexus serve                   # Start HTTP server for web UI connection
+rsis-gitnexus list                    # List all indexed repositories
+rsis-gitnexus status                  # Show index status for current repo
+rsis-gitnexus clean                   # Delete index for current repo
+rsis-gitnexus clean --all --force     # Delete all indexes
+rsis-gitnexus wiki [path]             # Generate repository wiki from knowledge graph
+rsis-gitnexus wiki --model <model>    # Wiki with custom LLM model (default: gpt-4o-mini)
+rsis-gitnexus wiki --base-url <url>   # Wiki with custom LLM API base URL
 ```
 
 ### What Your AI Agent Gets
@@ -135,13 +135,13 @@ gitnexus wiki --base-url <url>   # Wiki with custom LLM API base URL
 
 | Resource                                  | Purpose                                              |
 | ----------------------------------------- | ---------------------------------------------------- |
-| `gitnexus://repos`                      | List all indexed repositories (read this first)      |
-| `gitnexus://repo/{name}/context`        | Codebase stats, staleness check, and available tools |
-| `gitnexus://repo/{name}/clusters`       | All functional clusters with cohesion scores         |
-| `gitnexus://repo/{name}/cluster/{name}` | Cluster members and details                          |
-| `gitnexus://repo/{name}/processes`      | All execution flows                                  |
-| `gitnexus://repo/{name}/process/{name}` | Full process trace with steps                        |
-| `gitnexus://repo/{name}/schema`         | Graph schema for Cypher queries                      |
+| `rsis-gitnexus://repos`                      | List all indexed repositories (read this first)      |
+| `rsis-gitnexus://repo/{name}/context`        | Codebase stats, staleness check, and available tools |
+| `rsis-gitnexus://repo/{name}/clusters`       | All functional clusters with cohesion scores         |
+| `rsis-gitnexus://repo/{name}/cluster/{name}` | Cluster members and details                          |
+| `rsis-gitnexus://repo/{name}/processes`      | All execution flows                                  |
+| `rsis-gitnexus://repo/{name}/process/{name}` | Full process trace with steps                        |
+| `rsis-gitnexus://repo/{name}/schema`         | Graph schema for Cypher queries                      |
 
 **2 MCP prompts** for guided workflows:
 
@@ -166,19 +166,19 @@ GitNexus uses a **global registry** so one MCP server can serve multiple indexed
 ```mermaid
 flowchart TD
     subgraph CLI [CLI Commands]
-        Setup["gitnexus setup"]
-        Analyze["gitnexus analyze"]
-        Clean["gitnexus clean"]
-        List["gitnexus list"]
+        Setup["rsis-gitnexus setup"]
+        Analyze["rsis-gitnexus analyze"]
+        Clean["rsis-gitnexus clean"]
+        List["rsis-gitnexus list"]
     end
 
-    subgraph Registry ["~/.gitnexus/"]
+    subgraph Registry ["~/.rsis-gitnexus/"]
         RegFile["registry.json"]
     end
 
     subgraph Repos [Project Repos]
-        RepoA[".gitnexus/ in repo A"]
-        RepoB[".gitnexus/ in repo B"]
+        RepoA[".rsis-gitnexus/ in repo A"]
+        RepoB[".rsis-gitnexus/ in repo B"]
     end
 
     subgraph MCP [MCP Server]
@@ -203,7 +203,7 @@ flowchart TD
     ConnB -->|"queries"| RepoB
 ```
 
-**How it works:** Each `gitnexus analyze` stores the index in `.gitnexus/` inside the repo (portable, gitignored) and registers a pointer in `~/.gitnexus/registry.json`. When an AI agent starts, the MCP server reads the registry and can serve any indexed repo. KuzuDB connections are opened lazily on first query and evicted after 5 minutes of inactivity (max 5 concurrent). If only one repo is indexed, the `repo` parameter is optional on all tools — agents don't need to change anything.
+**How it works:** Each `rsis-gitnexus analyze` stores the index in `.rsis-gitnexus/` inside the repo (portable, gitignored) and registers a pointer in `~/.rsis-gitnexus/registry.json`. When an AI agent starts, the MCP server reads the registry and can serve any indexed repo. KuzuDB connections are opened lazily on first query and evicted after 5 minutes of inactivity (max 5 concurrent). If only one repo is indexed, the `repo` parameter is optional on all tools — agents don't need to change anything.
 
 ---
 
@@ -211,15 +211,15 @@ flowchart TD
 
 A fully client-side graph explorer and AI chat. No server, no install — your code never leaves the browser.
 
-**Try it now:** [gitnexus.vercel.app](https://gitnexus.vercel.app) — drag & drop a ZIP and start exploring.
+**Try it now:** [rsis-gitnexus.vercel.app](https://rsis-gitnexus.vercel.app) — drag & drop a ZIP and start exploring.
 
-<img width="2550" height="1343" alt="gitnexus_img" src="https://github.com/user-attachments/assets/cc5d637d-e0e5-48e6-93ff-5bcfdb929285" />
+<img width="2550" height="1343" alt="rsis-gitnexus_img" src="https://github.com/user-attachments/assets/cc5d637d-e0e5-48e6-93ff-5bcfdb929285" />
 
 Or run locally:
 
 ```bash
-git clone https://github.com/abhigyanpatwari/gitnexus.git
-cd gitnexus/gitnexus-web
+git clone https://github.com/abhigyanpatwari/rsis-gitnexus.git
+cd rsis-gitnexus/rsis-gitnexus-web
 npm install
 npm run dev
 ```
@@ -405,14 +405,14 @@ Generate LLM-powered documentation from your knowledge graph:
 
 ```bash
 # Requires an LLM API key (OPENAI_API_KEY, etc.)
-gitnexus wiki
+rsis-gitnexus wiki
 
 # Use a custom model or provider
-gitnexus wiki --model gpt-4o
-gitnexus wiki --base-url https://api.anthropic.com/v1
+rsis-gitnexus wiki --model gpt-4o
+rsis-gitnexus wiki --base-url https://api.anthropic.com/v1
 
 # Force full regeneration
-gitnexus wiki --force
+rsis-gitnexus wiki --force
 ```
 
 The wiki generator reads the indexed graph structure, groups files into modules via LLM, generates per-module documentation pages, and creates an overview page — all with cross-references to the knowledge graph.
@@ -456,7 +456,7 @@ The wiki generator reads the indexed graph structure, groups files into modules 
 
 ## Security & Privacy
 
-- **CLI**: Everything runs locally on your machine. No network calls. Index stored in `.gitnexus/` (gitignored). Global registry at `~/.gitnexus/` stores only paths and metadata.
+- **CLI**: Everything runs locally on your machine. No network calls. Index stored in `.rsis-gitnexus/` (gitignored). Global registry at `~/.rsis-gitnexus/` stores only paths and metadata.
 - **Web**: Everything runs in your browser. No code uploaded to any server. API keys stored in localStorage only.
 - Open source — audit the code yourself.
 

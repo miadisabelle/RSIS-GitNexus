@@ -1,0 +1,22 @@
+{
+  "protected_paths": [
+    {
+      "path": ".rsis/",
+      "authority": ["steward"],
+      "access": "ceremony_required",
+      "description": "RSIS configuration — changes require ceremonial review"
+    },
+    {
+      "path": "KINSHIP.md",
+      "authority": ["elder", "steward"],
+      "access": "restricted",
+      "description": "Kinship declarations — changes require elder or steward approval"
+    }
+  ],
+  "ceremony_required_changes": [
+    ".rsis/*",
+    "KINSHIP.md",
+    "rispecs/*"
+  ],
+  "index_exclusions": []
+}

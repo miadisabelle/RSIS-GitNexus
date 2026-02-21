@@ -1,0 +1,34 @@
+{
+  "enabled": true,
+  "charts": [
+    "rispecs/relational-schema.spec.md",
+    "rispecs/ceremonial-tools.spec.md"
+  ],
+  "kinship_paths": [
+    "KINSHIP.md"
+  ],
+  "ceremony": {
+    "current_cycle": "cycle-1",
+    "host_sun": "NovelEmergence",
+    "phase": "opening"
+  },
+  "directions": {
+    "auto_classify_commits": true,
+    "heuristics": "default"
+  },
+  "governance": {
+    "protected_paths": [
+      {
+        "path": ".rsis/",
+        "authority": ["steward"],
+        "access": "ceremony_required",
+        "description": "RSIS configuration — changes require ceremonial review"
+      }
+    ],
+    "ceremony_required_changes": [
+      ".rsis/*",
+      "KINSHIP.md"
+    ],
+    "index_exclusions": []
+  }
+}

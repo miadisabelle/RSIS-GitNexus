@@ -621,7 +621,7 @@ async function getWisdomLedgerResource(backend: LocalBackend, repoName?: string)
 /**
  * Steward's Compass — accumulated directional teachings and patterns
  */
-async function getStewardsCompassResource(_backend: LocalBackend, _repoName?: string): Promise<string> {
+async function getStewardsCompassResource(backend: LocalBackend, repoName?: string): Promise<string> {
   const lines: string[] = [
     "# Steward's Compass",
     '',
@@ -639,6 +639,22 @@ async function getStewardsCompassResource(_backend: LocalBackend, _repoName?: st
     '    focus: "Reflection, integration, wisdom"',
     '    guidance: "What has been learned? What reciprocity needs tending?"',
   ];
+
+  // Try to add stewardship data from the graph
+  try {
+    const repo = await backend.resolveRepo(repoName);
+    const result = await backend.callTool('cypher', {
+      query: 'MATCH (p:Person)-[:RSISRelation {type: "STEWARDS"}]->(target) RETURN p.name AS steward, labels(target)[0] AS type, COUNT(*) AS count ORDER BY count DESC LIMIT 10',
+      repo: repo.name,
+    });
+    if (result?.rows || (Array.isArray(result) && result.length > 0)) {
+      const rows = result.rows || result;
+      lines.push('', 'stewards:');
+      for (const row of rows) {
+        lines.push(`  - name: "${row.steward || row[0]}" type: "${row.type || row[1]}" count: ${row.count || row[2]}`);
+      }
+    }
+  } catch { /* no stewardship data */ }
 
   return lines.join('\n');
 }
@@ -704,9 +720,8 @@ async function getKinshipResource(backend: LocalBackend, repoName?: string): Pro
 /**
  * Medicine Wheel View — JSON data feed for Medicine Wheel UI
  */
-async function getMedicineWheelViewResource(_backend: LocalBackend, _repoName?: string): Promise<string> {
-  // Return a structured JSON view (empty by default, populated as data is ingested)
-  const view = {
+async function getMedicineWheelViewResource(backend: LocalBackend, repoName?: string): Promise<string> {
+  const view: any = {
     suns: [
       { name: 'NovelEmergence', inquiryCount: 0 },
       { name: 'CreativeActualization', inquiryCount: 0 },
@@ -724,6 +739,41 @@ async function getMedicineWheelViewResource(_backend: LocalBackend, _repoName?: 
     reciprocity: { flows: [], balance: [] },
     kinship: { hubs: [], relations: [] },
   };
+
+  try {
+    const repo = await backend.resolveRepo(repoName);
+
+    // Try to populate inquiry counts per sun
+    try {
+      const result = await backend.callTool('cypher', {
+        query: "MATCH (i:Inquiry) RETURN i.sun AS sun, COUNT(*) AS cnt",
+        repo: repo.name,
+      });
+      if (result?.rows || Array.isArray(result)) {
+        const rows = result.rows || result;
+        for (const row of rows) {
+          const sun = row.sun || row[0];
+          const cnt = row.cnt || row[1];
+          const entry = view.suns.find((s: any) => s.name === sun);
+          if (entry) entry.inquiryCount = cnt;
+        }
+      }
+    } catch { /* no inquiry data */ }
+
+    // Try to populate kinship hubs
+    try {
+      const result = await backend.callTool('cypher', {
+        query: 'MATCH (k:KinshipHub) RETURN k.name AS name, k.filePath AS filePath, k.identity AS identity',
+        repo: repo.name,
+      });
+      if (result?.rows || Array.isArray(result)) {
+        const rows = result.rows || result;
+        view.kinship.hubs = rows.map((r: any) => ({
+          name: r.name || r[0], path: r.filePath || r[1], identity: r.identity || r[2],
+        }));
+      }
+    } catch { /* no kinship data */ }
+  } catch { /* repo not available */ }
 
   return JSON.stringify(view, null, 2);
 }

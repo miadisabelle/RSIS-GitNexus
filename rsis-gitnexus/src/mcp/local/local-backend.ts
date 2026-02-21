@@ -1755,7 +1755,7 @@ export class LocalBackend {
       narrative += 'has no recorded ceremonial lineage yet.';
     }
     if (inquiries.length > 0) {
-      narrative += ` It serves ${inquiries.length} inquiry/inquiries: ${inquiries.map(i => i.name).join(', ')}.`;
+      narrative += ` It serves ${inquiries.length} ${inquiries.length === 1 ? 'inquiry' : 'inquiries'}: ${inquiries.map(i => i.name).join(', ')}.`;
     }
     if (stewardship_chain.length > 0) {
       narrative += ` Stewarded by: ${stewardship_chain.map(s => s.name).join(', ')}.`;
@@ -1834,7 +1834,8 @@ export class LocalBackend {
     await this.ensureInitialized(repo.id);
 
     const { execSync } = await import('child_process');
-    const since = params.since || new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+    const since = params.since || new Date(Date.now() - WEEK_MS).toISOString().slice(0, 10);
 
     // Get recent commits with changed files
     let commits: Array<{ message: string; files: string[] }> = [];
@@ -1847,7 +1848,8 @@ export class LocalBackend {
       for (const block of blocks) {
         const lines = block.trim().split('\n');
         if (lines.length === 0) continue;
-        const [, message] = (lines[0] || '').split('|||');
+        // Format: "hash|||message"
+        const [_hash, message] = (lines[0] || '').split('|||');
         const files = lines.slice(1).filter(f => f.trim());
         if (message) commits.push({ message, files });
       }

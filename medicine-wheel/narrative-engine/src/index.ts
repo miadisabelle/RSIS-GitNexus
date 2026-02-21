@@ -39,7 +39,7 @@ export function generateProvenanceNarrative(
     narrative += 'has no recorded ceremonial lineage yet.';
   }
   if (inquiries.length > 0) {
-    narrative += ` It serves ${inquiries.length} inquiry/inquiries: ${inquiries.map(i => i.name).join(', ')}.`;
+    narrative += ` It serves ${inquiries.length} ${inquiries.length === 1 ? 'inquiry' : 'inquiries'}: ${inquiries.map(i => i.name).join(', ')}.`;
   }
   if (stewards.length > 0) {
     narrative += ` Stewarded by: ${stewards.map(s => s.name).join(', ')}.`;

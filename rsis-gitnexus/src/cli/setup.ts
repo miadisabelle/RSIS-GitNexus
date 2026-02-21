@@ -42,7 +42,7 @@ function mergeMcpConfig(existing: any): any {
   if (!existing.mcpServers || typeof existing.mcpServers !== 'object') {
     existing.mcpServers = {};
   }
-  existing.mcpServers.rsis-gitnexus = getMcpEntry();
+  existing.mcpServers['rsis-gitnexus'] = getMcpEntry();
   return existing;
 }
 
@@ -207,7 +207,7 @@ async function setupOpenCode(result: SetupResult): Promise<void> {
     const existing = await readJsonFile(configPath);
     const config = existing || {};
     if (!config.mcp) config.mcp = {};
-    config.mcp.rsis-gitnexus = getMcpEntry();
+    config.mcp['rsis-gitnexus'] = getMcpEntry();
     await writeJsonFile(configPath, config);
     result.configured.push('OpenCode');
   } catch (err: any) {

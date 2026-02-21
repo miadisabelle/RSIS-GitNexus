@@ -15,7 +15,14 @@ export type NodeLabel =
   | 'Type'
   | 'CodeElement'
   | 'Community'
-  | 'Process';
+  | 'Process'
+  // RSIS relational science entities
+  | 'Person'
+  | 'Inquiry'
+  | 'Sun'
+  | 'Ceremony'
+  | 'Direction'
+  | 'KinshipHub';
 
 
 export type NodeProperties = {
@@ -41,6 +48,36 @@ export type NodeProperties = {
   // Entry point scoring (computed by process detection)
   entryPointScore?: number,
   entryPointReason?: string,
+  // RSIS Person properties
+  email?: string,
+  roles?: string[],
+  // RSIS Inquiry properties
+  sun?: string,
+  coreQuestion?: string,
+  status?: string,
+  // RSIS Sun properties
+  principle?: string,
+  valueStatement?: string,
+  // RSIS Ceremony properties
+  hostSun?: string,
+  cycle?: string,
+  phase?: string,
+  startDate?: string,
+  endDate?: string,
+  intention?: string,
+  // RSIS Direction properties
+  indigenousName?: string,
+  focus?: string,
+  primaryAgent?: string,
+  // RSIS KinshipHub properties
+  identity?: string,
+  lineage?: string,
+  humanAccountabilities?: string[],
+  moreThanHumanAccountabilities?: string[],
+  boundaries?: string[],
+  // RSIS Governance properties
+  governanceAccess?: 'open' | 'ceremony_required' | 'restricted' | 'sacred',
+  governanceAuthority?: string[],
 }
 
 export type RelationshipType = 
@@ -56,6 +93,13 @@ export type RelationshipType =
   | 'EXTENDS'
   | 'MEMBER_OF'
   | 'STEP_IN_PROCESS'
+  // RSIS relational science edges
+  | 'STEWARDS'
+  | 'BORN_FROM'
+  | 'SERVES'
+  | 'GIVES_BACK_TO'
+  | 'ALIGNED_WITH'
+  | 'KINSHIP_OF'
 
 export interface GraphNode {
   id:  string,

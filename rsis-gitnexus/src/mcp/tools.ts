@@ -198,4 +198,118 @@ Confidence: 1.0 = certain, <0.8 = fuzzy match`,
       required: ['target', 'direction'],
     },
   },
+
+  // =========================================================================
+  // RSIS Relational Science Tools
+  // =========================================================================
+
+  {
+    name: 'relational_context',
+    description: `360-degree relational view of a code symbol — extending context with ceremonial and kinship dimensions.
+
+WHEN TO USE: When you need to understand not just what calls/imports a symbol, but what ceremonies birthed it, who stewards it, what inquiries it serves, and its kinship boundaries.
+AFTER THIS: Use ceremony_provenance() for deeper lineage, or kinship_map() for hub relationships.
+
+Returns everything context() returns, plus:
+- ceremonies: ceremonies this symbol participated in
+- inquiries: inquiries this symbol serves
+- stewards: people with stewardship over this symbol
+- kinship: kinship hub this symbol belongs to, with boundaries
+- direction_alignment: directional tagging of the symbol's creation context`,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        name: { type: 'string', description: 'Symbol name (e.g., "validateUser", "AuthService")' },
+        repo: { type: 'string', description: 'Repository name or path. Omit if only one repo is indexed.' },
+        include: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'Relational dimensions to include. Options: ceremonies, inquiries, stewards, kinship, directions, reciprocity. Default: all.',
+        },
+      },
+      required: ['name'],
+    },
+  },
+  {
+    name: 'reciprocity_view',
+    description: `Surfaces reciprocity patterns across the codebase — where contributions flow, where giving and taking are balanced or imbalanced.
+
+WHEN TO USE: During ceremony reflection, community health assessment, or when tending relational balance in a codebase.
+AFTER THIS: Use relational_context() on specific symbols for deeper understanding.
+
+Results are framed as invitations for ceremonial attention, never as performance evaluations.
+Language uses "invites tending" not "underperforming."`,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        repo: { type: 'string', description: 'Repository name or path. Omit if only one repo is indexed.' },
+        scope: { type: 'string', description: 'Scope: person, community, or kinship_hub. Default: community', enum: ['person', 'community', 'kinship_hub'] },
+        period: { type: 'string', description: 'ISO date range. Default: last ceremony cycle' },
+      },
+      required: [],
+    },
+  },
+  {
+    name: 'ceremony_provenance',
+    description: `Traces a code artifact back to its ceremonial origins.
+
+WHEN TO USE: When you want to understand the lineage of a module, function, or directory — what ceremonies birthed it, what inquiries shaped it, who stewarded changes.
+AFTER THIS: Use relational_context() for current relational view, or direction_alignment() for directional analysis.
+
+Returns:
+- lineage: ordered ceremonies, inquiries, and structural tension charts that shaped this artifact
+- narrative: human-readable provenance story
+- stewardship_chain: who stewarded changes at each point`,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        target: { type: 'string', description: 'File path, function name, or directory to trace' },
+        repo: { type: 'string', description: 'Repository name or path. Omit if only one repo is indexed.' },
+        depth: { type: 'number', description: 'How many ceremony cycles back to trace. Default: 3', default: 3 },
+      },
+      required: ['target'],
+    },
+  },
+  {
+    name: 'kinship_map',
+    description: `Visualizes kinship relationships between directories, repos, and knowledge spaces.
+
+WHEN TO USE: When exploring relational boundaries, understanding which directories are relationally connected, or checking kinship accountabilities.
+AFTER THIS: Use relational_context() for a specific symbol's kinship, or governance checks via impact().
+
+Returns:
+- hubs: KinshipHub nodes with identity, lineage, accountabilities
+- relations: KINSHIP_OF edges between hubs
+- boundaries: access and modification boundaries per hub`,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        root: { type: 'string', description: 'Starting path. Default: repo root' },
+        depth: { type: 'number', description: 'Kinship traversal depth. Default: 2', default: 2 },
+        repo: { type: 'string', description: 'Repository name or path. Omit if only one repo is indexed.' },
+      },
+      required: [],
+    },
+  },
+  {
+    name: 'direction_alignment',
+    description: `Analyzes recent changes through the Four Directions lens — categorizing work as vision (East 🌸), planning (South 🧠), implementation (West ⚡), or reflection (North 🕸️).
+
+WHEN TO USE: During ceremony reflection, sprint retrospectives, or when assessing directional balance of recent work.
+AFTER THIS: Consider a ceremony in the underrepresented direction.
+
+Returns:
+- distribution: percentage of work in each direction
+- details: per-commit or per-file directional classification
+- observation: natural language observation about directional balance`,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        repo: { type: 'string', description: 'Repository name or path. Omit if only one repo is indexed.' },
+        since: { type: 'string', description: 'ISO date. Default: last 7 days' },
+        scope: { type: 'string', description: 'What to classify: commits, files, or processes. Default: commits', enum: ['commits', 'files', 'processes'] },
+      },
+      required: [],
+    },
+  },
 ];

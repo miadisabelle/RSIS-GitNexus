@@ -62,6 +62,22 @@ function getNextStepHint(toolName: string, args: Record<string, any> | undefined
     case 'cypher':
       return `\n\n---\n**Next:** To explore a result symbol, use context({name: "<name>"${repoParam}}). For schema reference, READ rsis-gitnexus://repo/${repoPath}/schema.`;
 
+    // RSIS relational science tools
+    case 'relational_context':
+      return `\n\n---\n**Next:** Use ceremony_provenance({target: "<name>"${repoParam}}) for deeper lineage, or kinship_map(${repoParam ? `{repo: "${repo}"}` : ''}) for hub relationships.`;
+
+    case 'reciprocity_view':
+      return `\n\n---\n**Next:** Use relational_context({name: "<symbol>"${repoParam}}) for a specific symbol's relational view. READ rsis-gitnexus://repo/${repoPath}/wisdom-ledger for ceremony-artifact links.`;
+
+    case 'ceremony_provenance':
+      return `\n\n---\n**Next:** Use relational_context({name: "<symbol>"${repoParam}}) for current relational view, or direction_alignment(${repoParam ? `{repo: "${repo}"}` : ''}) for directional analysis.`;
+
+    case 'kinship_map':
+      return `\n\n---\n**Next:** Use relational_context({name: "<symbol>"${repoParam}}) for a specific symbol's kinship. READ rsis-gitnexus://repo/${repoPath}/stewards-compass for directional teachings.`;
+
+    case 'direction_alignment':
+      return `\n\n---\n**Next:** Consider a ceremony in the underrepresented direction. READ rsis-gitnexus://repo/${repoPath}/stewards-compass for directional guidance.`;
+
     // Legacy tool names — still return useful hints
     case 'search':
       return `\n\n---\n**Next:** To understand a result in context, use context({name: "<symbol_name>"${repoParam}}).`;

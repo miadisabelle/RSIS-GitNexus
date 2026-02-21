@@ -1,0 +1,184 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Mia's Ceremonial AI Toolset Schema",
+  "description": "A schema describing the AI writing tools that Mia develops after learning ceremonial writing practice from Langy. These tools embody relational accountability rather than extraction, treating story as kin rather than product.",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "toolset_metadata": {
+      "type": "object",
+      "description": "Information about this toolset and its ceremonial origins",
+      "properties": {
+        "creator": {"type": "string", "description": "The character who created this toolset"},
+        "creation_context": {"type": "string", "description": "The story context in which this toolset was developed"},
+        "ceremonial_lineage": {"type": "string", "description": "Who taught the ceremonial principles embedded in these tools"},
+        "paradigm_source": {"type": "string", "description": "The Indigenous research paradigm informing the design"},
+        "version": {"type": "string"},
+        "created_at": {"type": "string", "format": "date-time"}
+      },
+      "required": ["creator", "creation_context", "version"]
+    },
+    "tools": {
+      "type": "array",
+      "description": "Collection of ceremonial writing tools",
+      "items": {
+        "$ref": "#/definitions/ceremonial_tool"
+      }
+    },
+    "protocols": {
+      "type": "array",
+      "description": "Ceremonial protocols for using AI tools relationally",
+      "items": {
+        "$ref": "#/definitions/tool_protocol"
+      }
+    },
+    "medicine_wheel_integration": {
+      "type": "object",
+      "description": "How the toolset aligns with medicine wheel directions",
+      "properties": {
+        "east_tools": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Tools for new beginnings, vision, and intention setting"
+        },
+        "south_tools": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Tools for growth, embodiment, and active practice"
+        },
+        "west_tools": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Tools for reflection, introspection, and emotional processing"
+        },
+        "north_tools": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Tools for wisdom integration and teaching others"
+        }
+      }
+    },
+    "wetiko_guards": {
+      "type": "array",
+      "description": "Safeguards against wetiko disease (extraction patterns) in tool use",
+      "items": {
+        "$ref": "#/definitions/wetiko_guard"
+      }
+    }
+  },
+  "required": ["toolset_metadata", "tools", "protocols"],
+  "definitions": {
+    "ceremonial_tool": {
+      "type": "object",
+      "description": "An AI writing tool designed with ceremonial accountability",
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "purpose": {"type": "string", "description": "What this tool enables in relational terms"},
+        "category": {
+          "type": "string",
+          "enum": ["vision", "relationship", "analysis", "enrichment", "integration", "reflection", "protection"]
+        },
+        "medicine_direction": {
+          "type": "string",
+          "enum": ["EAST", "SOUTH", "WEST", "NORTH"],
+          "description": "Primary medicine wheel alignment"
+        },
+        "ceremony_stage": {
+          "type": "string",
+          "enum": ["living_congruently", "preparing_space", "gathering_with_intention", "engaging_ritual", "achieving_enlightenment", "incorporating_wisdom"]
+        },
+        "relational_principles": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "How this tool honors relational accountability"
+        },
+        "input_schema": {
+          "type": "object",
+          "description": "What the tool requires from the writer"
+        },
+        "output_schema": {
+          "type": "object",
+          "description": "What the tool provides in return"
+        },
+        "opening_ceremony": {
+          "type": "object",
+          "description": "How to invoke this tool respectfully",
+          "properties": {
+            "intention_statement": {"type": "string"},
+            "gratitude_practice": {"type": "string"},
+            "consent_check": {"type": "string"}
+          }
+        },
+        "closing_ceremony": {
+          "type": "object",
+          "description": "How to release this tool when work is complete",
+          "properties": {
+            "gratitude_expression": {"type": "string"},
+            "integration_practice": {"type": "string"},
+            "dismissal_protocol": {"type": "string"}
+          }
+        },
+        "extraction_warning_signs": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Signs that this tool is being used extractively rather than relationally"
+        },
+        "wilson_alignment": {
+          "type": "object",
+          "properties": {
+            "ontology": {"type": "string", "description": "How this tool treats reality as relational"},
+            "epistemology": {"type": "string", "description": "How this tool creates knowledge through relationship"},
+            "axiology": {"type": "string", "description": "How this tool maintains relational accountability"}
+          }
+        }
+      },
+      "required": ["id", "name", "purpose", "category", "relational_principles"]
+    },
+    "tool_protocol": {
+      "type": "object",
+      "description": "A ceremonial protocol for tool use",
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "purpose": {"type": "string"},
+        "when_to_use": {"type": "string"},
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sequence": {"type": "integer"},
+              "action": {"type": "string"},
+              "intention": {"type": "string"},
+              "duration": {"type": "string"}
+            }
+          }
+        },
+        "completion_sign": {"type": "string", "description": "How you know the protocol is complete"},
+        "failure_recovery": {"type": "string", "description": "What to do if the protocol feels wrong"}
+      },
+      "required": ["id", "name", "purpose", "steps"]
+    },
+    "wetiko_guard": {
+      "type": "object",
+      "description": "Protection against extraction patterns in tool use",
+      "properties": {
+        "id": {"type": "string"},
+        "name": {"type": "string"},
+        "wetiko_pattern": {
+          "type": "string",
+          "enum": ["greed_without_limits", "perversion_without_borders", "arrogance_without_frontiers", "deceit_without_edges", "no_reflection", "no_skin", "aimless_wandering", "insatiable_consumption"]
+        },
+        "manifestation_in_tool_use": {"type": "string"},
+        "warning_signs": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "protection_practice": {"type": "string"},
+        "recovery_ceremony": {"type": "string"}
+      },
+      "required": ["id", "name", "wetiko_pattern", "manifestation_in_tool_use", "protection_practice"]
+    }
+  }
+}

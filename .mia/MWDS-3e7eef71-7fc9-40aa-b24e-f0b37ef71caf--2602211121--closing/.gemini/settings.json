@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "mcp-pde": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "/src/mcp-pde/dist/index.js"
+      ],
+      "env": {}
+    },
+    "charts__MWDS-3e7eef71-7fc9-40aa-b24e-f0b37ef71caf--2602211121--closing": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "coaia-narrative@0.11.0",
+        "--memory-path",
+        "/src/IAIP/prototypes/artefacts/MWDS-3e7eef71-7fc9-40aa-b24e-f0b37ef71caf--2602211121--closing/.coaia/charts__MWDS-3e7eef71-7fc9-40aa-b24e-f0b37ef71caf--2602211121--closing.coaia-narrative.jsonl"
+      ]
+    }
+  }
+}

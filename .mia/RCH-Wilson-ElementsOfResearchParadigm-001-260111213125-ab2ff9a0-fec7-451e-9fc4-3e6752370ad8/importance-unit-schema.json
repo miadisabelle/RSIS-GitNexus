@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "importance-unit.schema.json",
+  "title": "ImportanceUnit",
+  "description": "A relational unit of importance — the payload format for A2A messages flowing through Miadi's Redis broker. Each unit represents a relationally-accountable piece of meaning, not a flat data object.",
+  "type": "object",
+  "required": [
+    "id",
+    "direction",
+    "epistemicWeight",
+    "source",
+    "accountabilityLinks",
+    "circleDepth",
+    "content"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for this importance unit"
+    },
+    "direction": {
+      "type": "string",
+      "enum": ["east", "south", "west", "north"],
+      "description": "Medicine Wheel quadrant alignment. East=Vision/Nitsahakees, South=Analysis/Nahata, West=Validation/Iina, North=Action/Siihasin"
+    },
+    "epistemicWeight": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "How much epistemic authority this unit carries. Dream-state/liminal inputs start at 0.85+. Rational-filtered inputs start lower. Weight increases with circleDepth."
+    },
+    "source": {
+      "type": "string",
+      "enum": ["land", "dream", "code", "vision"],
+      "description": "Relational origin dimension. Land=place-grounded/embodied. Dream=liminal/spirit-state. Code=technical/implementation. Vision=intentional/architectural."
+    },
+    "accountabilityLinks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["targetId", "relationType"],
+        "properties": {
+          "targetId": {
+            "type": "string",
+            "description": "ID of the related entity (another ImportanceUnit, an inquiry, a trace, a person)"
+          },
+          "relationType": {
+            "type": "string",
+            "enum": [
+              "accountable-to",
+              "deepens",
+              "tensions-with",
+              "emerges-from",
+              "gates",
+              "circles-back-to"
+            ],
+            "description": "The nature of the relationship. Not 'references' — relationships carry responsibility."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of why this link exists"
+          }
+        }
+      },
+      "description": "Relational strings connecting this unit to what it is accountable to. The question is 'To what is this accountable?' not 'What is this about?'"
+    },
+    "circleDepth": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "How many times this topic has been circled. First visit=1. Each return that adds or refines increments. Repetition is ceremony and deepening, not redundancy."
+    },
+    "content": {
+      "type": "object",
+      "required": ["summary"],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "description": "The relational meaning of this unit — what it holds, not just what it says"
+        },
+        "rawInput": {
+          "type": "string",
+          "description": "Original unprocessed input if available (preserves the voice)"
+        },
+        "refinements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["circle", "shift"],
+            "properties": {
+              "circle": {
+                "type": "integer",
+                "description": "Which circle iteration produced this refinement"
+              },
+              "shift": {
+                "type": "string",
+                "description": "What changed or deepened in this pass — the subtle difference between the 3rd and 4th circling"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "description": "Track what shifts between circles — this is where the 'important lines' live"
+        }
+      }
+    },
+    "ceremonyState": {
+      "type": "object",
+      "properties": {
+        "quadrantsVisited": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["east", "south", "west", "north"]
+          },
+          "uniqueItems": true,
+          "description": "Which Medicine Wheel quadrants have been touched. When all four are present, a Relational Circle may be complete."
+        },
+        "circleComplete": {
+          "type": "boolean",
+          "default": false,
+          "description": "True when all four quadrants have been visited for this unit — triggers eligibility for pruning/archival"
+        },
+        "gatingConditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["condition", "satisfied"],
+            "properties": {
+              "condition": {
+                "type": "string",
+                "description": "e.g. 'Research Is Ceremony context gathered', 'Medicine Wheel alignment verified'"
+              },
+              "satisfied": {
+                "type": "boolean"
+              }
+            }
+          },
+          "description": "Conditions that must be met before autonomous action can proceed on this unit"
+        }
+      }
+    },
+    "axiologicalPillar": {
+      "type": "string",
+      "enum": ["ontology", "epistemology", "methodology", "axiology"],
+      "description": "Which of Wilson's four pillars this unit primarily addresses"
+    },
+    "inquiryRef": {
+      "type": "string",
+      "description": "Reference to the parent inquiry (e.g. 'inquiry::RCH-Wilson-ElementsOfResearchParadigm-001-...')"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "createdBy": {
+          "type": "string",
+          "description": "Agent or person who created this unit"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastCircledAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "traceId": {
+          "type": "string",
+          "description": "COAIA trace ID linking to the ceremonial documentation"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

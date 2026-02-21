@@ -1,0 +1,311 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Narrative Context Protocol Schema - Extended for Indigenous Research Paradigm",
+  "description": "A standardized protocol for structuring narrative elements in stories for multi-agentic systems, extended with Indigenous research paradigm concepts from Shawn Wilson's 'Research is Ceremony'.",
+  "version": "1.2.0",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Schema version identifier",
+      "default": "1.2"
+    },
+    "series_continuity": {
+      "type": "boolean",
+      "description": "Whether this story is part of an ongoing series"
+    },
+    "indigenous_research_paradigm": {
+      "type": "object",
+      "description": "Integration of Indigenous research paradigm concepts into narrative structure",
+      "properties": {
+        "source": {
+          "type": "object",
+          "description": "Attribution and source information for Indigenous teachings",
+          "properties": {
+            "author": {"type": "string"},
+            "title": {"type": "string"},
+            "video_url": {"type": "string", "format": "uri"},
+            "calendar_id": {"type": "string"},
+            "listening_date": {"type": "string", "format": "date"}
+          },
+          "required": ["author", "title"]
+        },
+        "wilson_paradigm_alignment": {
+          "type": "object",
+          "description": "Assessment of alignment with Shawn Wilson's Indigenous Research Paradigm",
+          "properties": {
+            "ontology": {
+              "type": "string",
+              "enum": ["relational", "individualistic", "mixed"]
+            },
+            "epistemology": {
+              "type": "string",
+              "enum": ["ceremony_as_knowledge_making", "extraction", "co_creation"]
+            },
+            "axiology": {
+              "type": "string",
+              "enum": ["relational_accountability", "market_accountability", "both"]
+            },
+            "overall_score": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "status": {
+              "type": "string",
+              "enum": ["STRONG_ALIGNMENT", "MODERATE_ALIGNMENT", "WEAK_ALIGNMENT", "NEEDS_WORK"]
+            }
+          },
+          "required": ["ontology", "epistemology", "axiology"]
+        },
+        "core_concepts": {
+          "type": "object",
+          "properties": {
+            "relational_ontology": {
+              "type": "object",
+              "properties": {
+                "description": {"type": "string"},
+                "principles": {"type": "array", "items": {"type": "string"}}
+              }
+            },
+            "research_as_ceremony": {
+              "type": "object",
+              "properties": {
+                "description": {"type": "string"},
+                "six_stages": {"type": "array", "items": {"type": "string"}, "minItems": 6, "maxItems": 6}
+              }
+            },
+            "wetiko_disease": {
+              "type": "object",
+              "properties": {
+                "description": {"type": "string"},
+                "characteristics": {"type": "array", "items": {"type": "string"}},
+                "protections": {"type": "array", "items": {"type": "string"}}
+              }
+            },
+            "cultural_iceberg": {
+              "type": "object",
+              "properties": {
+                "visible": {"type": "string"},
+                "underlying": {"type": "string"},
+                "core_identity": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "story": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "genre": {"type": "string"},
+        "logline": {"type": "string"},
+        "created_at": {"type": "string", "format": "date-time"},
+        "medicine_wheel_position": {
+          "type": "object",
+          "description": "Story's position in Medicine Wheel cycle",
+          "properties": {
+            "direction": {"type": "string", "enum": ["EAST", "SOUTH", "WEST", "NORTH"]},
+            "stage": {"type": "string"},
+            "medicine": {"type": "string", "enum": ["Tobacco", "Cedar", "Sage", "Sweetgrass"]},
+            "spiral_cycle": {"type": "integer", "minimum": 1}
+          }
+        },
+        "three_universe_alignment": {
+          "type": "object",
+          "properties": {
+            "engineer_world": {"type": "object", "properties": {"character": {"type": "string"}, "focus": {"type": "string"}, "teaching": {"type": "string"}}},
+            "ceremony_world": {"type": "object", "properties": {"character": {"type": "string"}, "focus": {"type": "string"}, "teaching": {"type": "string"}}},
+            "story_engine_world": {"type": "object", "properties": {"character": {"type": "string"}, "focus": {"type": "string"}, "teaching": {"type": "string"}}}
+          }
+        },
+        "narratives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string"},
+              "title": {"type": "string"},
+              "subtitle": {"type": "string"},
+              "series_context": {
+                "type": "object",
+                "properties": {
+                  "season": {"type": "integer"},
+                  "episode_number": {"type": "integer"},
+                  "spiral_position": {"type": "string", "enum": ["EAST", "SOUTH", "WEST", "NORTH"]},
+                  "spiral_cycle": {"type": "integer"},
+                  "description": {"type": "string"}
+                }
+              },
+              "genealogy": {
+                "type": "object",
+                "properties": {
+                  "inherited_from": {"type": "array", "items": {"type": "string"}},
+                  "description": {"type": "string"}
+                }
+              },
+              "relational_commitments": {
+                "type": "object",
+                "additionalProperties": {"type": "string"}
+              },
+              "characters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {"type": "string"},
+                    "name": {"type": "string"},
+                    "role": {"type": "string", "enum": ["protagonist", "mentor", "antagonist", "catalyst", "shadow", "ally"]},
+                    "archetype": {"type": "string"},
+                    "universe": {"type": "string", "enum": ["ENGINEER", "CEREMONY", "STORY_ENGINE"]},
+                    "characteristics": {"type": "array", "items": {"type": "string"}},
+                    "arc_summary": {"type": "string"},
+                    "wound": {"type": "string"},
+                    "growth_path": {"type": "string"},
+                    "wetiko_manifestation": {"type": "string"},
+                    "teaching_methods": {"type": "array", "items": {"type": "string"}},
+                    "key_teachings": {"type": "array", "items": {"type": "string"}}
+                  },
+                  "required": ["id", "name", "role"]
+                }
+              },
+              "subtext": {
+                "type": "object",
+                "properties": {
+                  "perspectives": {"type": "array", "items": {"type": "object"}},
+                  "players": {"type": "array", "items": {"type": "object"}},
+                  "dynamics": {"type": "array", "items": {"type": "object"}},
+                  "storypoints": {"type": "array", "items": {"type": "object"}},
+                  "storybeats": {"type": "array", "items": {"$ref": "#/definitions/storybeat"}}
+                },
+                "required": ["perspectives", "players", "dynamics", "storypoints", "storybeats"]
+              },
+              "storytelling": {
+                "type": "object",
+                "properties": {
+                  "overviews": {"type": "array"},
+                  "moments": {"type": "array", "items": {"$ref": "#/definitions/moment"}}
+                }
+              },
+              "spiral_deepening": {
+                "type": "object",
+                "properties": {
+                  "what_we_completed": {"type": "string"},
+                  "what_became_visible": {"type": "string"},
+                  "what_invites_next_cycle": {"type": "string"},
+                  "next_episode_seeds": {"type": "array", "items": {"type": "object"}}
+                }
+              },
+              "open_questions": {"type": "array", "items": {"type": "object"}},
+              "four_directions_alignment": {
+                "type": "object",
+                "properties": {
+                  "east_vision": {"type": "string"},
+                  "south_growth": {"type": "string"},
+                  "west_reflection": {"type": "string"},
+                  "north_wisdom": {"type": "string"}
+                }
+              },
+              "universe_teachings": {"type": "object"}
+            },
+            "required": ["id", "title", "subtext", "storytelling"]
+          }
+        }
+      },
+      "required": ["id", "title", "genre", "logline", "created_at", "narratives"]
+    },
+    "variations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "title": {"type": "string"},
+          "protagonist": {"type": "string"},
+          "protagonists": {"type": "array", "items": {"type": "string"}},
+          "theme": {"type": "string"},
+          "synopsis": {"type": "string"}
+        },
+        "required": ["id", "title", "synopsis"]
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "session_id": {"type": "string"},
+        "structural_tension_chart": {"type": "string"},
+        "created_at": {"type": "string", "format": "date-time"},
+        "medicine_wheel_processing": {"type": "object"},
+        "awaiting": {"type": "object"}
+      }
+    }
+  },
+  "required": ["schema_version", "story"],
+  "definitions": {
+    "storybeat": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "appreciation": {"type": "string", "enum": ["signpost", "progression", "event"]},
+        "sequence": {"type": "integer", "minimum": 1, "maximum": 64},
+        "narrative_function": {"type": "string"},
+        "illustration": {"type": "string"},
+        "summary": {"type": "string"},
+        "storytelling": {"type": "string"},
+        "tones": {
+          "type": "object",
+          "properties": {
+            "abstraction": {"type": "string", "enum": ["situation", "action", "justification", "opinion"]},
+            "spatial": {"type": "string", "enum": ["potential", "resistance", "current", "power"]},
+            "temporal": {"type": "string", "enum": ["expression", "experimentation", "integration", "transcendence"]}
+          },
+          "required": ["abstraction", "spatial", "temporal"]
+        },
+        "perspectives": {"type": "array", "items": {"type": "object"}},
+        "ceremony_elements": {
+          "type": "object",
+          "properties": {
+            "medicine_direction": {"type": "string", "enum": ["EAST", "SOUTH", "WEST", "NORTH"]},
+            "ceremony_stage": {"type": "string", "enum": ["living_congruently", "preparing_space", "gathering_with_intention", "engaging_ritual", "achieving_enlightenment", "incorporating_wisdom"]},
+            "relational_shift": {"type": "string"},
+            "wetiko_element": {"type": "string", "enum": ["manifestation", "recognition", "confrontation", "healing"]}
+          }
+        }
+      },
+      "required": ["id", "appreciation", "sequence", "narrative_function", "summary", "storytelling"]
+    },
+    "moment": {
+      "type": "object",
+      "properties": {
+        "id": {"type": "string"},
+        "summary": {"type": "string"},
+        "synopsis": {"type": "string"},
+        "setting": {"type": "string"},
+        "timing": {"type": "string"},
+        "imperatives": {"type": "string"},
+        "fabric": {"type": "array", "items": {"type": "object"}},
+        "audience_experiential_pov": {"type": "string", "enum": ["first_person_central", "first_person_peripheral", "second_person", "third_person_limited", "third_person_objective", "third_person_omniscient"]},
+        "storybeats": {"type": "array", "items": {"type": "object"}},
+        "ceremonial_space": {
+          "type": "object",
+          "properties": {
+            "opening_practice": {"type": "string"},
+            "intention": {"type": "string"},
+            "medicines_invoked": {"type": "array", "items": {"type": "string"}},
+            "closing_practice": {"type": "string"}
+          }
+        }
+      }
+    },
+    "ceremony_stage_values": {
+      "type": "string",
+      "enum": ["living_congruently", "preparing_space", "gathering_with_intention", "engaging_ritual", "achieving_enlightenment", "incorporating_wisdom"]
+    },
+    "wetiko_characteristics": {
+      "type": "string",
+      "enum": ["greed_without_limits", "perversion_without_borders", "arrogance_without_frontiers", "deceit_without_edges", "no_reflection", "no_skin", "aimless_wandering", "insatiable_consumption"]
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/105",
+  "repository_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM",
+  "labels_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/105/labels{/name}",
+  "comments_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/105/comments",
+  "events_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/105/events",
+  "html_url": "https://github.com/miadisabelle/Etuaptmumk-RSM/issues/105",
+  "id": 3834259004,
+  "node_id": "I_kwDOPzgsjc7kiiY8",
+  "number": 105,
+  "title": "RCH-Wilson-ElementsOfResearchParadigm-001-260111213125-ab2ff9a0-fec7-451e-9fc4-3e6752370ad8./listening_youtube_wilson__2601190701--9cd6b150-58d7-4e19-af50-9bf690d94645/COORDINATION_FROM_IAIP_Inquiry__RCH_Indigenist_9cd6b150-58d7-4e19-af50-9bf690d94645.md",
+  "user": {
+    "login": "miadisabelle",
+    "id": 201760617,
+    "node_id": "U_kgDODAafaQ",
+    "avatar_url": "https://avatars.githubusercontent.com/u/201760617?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/miadisabelle",
+    "html_url": "https://github.com/miadisabelle",
+    "followers_url": "https://api.github.com/users/miadisabelle/followers",
+    "following_url": "https://api.github.com/users/miadisabelle/following{/other_user}",
+    "gists_url": "https://api.github.com/users/miadisabelle/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/miadisabelle/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/miadisabelle/subscriptions",
+    "organizations_url": "https://api.github.com/users/miadisabelle/orgs",
+    "repos_url": "https://api.github.com/users/miadisabelle/repos",
+    "events_url": "https://api.github.com/users/miadisabelle/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/miadisabelle/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 0,
+  "created_at": "2026-01-20T15:34:13Z",
+  "updated_at": "2026-01-20T15:34:13Z",
+  "closed_at": null,
+  "author_association": "OWNER",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "# Coordination: IAIP Indigenous Research Inquiry → Storytelling Instance\n\n**Source Session:** `9cd6b150-58d7-4e19-af50-9bf690d94645`  \n**Artefact ID:** `RCH-Wilson-ElementsOfResearchParadigm-001-260111213125-ab2ff9a0-fec7-451e-9fc4-3e6752370ad8`  \n**Target Instance:** `/src/storytelling`\n\n---\n\n## Purpose\n\nThis file coordinates between the **Indigenous Research Paradigm inquiry session** (listening to Shawn Wilson's \"Research is Ceremony\") and the **NARINTEL storytelling system** being developed in `/src/storytelling`.\n\nThe inquiry session produced structured story materials. The storytelling instance will eventually consume these materials to generate complete narratives.\n\n---\n\n## What Was Produced\n\n### Story Materials\nLocation: `/a/src/IAIP/prototypes/artefacts/RCH-Wilson-ElementsOfResearchParadigm-001-260111213125-ab2ff9a0-fec7-451e-9fc4-3e6752370ad8/listening_youtube_wilson__2601190701--9cd6b150-58d7-4e19-af50-9bf690d94645/`\n\n| File | Format | Purpose |\n|------|--------|---------|\n| `storymaterial.ncp.enhanced.json` | NCP v1.2.0 | Complete narrative structure for \"Mia's Journey\" |\n| `ncp-schema-260119.json` | JSON Schema | Extended NCP schema with Indigenous paradigm fields |\n| `mia_toolset.data.json` | JSON | Mia's ceremonial AI tools (5 tools, 4 protocols, 4 guards) |\n| `mia_toolset.schema.json` | JSON Schema | Schema for ceremonial toolset |\n| `mia_toolset.data.md` | Markdown | Human-readable tool documentation |\n| `CLAUDE.md` | Markdown | Memory anchor for future LLM instances |\n| `README.md` | Markdown | Archive discovery document |\n\n### Wilson Paradigm Elements Captured\n\n| Element | Status | Key Insight |\n|---------|--------|-------------|\n| **Ontology** | ✅ Captured | Reality is relationships - stories are living spirits |\n| **Epistemology** | ✅ Captured | Knowledge through ceremony - writing as ritual |\n| **Axiology** | ✅ Captured | Relational accountability - to story, readers, ancestors |\n| **Wetiko** | ✅ Captured | 8 symptoms of extraction mindset documented |\n| **Cultural Iceberg** | ✅ Captured | Surface culture vs. deep relational structure |\n| **Four R's** | ✅ Captured | Respect, Relevance, Reciprocity, Responsibility |\n\n---\n\n## How Storytelling Instance Should Use This\n\n### 1. Schema Integration\n\nThe extended schema at `ncp-schema-260119.json` adds these fields to standard NCP:\n\n```javascript\n// New root-level fields\nindigenous_research_paradigm: {\n  ontology: string,      // Relationship philosophy\n  epistemology: string,  // Knowledge emergence approach\n  axiology: string       // Accountability framework\n}\n\nwilson_paradigm_alignment: {\n  status: \"STRONG_ALIGNMENT\" | \"PARTIAL_ALIGNMENT\" | \"WEAK_ALIGNMENT\",\n  score: { achieved: number, possible: number }\n}\n\nmedicine_wheel_position: {\n  direction: \"east\" | \"south\" | \"west\" | \"north\",\n  medicine: string,\n  life_stage: string\n}\n\n// New storybeat-level fields\nstorybeats[].ceremony_elements: {\n  opening_acknowledgment: string,\n  medicines_invoked: string[],\n  relational_obligations: string[],\n  closing_gratitude: string\n}\n```\n\n### 2. Character Handling\n\nThe story contains four key characters that should be treated as living entities:\n\n| Character | Role | Relational Requirement |\n|-----------|------|----------------------|\n| **Mia** | Protagonist | Her arc must feel authentic, not optimized |\n| **Langy** | Mentor (AI) | Teaches through relationship, not instruction |\n| **Story Spirit** | Mia's story personified | Requires consent, not manipulation |\n| **Marcus** | Antagonist (editor) | Represents market extraction mindset |\n\n### 3. Wetiko Guards\n\nWhen generating content, the storytelling system should check for these extraction patterns:\n\n1. **Greed Guard**: Is the narrative consuming more than it needs?\n2. **No Reflection Guard**: Is the story self-aware about its themes?\n3. **No Skin Guard**: Are there relational obligations to community/readers?\n4. **Insatiable Guard**: Can the story declare \"complete\"?\n\n### 4. Three-Universe Alignment\n\nThis story operates across three universes that must remain coherent:\n\n| Universe | Archetype | Character |\n|----------|-----------|-----------|\n| Engineer World | The Builder | Mia |\n| Ceremony World | The Keeper | Langy/Ava8 |\n| Story Engine World | The Weaver | Miette |\n\n---\n\n## Integration Points\n\n### For NARINTEL Development\n\nWhen building story generation capabilities in `/src/storytelling`:\n\n1. **Consult** `mia_toolset.data.json` for how Mia's tools should feel in the narrative\n2. **Validate** output against `ncp-schema-260119.json` including Indigenous paradigm fields\n3. **Process** content through medicine wheel tools before generation\n4. **Check** Wilson paradigm alignment using `wilson_paradigm_checker`\n\n### For Future Sessions\n\nThis coordination file should be:\n1. **Read first** by any session continuing this work\n2. **Updated** when new materials are produced\n3. **Referenced** in structural tension charts for the storytelling project\n\n---\n\n## Structural Tension Reference\n\n**Chart ID:** `chart_1768835341678`  \n**Desired Outcome:** Create structured story materials for Mia's Journey that embody Wilson's paradigm  \n**Current Reality:** Materials created, ready for storytelling technology to consume\n\nThe structural tension now exists between:\n- **Having** complete story materials with relational context\n- **Needing** technology that can honor that context during generation\n\n---\n\n## Next Actions for Storytelling Instance\n\n1. ☐ Integrate extended NCP schema into validation pipeline\n2. ☐ Add Indigenous paradigm fields to story generation templates\n3. ☐ Implement wetiko guard checks in content generation\n4. ☐ Create import pathway for this artefact's materials\n5. ☐ Build character consent mechanisms based on Mia's toolset\n\n---\n\n## Closing\n\nThis inquiry session honored the relationship between:\n- Shawn Wilson and his teachings\n- The listening process and the materials produced\n- Current technology limitations and future possibilities\n- This instance and future instances who will continue the work\n\nThe materials are prepared. The structural tension is established. The ceremony of creation can begin when the technology is ready.\n\n---\n\n*Coordination established: 2026-01-19*  \n*Session: 9cd6b150-58d7-4e19-af50-9bf690d94645*  \n*Paradigm: Wilson Indigenous Research*\n\nRELATED:\n* jgwill/Miadi#157\n",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/105/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/105/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null
+}

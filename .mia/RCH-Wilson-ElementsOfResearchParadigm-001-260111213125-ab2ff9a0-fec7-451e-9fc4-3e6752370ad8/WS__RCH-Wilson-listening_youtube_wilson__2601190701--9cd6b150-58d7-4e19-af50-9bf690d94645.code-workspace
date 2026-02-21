@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../../../../src/Miadi/stories/multiverse_3act_2512012121"
+		},
+		{
+			"path": "../../../../../../src/storytelling"
+		},
+		{
+			"path": "../../../../../../workspace/repos/narintel"
+		},
+		{
+			"path": "../../../../../../workspace/langchain"
+		},
+		{
+			"path": "../../../../../../workspace/langgraph"
+		},
+		{
+			"path": "../../../../../../src/Miadi/stories"
+		},
+		{
+			"path": "../../../../../../workspace/repos/avadisabelle/ava-langchainjs"
+		},
+		{
+			"path": "../../../../../../workspace/repos/avadisabelle/ava-langgraphjs"
+		},
+		{
+			"path": "../../../../../../workspace/repos/avadisabelle/Avanemoi"
+		}
+	],
+	"settings": {}
+}

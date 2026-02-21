@@ -1,0 +1,243 @@
+{
+  "input": "A grounded comparative framework between Kaupapa Māori and Wilson's Research Is Ceremony approaches, identifying where each methodology applies best for Indigenous AI research, with clarity on commonalities, particularities, and epistemological-ontological-axiological-methodological positioning for Guillaume's potential Master's pathway
+",
+  "primary": {
+    "action": "Develop",
+    "target": "a grounded comparative framework",
+    "urgency": "persistent",
+    "confidence": 1
+  },
+  "secondary": [
+    {
+      "action": "Compare",
+      "target": "Kaupapa Māori and Wilson's Research Is Ceremony approaches",
+      "implicit": false,
+      "dependency": null,
+      "confidence": 1
+    },
+    {
+      "action": "Identify",
+      "target": "best application areas for Indigenous AI research",
+      "implicit": false,
+      "dependency": "Compare Kaupapa Māori and Wilson's Research Is Ceremony approaches",
+      "confidence": 1
+    },
+    {
+      "action": "Clarify",
+      "target": "commonalities",
+      "implicit": false,
+      "dependency": "Compare Kaupapa Māori and Wilson's Research Is Ceremony approaches",
+      "confidence": 1
+    },
+    {
+      "action": "Clarify",
+      "target": "particularities",
+      "implicit": false,
+      "dependency": "Compare Kaupapa Māori and Wilson's Research Is Ceremony approaches",
+      "confidence": 1
+    },
+    {
+      "action": "Position",
+      "target": "epistemological-ontological-axiological-methodological aspects of each approach",
+      "implicit": false,
+      "dependency": "Compare Kaupapa Māori and Wilson's Research Is Ceremony approaches",
+      "confidence": 1
+    },
+    {
+      "action": "Inform",
+      "target": "Guillaume's potential Master's pathway",
+      "implicit": true,
+      "dependency": "Develop a grounded comparative framework",
+      "confidence": 0.9
+    }
+  ],
+  "context": {
+    "files_needed": [],
+    "tools_required": [
+      "research methodologies",
+      "comparative analysis"
+    ],
+    "assumptions": [
+      "Kaupapa Māori and Wilson's Research Is Ceremony are established methodologies",
+      "Indigenous AI research is a relevant field of application",
+      "Guillaume's Master's pathway requires guidance on research methodologies"
+    ]
+  },
+  "outputs": {
+    "artifacts": [
+      "grounded comparative framework document"
+    ],
+    "updates": [],
+    "communications": []
+  },
+  "directions": {
+    "east": [
+      {
+        "text": "Understand Kaupapa Māori methodology",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Understand Wilson's Research Is Ceremony methodology",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Understand the context of Indigenous AI research",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Clarify the specific needs for Guillaume's Master's pathway",
+        "confidence": 0.8,
+        "implicit": true
+      }
+    ],
+    "south": [
+      {
+        "text": "Research epistemological-ontological-axiological-methodological positioning for Kaupapa Māori",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Research epistemological-ontological-axiological-methodological positioning for Wilson's Research Is Ceremony",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Analyze commonalities between the two approaches",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Analyze particularities between the two approaches",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Determine best application areas for each methodology within Indigenous AI research",
+        "confidence": 1,
+        "implicit": false
+      }
+    ],
+    "west": [
+      {
+        "text": "Review the framework for clarity and accuracy of comparisons",
+        "confidence": 0.9,
+        "implicit": true
+      },
+      {
+        "text": "Validate the framework's applicability to Indigenous AI research",
+        "confidence": 0.9,
+        "implicit": true
+      },
+      {
+        "text": "Assess how well the framework addresses Guillaume's Master's pathway needs",
+        "confidence": 0.8,
+        "implicit": true
+      }
+    ],
+    "north": [
+      {
+        "text": "Construct the comparative framework document",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Articulate the epistemological-ontological-axiological-methodological positioning for each",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Detail commonalities and particularities",
+        "confidence": 1,
+        "implicit": false
+      },
+      {
+        "text": "Specify best application areas for Indigenous AI research",
+        "confidence": 1,
+        "implicit": false
+      }
+    ]
+  },
+  "actionStack": [
+    {
+      "text": "Understand Kaupapa Māori methodology",
+      "direction": "east",
+      "dependency": null,
+      "completed": false
+    },
+    {
+      "text": "Understand Wilson's Research Is Ceremony methodology",
+      "direction": "east",
+      "dependency": null,
+      "completed": false
+    },
+    {
+      "text": "Understand the context of Indigenous AI research",
+      "direction": "east",
+      "dependency": null,
+      "completed": false
+    },
+    {
+      "text": "Research epistemological-ontological-axiological-methodological positioning for Kaupapa Māori",
+      "direction": "south",
+      "dependency": "Understand Kaupapa Māori methodology",
+      "completed": false
+    },
+    {
+      "text": "Research epistemological-ontological-axiological-methodological positioning for Wilson's Research Is Ceremony",
+      "direction": "south",
+      "dependency": "Understand Wilson's Research Is Ceremony methodology",
+      "completed": false
+    },
+    {
+      "text": "Analyze commonalities between the two approaches",
+      "direction": "south",
+      "dependency": "Research epistemological-ontological-axiological-methodological positioning for Kaupapa Māori",
+      "completed": false
+    },
+    {
+      "text": "Analyze particularities between the two approaches",
+      "direction": "south",
+      "dependency": "Research epistemological-ontological-axiological-methodological positioning for Wilson's Research Is Ceremony",
+      "completed": false
+    },
+    {
+      "text": "Determine best application areas for each methodology within Indigenous AI research",
+      "direction": "south",
+      "dependency": "Analyze commonalities between the two approaches",
+      "completed": false
+    },
+    {
+      "text": "Construct the comparative framework document, detailing commonalities, particularities, and positioning",
+      "direction": "north",
+      "dependency": "Determine best application areas for each methodology within Indigenous AI research",
+      "completed": false
+    },
+    {
+      "text": "Review the framework for clarity, accuracy, and applicability to Indigenous AI research",
+      "direction": "west",
+      "dependency": "Construct the comparative framework document, detailing commonalities, particularities, and positioning",
+      "completed": false
+    },
+    {
+      "text": "Clarify the specific needs for Guillaume's Master's pathway",
+      "direction": "east",
+      "dependency": null,
+      "completed": false
+    },
+    {
+      "text": "Assess how well the framework addresses Guillaume's Master's pathway needs",
+      "direction": "west",
+      "dependency": "Review the framework for clarity, accuracy, and applicability to Indigenous AI research",
+      "completed": false
+    }
+  ],
+  "ambiguities": [
+    {
+      "text": "clarity on Guillaume's potential Master's pathway",
+      "suggestion": "Specify the exact nature of the 'pathway' and how the framework should directly inform or guide it (e.g., specific recommendations, foundational knowledge, a template for thesis structure)."
+    }
+  ]
+}

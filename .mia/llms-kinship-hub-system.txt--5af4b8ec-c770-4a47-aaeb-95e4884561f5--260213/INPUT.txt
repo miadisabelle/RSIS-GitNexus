@@ -1,0 +1,12 @@
+<input>
+llms-kinship-hub-system.txt--5af4b8ec-c770-4a47-aaeb-95e4884561f5--260213
+
+With all that is attached, you have all my LLM-txt guidance so that my ways of knowing and futurely work with LLM, influence, give them directions should be analyzed in relation to all the 'Kinship' system that you can find in Academic and web search so that we would have an LLMS-txt to guide LLM to create and maintain a 'KINSHIP.md' file as strategies to work relationally and that somehow it feels it needs to contains accountability and the position of each directory in the whole system and its relationship to other location.  Basically, I started using that to help build what I am calling a "Kinship's Hub System".  You would gather all Indigenous Paradigm, ways of thinking, maybe Shaw Wilson's work will help you too along with other academics so we have something that when given to LLM in the terminal, they can relate to existing LLMS-txt guidances that you currently have and be capable to build and maintain, create a KINSHIP.md file.   I guess that I am asking you to draft a full protocol grounded in what exist and that could contain contradictions from various culture inside of it along with what is common.
+
+Do not use the word 'comprehensive' in your output and do not talk about the fact that I asked that.  Do not introduce/frame or conclude your response, just output results.
+Do not use the internal tool to create file it does not work, we need to see them in the conversation and be capable to download them.
+</input>
+<attachements>
+11 llms from /src/llms related in creative orientation, etc
+</attachements>
+

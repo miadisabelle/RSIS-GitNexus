@@ -1,0 +1,8 @@
+/src/_sessiondata/a9a2cbe1-b756-49e4-9cb9-c0b580521ff2/.coaia/pde_charts__a9a2cbe1-b756-49e4-9cb9-c0b580521ff2.coaia-narrative.jsonl
+/src/_sessiondata/ef483454-39c9-46f2-8b6e-12adbde8934d/.coaia/charts__ef483454-39c9-46f2-8b6e-12adbde8934d--2602191709.coaia-narrative.jsonl
+/src/_sessiondata/50e5dbbe-7992-4514-aad7-084175832db0/.coaia/charts_ea2e6df3-6f30-4bc0-a486-6538f49a1176--2602170608.coaia-narrative.jsonl
+/src/_sessiondata/1cb1e540-97d6-4212-bdcf-551e770a76e5/proposed/coaia-narrative-jsonl.schema.json
+/src/_sessiondata/234aa870-1929-455a-8c84-66587d1efe93/.coaia/charts_234aa870-1929-455a-8c84-66587d1efe93.coaia-narrative.jsonl
+/src/_sessiondata/1d0ae870-be12-4a26-8aac-6427c8966e8e/sessiondata_1d0ae870-be12-4a26-8aac-6427c8966e8e.coaia-narrative.jsonl
+/src/_sessiondata/32532353-a101-4cf3-bc1b-553dcbd3a540/coaia-narrative-32532353-a101-4cf3-bc1b-553dcbd3a540.jsonl
+/src/_sessiondata/55158baa-dea7-45c8-9941-540433cfe551/.coaia/charts_55158baa-dea7-45c8-9941-540433cfe551__260207.coaia-narrative.jsonl

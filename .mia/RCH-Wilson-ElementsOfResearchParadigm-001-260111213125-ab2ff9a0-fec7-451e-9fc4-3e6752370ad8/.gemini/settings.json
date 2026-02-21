@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "medecin-wheel-mcp": {
+      "command": "node",
+      "args": [
+        "/src/mcp-medicine-wheel/dist/index.js"
+      ],
+      "env": {}
+    },
+    "charts_ab2ff9a0-fec7-451e-9fc4-3e6752370ad8": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "${CNCV}",
+        "--memory-path",
+        "/src/IAIP/prototypes/artefacts/RCH-Wilson-ElementsOfResearchParadigm-001-260111213125-ab2ff9a0-fec7-451e-9fc4-3e6752370ad8/.coaia/charts_ab2ff9a0-fec7-451e-9fc4-3e6752370ad8.coaia-narrative.jsonl"
+      ]
+    }
+  }
+}

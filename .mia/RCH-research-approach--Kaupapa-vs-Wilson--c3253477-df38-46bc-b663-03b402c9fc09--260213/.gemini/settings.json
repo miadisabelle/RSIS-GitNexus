@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "medecin-wheel-mcp": {
+      "command": "node",
+      "args": [
+        "${srcroot}/mcp-medicine-wheel/dist/index.js"
+      ],
+      "env": {}
+    },
+    "charts__RCH-research-approach--Kaupapa-vs-Wilson--c3253477-df38-46bc-b663-03b402c9fc09--260213": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "${CNCV}",
+        "--memory-path",
+        "/a/src/IAIP/prototypes/artefacts/RCH-research-approach--Kaupapa-vs-Wilson--c3253477-df38-46bc-b663-03b402c9fc09--260213/.coaia/charts__RCH-research-approach--Kaupapa-vs-Wilson--c3253477-df38-46bc-b663-03b402c9fc09--260213.coaia-narrative.jsonl"
+      ]
+    }
+  }
+}

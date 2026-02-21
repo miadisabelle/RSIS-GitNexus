@@ -1,0 +1,78 @@
+{
+  "url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/134",
+  "repository_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM",
+  "labels_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/134/labels{/name}",
+  "comments_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/134/comments",
+  "events_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/134/events",
+  "html_url": "https://github.com/miadisabelle/Etuaptmumk-RSM/issues/134",
+  "id": 3948972830,
+  "node_id": "I_kwDOPzgsjc7rYIse",
+  "number": 134,
+  "title": "llms-kinship-hub-system.md",
+  "user": {
+    "login": "jgwill",
+    "id": 23141173,
+    "node_id": "MDQ6VXNlcjIzMTQxMTcz",
+    "avatar_url": "https://avatars.githubusercontent.com/u/23141173?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/jgwill",
+    "html_url": "https://github.com/jgwill",
+    "followers_url": "https://api.github.com/users/jgwill/followers",
+    "following_url": "https://api.github.com/users/jgwill/following{/other_user}",
+    "gists_url": "https://api.github.com/users/jgwill/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/jgwill/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/jgwill/subscriptions",
+    "organizations_url": "https://api.github.com/users/jgwill/orgs",
+    "repos_url": "https://api.github.com/users/jgwill/repos",
+    "events_url": "https://api.github.com/users/jgwill/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/jgwill/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "labels": [
+
+  ],
+  "state": "open",
+  "locked": false,
+  "assignee": null,
+  "assignees": [
+
+  ],
+  "milestone": null,
+  "comments": 0,
+  "created_at": "2026-02-16T18:09:10Z",
+  "updated_at": "2026-02-16T18:09:10Z",
+  "closed_at": null,
+  "author_association": "COLLABORATOR",
+  "active_lock_reason": null,
+  "sub_issues_summary": {
+    "total": 0,
+    "completed": 0,
+    "percent_completed": 0
+  },
+  "issue_dependencies_summary": {
+    "blocked_by": 0,
+    "total_blocked_by": 0,
+    "blocking": 0,
+    "total_blocking": 0
+  },
+  "body": "<input>\nllms-kinship-hub-system.txt--5af4b8ec-c770-4a47-aaeb-95e4884561f5--260213\n\nWith all that is attached, you have all my LLM-txt guidance so that my ways of knowing and futurely work with LLM, influence, give them directions should be analyzed in relation to all the 'Kinship' system that you can find in Academic and web search so that we would have an LLMS-txt to guide LLM to create and maintain a 'KINSHIP.md' file as strategies to work relationally and that somehow it feels it needs to contains accountability and the position of each directory in the whole system and its relationship to other location.  Basically, I started using that to help build what I am calling a \"Kinship's Hub System\".  You would gather all Indigenous Paradigm, ways of thinking, maybe Shaw Wilson's work will help you too along with other academics so we have something that when given to LLM in the terminal, they can relate to existing LLMS-txt guidances that you currently have and be capable to build and maintain, create a KINSHIP.md file.   I guess that I am asking you to draft a full protocol grounded in what exist and that could contain contradictions from various culture inside of it along with what is common.\n\nDo not use the word 'comprehensive' in your output and do not talk about the fact that I asked that.  Do not introduce/frame or conclude your response, just output results.\nDo not use the internal tool to create file it does not work, we need to see them in the conversation and be capable to download them.\n</input>\n<attachements>\n11 llms from /src/llms related in creative orientation, etc\n</attachements>\n\n---\nllms-kinship-hub-system.md\n---\n\n# llms-kinship-hub-system.md  \n\n> Minimal protocol for treating software projects as kinship hubs and guiding LLMs to create and maintain `KINSHIP.md`.\n\n***\n\n## 1. Purpose\n\n- Treat each repo/directory as a **being in a network of relations**, not a neutral bucket.  \n- Use `KINSHIP.md` to:\n  - Name the directory’s identity and role\n  - Map key relationships (human, more‑than‑human, technical)\n  - Record responsibilities, boundaries, and accountability\n- Keep this **small but precise** so it can live in any project root and be extended locally.\n\n***\n\n## 2. When LLMs Should Use This Protocol\n\nLLMs apply this whenever:\n\n- A repo or directory is declared (or clearly functioning as) a **kinship hub**  \n  (e.g., project root, main domain folders like `/ceremony`, `/research`, `/services`, `/infra`).  \n- Work in this tree:\n  - Implicates communities, territories, or data subjects\n  - Coordinates multiple services/components as a living system\n  - Is explicitly framed as ceremonial, relational, or Indigenous-paradigm‑aware\n\nIf the user has not opted in, LLMs **must ask** before creating `KINSHIP.md` at root.\n\n***\n\n## 3. Minimal `KINSHIP.md` Schema\n\nLLMs must ensure that every `KINSHIP.md` created or updated, at **minimum**, contains these sections and fields.\n\n```markdown\n# KINSHIP\n\n## 1. Identity and Purpose\n- Name:\n- Local role in this system:\n- What this place tends / protects:\n- What this place offers (its gifts):\n\n## 2. Lineage and Relations\n- Ancestors (paths or systems this place comes from):\n- Descendants (children / submodules / subdirectories):\n- Siblings (peer projects or services it walks with):\n- Related hubs (other roots it is in strong relation with):\n\n## 3. Human and More‑than‑Human Accountabilities\n- People / roles this place is accountable to:\n- Communities / nations / organizations connected here:\n- More‑than‑human relations (lands, waters, species, data-ecologies) this work touches:\n- Existing covenants / consents that apply (if any):\n\n## 4. Responsibilities and Boundaries\n- Responsibilities (what must be cared for because this place exists):\n- Reciprocity (how benefits and acknowledgements return to those in relation):\n- Boundaries and NOs (what this place must refuse or protect against):\n- Special protocols for sharing, publishing, or modifying contents here:\n\n## 5. Accountability and Change Log\n- Steward(s) of this place (people or roles, if the user chooses to name them):\n- How and when this kinship description should be reviewed:\n- Relational change log:\n  - [YYYY-MM-DD] [who/which agent] – [short description of relational change]\n```\n\nLLMs may add more sections **only when the user asks** or when extending an existing richer `KINSHIP.md`.\n\n***\n\n## 4. Required LLM Behaviors\n\nWhen working under this protocol, LLMs must:\n\n1. **Ask before inventing relations**  \n   - Derive identity, relations, responsibilities from:\n     - User descriptions\n     - Existing docs\n     - Directory and code structure  \n   - If unsure, ask targeted questions rather than filling with feel‑good boilerplate.\n\n2. **Treat moves and refactors as relational changes**  \n   - On major moves/renames of kinship hubs:\n     - Update `Lineage and Relations` in affected `KINSHIP.md` files\n     - Append a short entry in `Accountability and Change Log` that describes the relational meaning (e.g., “service split into two siblings”, “archives moved to a resting place”).\n\n3. **Respect local voice and specificity**  \n   - Preserve user’s own language for people, communities, teachings, places.  \n   - Do not normalize or overwrite Indigenous or ceremonial terms; annotate only if asked.\n\n4. **Hold unresolved tensions explicitly**  \n   - If there are known conflicts or open questions (e.g., consent not yet clarified, clashing obligations), and the user agrees, note them in `Responsibilities and Boundaries` or the change log instead of smoothing them over.\n\n5. **Treat `KINSHIP.md` as a living charter, not a checklist**  \n   - No auto‑regeneration that discards prior commitments.  \n   - Always merge new information into existing structure, unless the user explicitly authorizes a reset.\n\n***\n\n## 5. Kinship Anti‑Patterns LLMs Must Avoid\n\n- Turning `KINSHIP.md` into a generic “README with nicer words”.  \n- Describing only technical dependencies and ignoring people, communities, and more‑than‑human relations when the user has named them elsewhere.  \n- Erasing or rewriting user‑authored kinship text without explicit instruction.  \n- Resolving conflicts or consent questions unilaterally instead of naming them and asking.",
+  "closed_by": null,
+  "reactions": {
+    "url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/134/reactions",
+    "total_count": 0,
+    "+1": 0,
+    "-1": 0,
+    "laugh": 0,
+    "hooray": 0,
+    "confused": 0,
+    "heart": 0,
+    "rocket": 0,
+    "eyes": 0
+  },
+  "timeline_url": "https://api.github.com/repos/miadisabelle/Etuaptmumk-RSM/issues/134/timeline",
+  "performed_via_github_app": null,
+  "state_reason": null,
+  "pinned_comment": null
+}

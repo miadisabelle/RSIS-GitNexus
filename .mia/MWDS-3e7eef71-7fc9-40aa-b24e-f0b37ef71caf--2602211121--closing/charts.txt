@@ -1,0 +1,2 @@
+/src/IAIP/prototypes/artefacts/IAIP-ontologies_and_knowledge_graphs__09e79fe1-5f15-4fe9-a5fa-2713c1774724--2602142202/.coaia/charts_IAIP-ontologies_and_knowledge_graphs__09e79fe1-5f15-4fe9-a5fa-2713c1774724--2602142202.coaia-narrative.jsonl
+/workspace/repos/avadisabelle/IAIP-ontologies_and_knowledge_graphs__09e79fe1-5f15-4fe9-a5fa-2713c1774724--2602142202/.coaia/charts_IAIP-ontologies_and_knowledge_graphs__09e79fe1-5f15-4fe9-a5fa-2713c1774724--2602142202.coaia-narrative.jsonl

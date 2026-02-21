@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "charts__MWDS-3e7eef71-7fc9-40aa-b24e-f0b37ef71caf--2602211121--closing": {
+      "command": "npx",
+      "args": ["-y", "${CNCV}", "--memory-path", "/a/src/IAIP/prototypes/artefacts/MWDS-3e7eef71-7fc9-40aa-b24e-f0b37ef71caf--2602211121--closing/.coaia/charts__MWDS-3e7eef71-7fc9-40aa-b24e-f0b37ef71caf--2602211121--closing.coaia-narrative.jsonl"]
+    }
+  }
+}

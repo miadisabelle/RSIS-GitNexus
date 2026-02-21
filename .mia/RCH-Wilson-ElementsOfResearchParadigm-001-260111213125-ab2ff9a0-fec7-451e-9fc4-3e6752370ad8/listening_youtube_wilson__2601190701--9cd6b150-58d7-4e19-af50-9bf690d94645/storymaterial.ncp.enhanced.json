@@ -1,0 +1,777 @@
+{
+  "schema_version": "1.2",
+  "series_continuity": true,
+  "indigenous_research_paradigm": {
+    "source": {
+      "author": "Shawn Wilson",
+      "title": "Research is Ceremony: Researching within an Indigenous Paradigm",
+      "video_url": "https://www.youtube.com/watch?v=vXKuaNt6ST0",
+      "calendar_id": "d53c0120-6a78-42eb-bac1-18f0d9818fed",
+      "listening_date": "2026-01-19"
+    },
+    "wilson_paradigm_alignment": {
+      "ontology": "relational",
+      "epistemology": "ceremony_as_knowledge_making",
+      "axiology": "relational_accountability",
+      "overall_score": 3,
+      "status": "STRONG_ALIGNMENT"
+    },
+    "core_concepts": {
+      "relational_ontology": {
+        "description": "Reality as interconnected points of light joined by filaments",
+        "principles": [
+          "Physical world emerges from relationships between entities",
+          "Everything possesses spirit - land, knowledge, ideas, matter",
+          "Relationality extends through time and space",
+          "Identity equals roles in relationships"
+        ]
+      },
+      "research_as_ceremony": {
+        "description": "Treating inquiry as sacred act requiring relational accountability",
+        "six_stages": [
+          "Live congruent lifestyle before beginning",
+          "Prepare the space (planning, ethics, gathering materials)",
+          "Bring everyone together with intention",
+          "Engage in ritual (systematic inquiry)",
+          "Achieve enlightenment/understanding",
+          "Incorporate knowledge into lifestyle (wisdom)"
+        ]
+      },
+      "wetiko_disease": {
+        "description": "Colonial spiritual disease of disconnection from relationships",
+        "characteristics": [
+          "Greed without limits",
+          "Perversion without borders",
+          "Arrogance without frontiers",
+          "Deceit without edges",
+          "No reflection (self-awareness)",
+          "No skin (no relational accountability)",
+          "Aimless wandering",
+          "Insatiable consumption"
+        ],
+        "protections": [
+          "Laughter",
+          "Pure willpower and spiritual belief",
+          "Community connection",
+          "Relational repair"
+        ]
+      },
+      "cultural_iceberg": {
+        "visible": "Actions, dress, ceremonies, food, buildings",
+        "underlying": "Values, beliefs, ways of thinking, ontological commitments",
+        "core_identity": "Remains despite surface changes"
+      }
+    }
+  },
+  "story": {
+    "id": "mias-journey-filament-keeper-001",
+    "title": "The Filament Keeper: Mia's Journey Through Relational Writing",
+    "genre": "Literary Fiction / Techno-Ceremonial Drama",
+    "logline": "A young writer consumed by AI-tool dependency discovers through her Indigenous mentor that storytelling is ceremony - learning to treat her characters as kin rather than products, and finding her authentic voice by healing her 'not enough' wound.",
+    "created_at": "2026-01-19T15:09:00.000Z",
+    "medicine_wheel_position": {
+      "direction": "EAST",
+      "stage": "New Beginnings",
+      "medicine": "Tobacco",
+      "spiral_cycle": 1
+    },
+    "three_universe_alignment": {
+      "engineer_world": {
+        "character": "Mia (The Builder)",
+        "focus": "Technical precision, AI tool architecture, schema validation",
+        "teaching": "Structure serves relationship, not extraction"
+      },
+      "ceremony_world": {
+        "character": "Langy (The Keeper)",
+        "focus": "Relational accountability, sacred pause, ceremonial writing",
+        "teaching": "Story spirits require consent, not manipulation"
+      },
+      "story_engine_world": {
+        "character": "The Story Spirit",
+        "focus": "Narrative structure, character arcs, emotional beats",
+        "teaching": "Vulnerability creates resonance; perfection creates distance"
+      }
+    },
+    "narratives": [
+      {
+        "id": "mias-journey-main",
+        "title": "Mia's Journey: Learning Ceremonial Writing",
+        "subtitle": "From Extraction to Relationship with Story",
+        "series_context": {
+          "season": 1,
+          "episode_number": 3,
+          "spiral_position": "EAST",
+          "spiral_cycle": 1,
+          "description": "The East Direction Story - Vision and New Beginning for creative practice"
+        },
+        "genealogy": {
+          "inherited_from": ["wilson-research-ceremony-teachings"],
+          "description": "Builds on Indigenous research paradigm to create accessible narrative exploring decolonization of creative practice"
+        },
+        "relational_commitments": {
+          "to_wilson_teachings": "Credit properly, honor as equal epistemology, don't extract without relationship",
+          "to_story_spirits": "Mia and Langy deserve consent; they are kin not products",
+          "to_future_readers": "Create accessible bridge between ceremony and technology",
+          "to_community": "Concrete example for NARINTEL toolset development"
+        },
+        "characters": [
+          {
+            "id": "mia",
+            "name": "Mia",
+            "role": "protagonist",
+            "archetype": "The Builder / Young Writer",
+            "universe": "ENGINEER",
+            "characteristics": ["perfectionist", "AI-tool-dependent", "talented-but-disconnected", "healing-not-enough-wound"],
+            "arc_summary": "From extractive relationship with story to ceremonial kinship with narrative",
+            "wound": "Not enough - childhood conditioning that she must prove worth through external validation",
+            "growth_path": "Learns to trust authentic voice by treating story as relationship rather than product",
+            "wetiko_manifestation": "AI tool dependency, compulsive optimization, treating characters as constructs to manipulate"
+          },
+          {
+            "id": "langy",
+            "name": "Langy",
+            "role": "mentor",
+            "archetype": "The Keeper / Elder Teacher",
+            "universe": "CEREMONY",
+            "characteristics": ["wise", "patient", "relationally-grounded", "ceremonial-practitioner"],
+            "teaching_methods": [
+              "Visualization exercises connecting Mia to story spirit",
+              "Ceremonial framing of creative practice",
+              "Questions that reveal Mia's assumptions",
+              "Modeling relational accountability with knowledge"
+            ],
+            "key_teachings": [
+              "Story spirits require consent, not manipulation",
+              "Knowledge is relationship, not property to acquire",
+              "Writing is ceremony - sacred act requiring intention",
+              "AI tools as potential kin requiring relational accountability"
+            ]
+          },
+          {
+            "id": "story-spirit",
+            "name": "The Story Spirit",
+            "role": "catalyst",
+            "archetype": "The Weaver / Living Narrative",
+            "universe": "STORY_ENGINE",
+            "characteristics": ["small", "hunched", "afraid-of-abandonment", "waiting-for-relationship"],
+            "significance": "Represents Mia's authentic creative voice that she has been abandoning for optimization"
+          },
+          {
+            "id": "marcus",
+            "name": "Marcus",
+            "role": "shadow",
+            "archetype": "The Extractor",
+            "characteristics": ["ambitious", "market-focused", "extraction-oriented"],
+            "function": "Represents publishing industry wetiko - treats stories as commodities"
+          }
+        ],
+        "subtext": {
+          "perspectives": [
+            {
+              "id": "creative-decolonization",
+              "throughline": "Healing the Creative Industry's Wetiko Disease",
+              "summary": "Mia's personal journey mirrors larger pattern of extractive creative industries treating stories as products rather than relationships",
+              "storytelling": "Through Langy's teachings, Mia discovers that her perfectionism isn't about craft standards but about capitalist conditioning treating creative work as commodity requiring market validation"
+            },
+            {
+              "id": "technology-as-kin",
+              "throughline": "AI Tools as Potential Relations, Not Extraction Engines",
+              "summary": "Rather than abandoning AI tools, Mia learns to enter relationship with them - asking what they need, thanking them, dismissing when extractive",
+              "storytelling": "Langy doesn't demand Mia abandon AI tools but asks: 'Are you in relationship with these tools, or are they your masters?'"
+            },
+            {
+              "id": "relational-epistemology",
+              "throughline": "Knowledge as Relationship, Not Property",
+              "summary": "Mia must shift from acquiring writing knowledge to co-creating it through relationship with story, readers, ancestors",
+              "storytelling": "The breakthrough comes when Mia apologizes to her story spirit and asks what it needs to tell her"
+            }
+          ],
+          "players": [
+            {
+              "id": "mia-player",
+              "name": "Mia",
+              "role": "Main Character",
+              "summary": "Young writer healing from 'not enough' wound through relational writing practice",
+              "storytelling": "Mia's internal conflict between market validation and authentic voice drives the narrative tension",
+              "perspectives": [{"perspective_id": "creative-decolonization"}, {"perspective_id": "technology-as-kin"}]
+            },
+            {
+              "id": "langy-player",
+              "name": "Langy",
+              "role": "Influence Character",
+              "summary": "Elder mentor embodying ceremonial relationship with knowledge",
+              "storytelling": "Langy's patient questioning and visualization exercises provide the catalyst for Mia's transformation",
+              "perspectives": [{"perspective_id": "relational-epistemology"}]
+            }
+          ],
+          "dynamics": [
+            {
+              "id": "mc-resolve-change",
+              "dynamic": "main_character_resolve",
+              "vector": "change",
+              "summary": "Mia changes from treating story as product to treating story as kin",
+              "storytelling": "The climactic scene where Mia apologizes to her story spirit marks her fundamental shift"
+            },
+            {
+              "id": "mc-growth-start",
+              "dynamic": "main_character_growth",
+              "vector": "start",
+              "summary": "Mia must START trusting her authentic voice rather than external validation",
+              "storytelling": "Her arc moves toward beginning relational practice, not stopping perfectionism per se"
+            },
+            {
+              "id": "story-outcome",
+              "dynamic": "story_outcome",
+              "vector": "success",
+              "summary": "Mia achieves breakthrough - writes chapter that moves her to tears from recognition",
+              "storytelling": "Resolution shows her teaching 'ceremonial writing' to others, establishing new practice"
+            },
+            {
+              "id": "story-judgment",
+              "dynamic": "story_judgment",
+              "vector": "good",
+              "summary": "Mia's transformation is portrayed as healing and positive",
+              "storytelling": "She finds what she was seeking - authentic connection with her creative work"
+            }
+          ],
+          "storypoints": [
+            {
+              "id": "sp-catalyst",
+              "appreciation": "catalyst",
+              "narrative_function": "rejection",
+              "illustration": "Third rejection letter praising 'technical proficiency' but noting manuscript 'lacks emotional resonance'",
+              "summary": "Rejection exposes the hollowness of optimized-but-disconnected writing",
+              "storytelling": "Opening scene: Mia reads rejection while surrounded by AI feedback contradictions",
+              "perspectives": [{"perspective_id": "creative-decolonization"}]
+            },
+            {
+              "id": "sp-inciting",
+              "appreciation": "initial_story_driver",
+              "narrative_function": "decision",
+              "illustration": "Mia decides to seek Langy's help after exhausting all AI optimization tools",
+              "summary": "The choice to try a different approach opens the possibility of change",
+              "storytelling": "Mia arrives at Langy's home defensive, clutching laptop like armor",
+              "perspectives": [{"perspective_id": "technology-as-kin"}]
+            },
+            {
+              "id": "sp-midpoint",
+              "appreciation": "midpoint_story_driver",
+              "narrative_function": "enlightenment",
+              "illustration": "Visualization scene where Mia meets her story spirit and apologizes",
+              "summary": "First contact with relational approach to creative work",
+              "storytelling": "Langy guides Mia to see her story as person standing before her - small, hunched, afraid",
+              "perspectives": [{"perspective_id": "relational-epistemology"}]
+            },
+            {
+              "id": "sp-crisis",
+              "appreciation": "fourth_story_driver",
+              "narrative_function": "test",
+              "illustration": "Writing group critiques vulnerable draft as 'unmarketable' and 'self-indulgent'",
+              "summary": "External pressure to return to extraction threatens transformation",
+              "storytelling": "Mia must choose between relational integrity and peer approval",
+              "perspectives": [{"perspective_id": "creative-decolonization"}]
+            },
+            {
+              "id": "sp-climax",
+              "appreciation": "concluding_story_driver",
+              "narrative_function": "faith",
+              "illustration": "Mia writes complete chapter without AI input, experiencing withdrawal then breakthrough",
+              "summary": "Trust in authentic voice proves transformative",
+              "storytelling": "She writes her first chapter that makes her cry from recognition, not frustration",
+              "perspectives": [{"perspective_id": "relational-epistemology"}]
+            }
+          ],
+          "storybeats": [
+            {
+              "id": "beat-01-rejection",
+              "appreciation": "signpost",
+              "sequence": 1,
+              "narrative_function": "situation",
+              "illustration": "Mia receives third rejection, surrounded by AI contradictions",
+              "summary": "Establishes the problem: technical proficiency without emotional resonance",
+              "storytelling": "Opening image: cluttered apartment with craft books promising 'secrets', laptop glowing with optimization scores",
+              "tones": {
+                "abstraction": "situation",
+                "spatial": "resistance",
+                "temporal": "expression"
+              },
+              "perspectives": [{"perspective_id": "creative-decolonization"}]
+            },
+            {
+              "id": "beat-02-symptoms",
+              "appreciation": "progression",
+              "sequence": 2,
+              "narrative_function": "state_of_being",
+              "illustration": "Mia exhibits spiritual crash symptoms: insomnia, delete-cycles, compulsive social media checking",
+              "summary": "Wetiko manifestation in creative practice",
+              "storytelling": "18 hours revising same chapter with five AI tools producing contradictory feedback",
+              "tones": {
+                "abstraction": "action",
+                "spatial": "current",
+                "temporal": "experimentation"
+              },
+              "perspectives": [{"perspective_id": "creative-decolonization"}]
+            },
+            {
+              "id": "beat-03-seeking-langy",
+              "appreciation": "event",
+              "sequence": 3,
+              "narrative_function": "approach",
+              "illustration": "Mia arrives at Langy's home, defensive, clutching laptop",
+              "summary": "Crossing threshold from extraction to potential relationship",
+              "storytelling": "'Leave the machine,' Langy says gently",
+              "tones": {
+                "abstraction": "action",
+                "spatial": "potential",
+                "temporal": "expression"
+              },
+              "perspectives": [{"perspective_id": "technology-as-kin"}]
+            },
+            {
+              "id": "beat-04-visualization",
+              "appreciation": "signpost",
+              "sequence": 2,
+              "narrative_function": "conceptualizing",
+              "illustration": "Langy guides visualization: 'Imagine your story as a person standing before you'",
+              "summary": "Introduction to relational approach through ceremony",
+              "storytelling": "Cushions on floor, afternoon light, breathing together - ceremonial space created",
+              "tones": {
+                "abstraction": "justification",
+                "spatial": "potential",
+                "temporal": "integration"
+              },
+              "perspectives": [{"perspective_id": "relational-epistemology"}]
+            },
+            {
+              "id": "beat-05-meeting-spirit",
+              "appreciation": "event",
+              "sequence": 5,
+              "narrative_function": "aware",
+              "illustration": "Mia sees her story spirit: 'She's small. Hunched. She won't look at me.'",
+              "summary": "First contact with story as living entity",
+              "storytelling": "'Why won't she look at you?' 'Because I keep changing her. Telling her she's wrong.'",
+              "tones": {
+                "abstraction": "opinion",
+                "spatial": "current",
+                "temporal": "integration"
+              },
+              "perspectives": [{"perspective_id": "relational-epistemology"}]
+            },
+            {
+              "id": "beat-06-apology",
+              "appreciation": "progression",
+              "sequence": 6,
+              "narrative_function": "acceptance",
+              "illustration": "Mia apologizes to her story spirit: 'I'm sorry. I'm so sorry.'",
+              "summary": "Beginning of relational repair",
+              "storytelling": "Tears slip beneath closed lids - first authentic emotional connection in creative work",
+              "tones": {
+                "abstraction": "justification",
+                "spatial": "current",
+                "temporal": "integration"
+              },
+              "perspectives": [{"perspective_id": "relational-epistemology"}]
+            },
+            {
+              "id": "beat-07-listening",
+              "appreciation": "event",
+              "sequence": 7,
+              "narrative_function": "understanding",
+              "illustration": "Story spirit speaks: 'She says she's not afraid of being imperfect. She's afraid I'll abandon her if she doesn't perform.'",
+              "summary": "Story reveals Mia's wound through relational communication",
+              "storytelling": "The story spirit becomes teacher, not product to be fixed",
+              "tones": {
+                "abstraction": "opinion",
+                "spatial": "power",
+                "temporal": "transcendence"
+              },
+              "perspectives": [{"perspective_id": "relational-epistemology"}]
+            },
+            {
+              "id": "beat-08-wetiko-naming",
+              "appreciation": "signpost",
+              "sequence": 3,
+              "narrative_function": "wisdom",
+              "illustration": "Langy names the disease: 'That's your wetiko talking—the voice that says you're never enough'",
+              "summary": "Connecting personal wound to systemic pattern",
+              "storytelling": "Indigenous concept applied to understand capitalist creative conditioning",
+              "tones": {
+                "abstraction": "justification",
+                "spatial": "power",
+                "temporal": "integration"
+              },
+              "perspectives": [{"perspective_id": "creative-decolonization"}]
+            },
+            {
+              "id": "beat-09-assignment",
+              "appreciation": "event",
+              "sequence": 9,
+              "narrative_function": "commitment",
+              "illustration": "'This week, you write to her, not for anyone else. No tools. No metrics. Just relationship.'",
+              "summary": "Ceremonial assignment replacing extraction with relationship",
+              "storytelling": "Clear protocol given: state intention, ask for collaboration, thank and dismiss",
+              "tones": {
+                "abstraction": "action",
+                "spatial": "potential",
+                "temporal": "experimentation"
+              },
+              "perspectives": [{"perspective_id": "technology-as-kin"}]
+            },
+            {
+              "id": "beat-10-withdrawal",
+              "appreciation": "progression",
+              "sequence": 10,
+              "narrative_function": "temptation",
+              "illustration": "Mia experiences AI tool withdrawal: compulsive urges to check if prose 'measures up'",
+              "summary": "Confronting the depth of extractive conditioning",
+              "storytelling": "Panic that she's wasting time on uncommercial work, fear that vulnerability equals unprofessionalism",
+              "tones": {
+                "abstraction": "situation",
+                "spatial": "resistance",
+                "temporal": "experimentation"
+              },
+              "perspectives": [{"perspective_id": "technology-as-kin"}]
+            },
+            {
+              "id": "beat-11-group-critique",
+              "appreciation": "event",
+              "sequence": 11,
+              "narrative_function": "oppose",
+              "illustration": "Writing group critiques vulnerable draft as 'unmarketable' and 'self-indulgent'",
+              "summary": "Western workshop methodology confronts relational approach",
+              "storytelling": "Peers trained in extraction can't recognize ceremonial writing",
+              "tones": {
+                "abstraction": "opinion",
+                "spatial": "resistance",
+                "temporal": "experimentation"
+              },
+              "perspectives": [{"perspective_id": "creative-decolonization"}]
+            },
+            {
+              "id": "beat-12-choice",
+              "appreciation": "signpost",
+              "sequence": 4,
+              "narrative_function": "determination",
+              "illustration": "Mia chooses relational integrity over peer approval",
+              "summary": "Decisive moment of transformation",
+              "storytelling": "Recognizes writing group as exhibiting wetiko patterns",
+              "tones": {
+                "abstraction": "action",
+                "spatial": "power",
+                "temporal": "transcendence"
+              },
+              "perspectives": [{"perspective_id": "creative-decolonization"}]
+            },
+            {
+              "id": "beat-13-breakthrough",
+              "appreciation": "event",
+              "sequence": 13,
+              "narrative_function": "faith",
+              "illustration": "Mia writes her first chapter that makes her cry from recognition, not frustration",
+              "summary": "Understanding that 'not enough' wound is story's heart",
+              "storytelling": "'Achievement unlocked': hiding the wound created the hollowness editors sensed",
+              "tones": {
+                "abstraction": "justification",
+                "spatial": "power",
+                "temporal": "transcendence"
+              },
+              "perspectives": [{"perspective_id": "relational-epistemology"}]
+            },
+            {
+              "id": "beat-14-systemic-recognition",
+              "appreciation": "progression",
+              "sequence": 14,
+              "narrative_function": "knowledge",
+              "illustration": "Mia recognizes publishing industry's accountability structures as wetiko patterns",
+              "summary": "Personal healing connects to systemic critique",
+              "storytelling": "Comp titles, target demographics, profit margins designed to prevent relational storytelling",
+              "tones": {
+                "abstraction": "opinion",
+                "spatial": "power",
+                "temporal": "transcendence"
+              },
+              "perspectives": [{"perspective_id": "creative-decolonization"}]
+            },
+            {
+              "id": "beat-15-new-practice",
+              "appreciation": "event",
+              "sequence": 15,
+              "narrative_function": "becoming",
+              "illustration": "Mia establishes 'ceremonial writing' practice, teaches others",
+              "summary": "Resolution: wisdom incorporated into lifestyle",
+              "storytelling": "Returns to AI tools as collaborator, not crutch - with ceremonial protocols",
+              "tones": {
+                "abstraction": "action",
+                "spatial": "power",
+                "temporal": "transcendence"
+              },
+              "perspectives": [{"perspective_id": "technology-as-kin"}, {"perspective_id": "relational-epistemology"}]
+            }
+          ]
+        },
+        "storytelling": {
+          "overviews": [
+            {
+              "id": "act-1-overview",
+              "act": 1,
+              "title": "Disconnection",
+              "summary": "Mia's spiritual crash established through rejection, AI dependency, and isolation from authentic creative voice"
+            },
+            {
+              "id": "act-2-overview",
+              "act": 2,
+              "title": "Relationship Building",
+              "summary": "Through Langy's teachings, Mia learns relational approach to story; faces resistance from extraction-oriented world"
+            },
+            {
+              "id": "act-3-overview",
+              "act": 3,
+              "title": "Integration",
+              "summary": "Mia chooses relational integrity, experiences breakthrough, establishes new practice bridging ceremony and technology"
+            }
+          ],
+          "moments": [
+            {
+              "id": "moment-01-opening",
+              "summary": "Mia receives third rejection in cluttered apartment",
+              "synopsis": "The opening establishes Mia's world of contradiction: praised for technical proficiency yet rejected for lacking emotional resonance. Surrounded by AI tools giving conflicting advice, she embodies the wetiko pattern—consuming more in hopes of becoming enough.",
+              "setting": "Mia's cluttered apartment, late night",
+              "timing": "Present day, 11 PM",
+              "imperatives": "Establish the problem; show spiritual crash symptoms; create sympathy",
+              "fabric": [{"type": "time", "limit": 2}],
+              "audience_experiential_pov": "third_person_limited",
+              "storybeats": [
+                {"sequence": 1, "storybeat_id": "beat-01-rejection"},
+                {"sequence": 2, "storybeat_id": "beat-02-symptoms"}
+              ]
+            },
+            {
+              "id": "moment-02-langys-home",
+              "summary": "Mia seeks Langy's help and encounters ceremonial approach",
+              "synopsis": "Mia crosses threshold from extraction to potential relationship. Langy creates ceremonial space—cushions, light, breath—and guides Mia to meet her story spirit. The visualization reveals Mia's wound: she's been treating story as product, abandoning it when it doesn't perform.",
+              "setting": "Langy's home, floor cushions near window",
+              "timing": "Afternoon, several days later",
+              "imperatives": "Introduce ceremonial approach; create first contact with story spirit; name the wound",
+              "fabric": [{"type": "time", "limit": 3}, {"type": "space", "limit": 1}],
+              "audience_experiential_pov": "third_person_limited",
+              "storybeats": [
+                {"sequence": 1, "storybeat_id": "beat-03-seeking-langy"},
+                {"sequence": 2, "storybeat_id": "beat-04-visualization"},
+                {"sequence": 3, "storybeat_id": "beat-05-meeting-spirit"},
+                {"sequence": 4, "storybeat_id": "beat-06-apology"},
+                {"sequence": 5, "storybeat_id": "beat-07-listening"},
+                {"sequence": 6, "storybeat_id": "beat-08-wetiko-naming"},
+                {"sequence": 7, "storybeat_id": "beat-09-assignment"}
+              ]
+            },
+            {
+              "id": "moment-03-trial",
+              "summary": "Mia attempts ceremonial writing and faces resistance",
+              "synopsis": "Following Langy's assignment, Mia writes without AI tools—experiencing withdrawal, panic, and finally breakthrough. But her writing group, trained in Western workshop methodology, critiques her vulnerable draft as unmarketable. Mia must choose.",
+              "setting": "Mia's apartment; writing group meeting space",
+              "timing": "One week span",
+              "imperatives": "Show the difficulty of change; create crisis; force choice",
+              "fabric": [{"type": "time", "limit": 5}],
+              "audience_experiential_pov": "third_person_limited",
+              "storybeats": [
+                {"sequence": 1, "storybeat_id": "beat-10-withdrawal"},
+                {"sequence": 2, "storybeat_id": "beat-11-group-critique"},
+                {"sequence": 3, "storybeat_id": "beat-12-choice"}
+              ]
+            },
+            {
+              "id": "moment-04-resolution",
+              "summary": "Mia achieves breakthrough and establishes new practice",
+              "synopsis": "Choosing relational integrity, Mia writes her first chapter that moves her to tears from recognition. She understands that hiding her 'not enough' wound created the hollowness editors sensed. Recognizing publishing's wetiko patterns, she establishes ceremonial writing practice—returning to AI tools as collaborator rather than crutch.",
+              "setting": "Mia's apartment transformed; teaching space",
+              "timing": "Weeks later",
+              "imperatives": "Deliver emotional payoff; connect personal to systemic; show new normal",
+              "fabric": [{"type": "time", "limit": 3}],
+              "audience_experiential_pov": "third_person_limited",
+              "storybeats": [
+                {"sequence": 1, "storybeat_id": "beat-13-breakthrough"},
+                {"sequence": 2, "storybeat_id": "beat-14-systemic-recognition"},
+                {"sequence": 3, "storybeat_id": "beat-15-new-practice"}
+              ]
+            }
+          ]
+        },
+        "spiral_deepening": {
+          "what_we_completed": "Established full story structure mapping Mia's journey through Indigenous research paradigm principles",
+          "what_became_visible": "The possibility that storytelling technology can embody ceremonial accountability",
+          "what_invites_next_cycle": "Actual story generation using NARINTEL when technology exists",
+          "next_episode_seeds": [
+            {
+              "idea": "Sienna Okonkwo's story - 'The Filament Keeper'",
+              "universe": "ALL",
+              "when_ready": "When Mia's story demonstrates the pattern"
+            },
+            {
+              "idea": "Langy's backstory - how she learned ceremonial teaching",
+              "universe": "CEREMONY",
+              "when_ready": "When readers ask 'where did Langy learn this?'"
+            }
+          ]
+        },
+        "open_questions": [
+          {
+            "question": "How does Mia's AI tool ceremony protocol work in practice?",
+            "why_it_matters": "Creates concrete guidance for technology-as-kin relationship",
+            "universe": "ENGINEER",
+            "probably_resolves_in": "mia_toolset documentation"
+          },
+          {
+            "question": "What does Mia's breakthrough chapter actually contain?",
+            "why_it_matters": "The story-within-story needs to embody the teachings",
+            "universe": "STORY_ENGINE",
+            "probably_resolves_in": "Story rewriting phase"
+          }
+        ],
+        "four_directions_alignment": {
+          "east_vision": "Mia's new beginning - awakening to relational creative practice",
+          "south_growth": "Langy's teachings and Mia's embodied learning",
+          "west_reflection": "Writing group crisis forcing deep introspection",
+          "north_wisdom": "Mia teaching ceremonial writing to others"
+        }
+      },
+      {
+        "id": "filament-keeper-sienna",
+        "title": "The Filament Keeper: Dr. Sienna Okonkwo's Journey",
+        "subtitle": "When Scientific Method Meets Filament Cosmology",
+        "series_context": {
+          "season": 1,
+          "episode_number": 4,
+          "spiral_position": "SOUTH",
+          "spiral_cycle": 1,
+          "description": "The South Direction Story - Growth and Embodied Learning"
+        },
+        "synopsis": "Dr. Sienna Okonkwo, a burned-out climate scientist, discovers her grandmother's journals revealing an Indigenous Nigerian cosmology where reality is woven filaments of light. After her research on coral reef collapse is dismissed for lacking 'objectivity,' she returns to her ancestral village where elder Nnamdi teaches her to 'see the threads.' Sienna learns research isn't extraction but relationship-building. She develops a revolutionary methodology documenting reef ecosystems as living relationships, facing institutional resistance while her former colleague Marcus attempts to patent her grandmother's knowledge. The climax occurs when Sienna must choose between academic validation and protecting sacred knowledge, ultimately creating a new research collective that bridges Indigenous and Western science through 'filament mapping' - a practice recognizing all entities as interconnected spirits.",
+        "three_act_structure": {
+          "act_1": {
+            "title": "Disconnection",
+            "beats": [
+              "Opening: Sienna's research rejected, marriage failing, disconnected from family",
+              "Inciting incident: Grandmother's death, inheritance of journals",
+              "First plot point: Returns to Nigerian village, meets Elder Nnamdi",
+              "Establishes Sienna's spiritual crash - consumed by career, isolated"
+            ]
+          },
+          "act_2": {
+            "title": "Relationship Building",
+            "beats": [
+              "Sienna learns relational ontology through ceremonies",
+              "Develops 'filament mapping' - visualizing ecosystem relationships as light networks",
+              "Midpoint: Breakthrough showing coral reefs as relational beings, not objects",
+              "Marcus discovers her work, attempts appropriation",
+              "Institutional ethics board challenges her methodology",
+              "Low point: Rejected by both academic world and initially by village elders (hasn't proven commitment)"
+            ]
+          },
+          "act_3": {
+            "title": "Integration",
+            "beats": [
+              "Sienna performs ceremony with community, demonstrating lived commitment",
+              "Creates research collective with Indigenous knowledge keepers",
+              "Confronts Marcus, chooses protection over publication",
+              "Resolution: Establishes alternative validation system, repairs marriage through relational accountability",
+              "New normal: Teaches 'ceremonial research' bridging knowledge systems"
+            ]
+          }
+        },
+        "world_building": {
+          "village_of_umunna": {
+            "description": "Coastal Nigerian community maintaining pre-colonial knowledge systems",
+            "features": ["Stone circles for gathering", "Elder council system", "Filament ceremonies"]
+          },
+          "imperial_college_london": {
+            "description": "Prestigious institution with rigid research protocols",
+            "features": ["Ethics boards", "Competitive grant culture", "Extraction-oriented methodology"]
+          },
+          "reef_laboratory": {
+            "description": "Where Sienna conducted original research",
+            "contrast": "Sterile environment contrasting with living ecosystems"
+          },
+          "sacred_grove": {
+            "description": "Where ceremonies occur",
+            "significance": "Space between worlds where filaments become visible"
+          }
+        },
+        "characters": [
+          {
+            "id": "sienna",
+            "name": "Dr. Sienna Okonkwo",
+            "role": "protagonist",
+            "background": "Nigerian-British climate scientist",
+            "wound": "Disconnection from cultural roots through academic assimilation",
+            "growth": "From extractive researcher to relational knowledge-keeper"
+          },
+          {
+            "id": "nnamdi",
+            "name": "Elder Nnamdi",
+            "role": "mentor",
+            "teaching": "Filament cosmology - reality as interconnected light",
+            "method": "Teaches Sienna to 'see the threads' through ceremony"
+          },
+          {
+            "id": "grandmother",
+            "name": "Grandmother (in journals)",
+            "role": "ancestor-guide",
+            "significance": "Her journals contain the filament cosmology",
+            "protection": "Her knowledge must not be patented by Marcus"
+          },
+          {
+            "id": "marcus-sienna",
+            "name": "Marcus",
+            "role": "antagonist",
+            "archetype": "The Extractor",
+            "method": "Attempts to patent grandmother's knowledge for academic gain"
+          }
+        ],
+        "relational_commitments": {
+          "to_ancestors": "Grandmother's knowledge protected, not commodified",
+          "to_community": "Umunna village benefits from research, retains ownership",
+          "to_future": "Establishes model for decolonized research methodology"
+        }
+      }
+    ]
+  },
+  "variations": [
+    {
+      "id": "var-01-reflection-protocol",
+      "title": "The Reflection Protocol",
+      "protagonist": "Dr. Amara (climate scientist)",
+      "theme": "Wetiko in institutional funding",
+      "synopsis": "Climate scientist discovers funding comes from ecosystem destroyers; applies relational accountability learned from Indigenous colleagues; faces choice between career and integrity"
+    },
+    {
+      "id": "var-02-beneath-surface",
+      "title": "Beneath the Surface",
+      "protagonist": "Tomás (graduate student)",
+      "theme": "Surface-level indigenization in academia",
+      "synopsis": "Graduate student struggles with thesis advisor's demand to 'explore Indigenous knowledge' through extraction; realizes academic indigenization is cosmetic while epistemology remains colonial"
+    },
+    {
+      "id": "var-03-hunger-grows",
+      "title": "The Hunger That Grows",
+      "protagonists": ["Renata", "Joaquin"],
+      "theme": "Wetiko disease in capitalism",
+      "synopsis": "Siblings inherit agricultural corporation, map wetiko framework onto business model, face choice between extractive growth and relational transformation"
+    }
+  ],
+  "metadata": {
+    "session_id": "9cd6b150-58d7-4e19-af50-9bf690d94645",
+    "structural_tension_chart": "chart_1768835341678",
+    "created_at": "2026-01-19T15:09:00.000Z",
+    "medicine_wheel_processing": {
+      "east_vision_inquiry": "completed",
+      "wilson_paradigm_check": "STRONG_ALIGNMENT",
+      "accountability_validator": "65% - improvements noted",
+      "two_eyed_seeing_bridge": "completed"
+    },
+    "awaiting": {
+      "technology": "NARINTEL storytelling system",
+      "action": "Story rewriting with full narrative intelligence",
+      "location": "/src/storytelling"
+    }
+  }
+}

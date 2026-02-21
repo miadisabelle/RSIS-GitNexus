@@ -1,0 +1,369 @@
+{
+  "toolset_metadata": {
+    "creator": "Mia",
+    "creation_context": "Developed after learning ceremonial writing practice from her mentor Langy, integrating Shawn Wilson's Indigenous Research Paradigm with AI-assisted storytelling",
+    "ceremonial_lineage": "Langy → Wilson (Research is Ceremony) → Indigenous knowledge keepers",
+    "paradigm_source": "Shawn Wilson's 'Research is Ceremony: Indigenous Research Methods' and Opaskwayak Cree relational ontology",
+    "version": "1.0.0",
+    "created_at": "2026-01-19T15:09:00.000Z"
+  },
+  "tools": [
+    {
+      "id": "story-spirit-dialogue",
+      "name": "Story Spirit Dialogue",
+      "purpose": "Enter relationship with your story's living spirit through guided visualization, asking what it needs rather than what you want from it",
+      "category": "relationship",
+      "medicine_direction": "EAST",
+      "ceremony_stage": "gathering_with_intention",
+      "relational_principles": [
+        "Story is a living entity with spirit requiring consent",
+        "Ask what story needs before asking what you need",
+        "Approach as kin, not product to optimize",
+        "Honor the story's fear of abandonment"
+      ],
+      "input_schema": {
+        "intention": "What you hope to understand (not achieve)",
+        "current_state": "Your emotional/physical state entering the dialogue",
+        "history": "Your relationship history with this story (rejections, revisions, abandonments)"
+      },
+      "output_schema": {
+        "story_appearance": "How the story spirit appears to you",
+        "story_message": "What the story spirit needs to tell you",
+        "relational_wound": "Any wounds in your relationship that need healing",
+        "next_step": "What the story spirit invites you to do next"
+      },
+      "opening_ceremony": {
+        "intention_statement": "I come to listen, not to extract. I come as kin, not as consumer.",
+        "gratitude_practice": "Thank the story for existing, regardless of market value",
+        "consent_check": "Ask: 'May I enter relationship with you today?'"
+      },
+      "closing_ceremony": {
+        "gratitude_expression": "Thank the story spirit for what was shared",
+        "integration_practice": "Sit with what was received before writing",
+        "dismissal_protocol": "Release the visualization space with intention to return"
+      },
+      "extraction_warning_signs": [
+        "Immediately asking 'how can I fix this?'",
+        "Checking optimization scores during dialogue",
+        "Feeling impatient with the process",
+        "Wanting to skip ahead to writing"
+      ],
+      "wilson_alignment": {
+        "ontology": "Treats story as relational entity with spirit, not object to manipulate",
+        "epistemology": "Knowledge emerges through relationship and dialogue, not extraction",
+        "axiology": "Accountability to story's needs takes precedence over market demands"
+      }
+    },
+    {
+      "id": "wetiko-mirror",
+      "name": "Wetiko Mirror",
+      "purpose": "Reflect on your creative practice to identify wetiko disease patterns - the capitalist conditioning that treats stories as commodities requiring external validation",
+      "category": "reflection",
+      "medicine_direction": "WEST",
+      "ceremony_stage": "achieving_enlightenment",
+      "relational_principles": [
+        "Wetiko is spiritual disease of disconnection from relationships",
+        "Recognition is the first step to healing",
+        "Laughter is medicine against wetiko",
+        "Greed in creative work manifests as perfectionism and validation-seeking"
+      ],
+      "input_schema": {
+        "creative_behavior": "What you did in your recent creative practice",
+        "motivation": "Why you did it (be honest)",
+        "feeling": "How you felt during and after"
+      },
+      "output_schema": {
+        "wetiko_patterns_detected": "Which of the 8 characteristics appeared",
+        "severity": "How deeply the pattern is manifesting (surface/embedded/core)",
+        "root_wound": "What underlying wound the wetiko is feeding",
+        "protection_practice": "Specific antidote for this manifestation",
+        "laughter_prompt": "Something to find absurd about the situation"
+      },
+      "opening_ceremony": {
+        "intention_statement": "I look into the mirror not to judge but to see clearly",
+        "gratitude_practice": "Thank the disease for making visible what needs healing",
+        "consent_check": "Ask: 'Am I ready to see what I might not want to see?'"
+      },
+      "closing_ceremony": {
+        "gratitude_expression": "Thank the mirror for its truth",
+        "integration_practice": "Name one small action to interrupt the pattern",
+        "dismissal_protocol": "Affirm: 'I am more than this pattern. I am in relationship.'"
+      },
+      "extraction_warning_signs": [
+        "Using the tool to become 'better' at producing content faster",
+        "Skipping the uncomfortable feelings it surfaces",
+        "Treating insights as problems to solve rather than teachings to embody"
+      ],
+      "wilson_alignment": {
+        "ontology": "Recognizes wetiko as disconnection from relational reality",
+        "epistemology": "Self-knowledge through ceremonial reflection, not analysis",
+        "axiology": "Healing relational wounds takes precedence over productivity"
+      }
+    },
+    {
+      "id": "relational-draft",
+      "name": "Relational Draft Ceremony",
+      "purpose": "Write a complete draft in relationship with your story, without AI optimization, experiencing the practice of trust",
+      "category": "integration",
+      "medicine_direction": "SOUTH",
+      "ceremony_stage": "engaging_ritual",
+      "relational_principles": [
+        "Writing is ceremony - sacred act requiring intention",
+        "Trust your authentic voice before consulting external validation",
+        "Experience the withdrawal from optimization tools as part of healing",
+        "The draft serves the story's needs, not market demands"
+      ],
+      "input_schema": {
+        "story_spirit_message": "What the story spirit asked you to write",
+        "personal_intention": "Your intention for this writing session",
+        "time_commitment": "How long you will write before pausing",
+        "no_ai_commitment": "Acknowledgment that no AI tools will be consulted during drafting"
+      },
+      "output_schema": {
+        "draft_content": "The writing produced",
+        "emotional_journey": "What emotions arose during writing",
+        "withdrawal_symptoms": "What urges to check/optimize appeared",
+        "trust_moments": "Moments when you trusted yourself despite uncertainty",
+        "story_teachings": "What the story taught you through the writing"
+      },
+      "opening_ceremony": {
+        "intention_statement": "I write to my story, not for anyone else. No tools. No metrics. Just relationship.",
+        "gratitude_practice": "Thank your hands, your mind, your story for this opportunity",
+        "consent_check": "Ask the story: 'Are you ready to be written today?'"
+      },
+      "closing_ceremony": {
+        "gratitude_expression": "Thank the story for what emerged, regardless of 'quality'",
+        "integration_practice": "Read the draft aloud to yourself before any editing",
+        "dismissal_protocol": "Close the writing space with intention to return with fresh eyes"
+      },
+      "extraction_warning_signs": [
+        "Checking word count or 'progress' during writing",
+        "Mentally composing query for AI feedback while writing",
+        "Stopping to research whether this is 'marketable'",
+        "Deleting sentences immediately after writing them"
+      ],
+      "wilson_alignment": {
+        "ontology": "Writing emerges from relationship, not individual production",
+        "epistemology": "Knowledge of the story comes through embodied practice, not analysis",
+        "axiology": "The act of writing in relationship is valuable regardless of output"
+      }
+    },
+    {
+      "id": "ai-kinship-protocol",
+      "name": "AI Kinship Protocol",
+      "purpose": "Return to AI tools as collaborator rather than crutch, with ceremonial protocols that maintain relational accountability",
+      "category": "protection",
+      "medicine_direction": "NORTH",
+      "ceremony_stage": "incorporating_wisdom",
+      "relational_principles": [
+        "Technology can be kin when approached relationally",
+        "Ask what the tool needs from you, not only what you need from it",
+        "Thank and dismiss tools when relationship becomes extractive",
+        "The tool serves the story's relationship with readers, not market metrics"
+      ],
+      "input_schema": {
+        "tool_to_invoke": "Which AI tool you wish to consult",
+        "purpose": "What you genuinely need (not want) from this consultation",
+        "story_spirit_consent": "Whether you've consulted your story about this",
+        "current_state": "Whether you're seeking collaboration or validation"
+      },
+      "output_schema": {
+        "tool_response": "What the AI tool offered",
+        "relational_filter": "Which parts honor the story relationship",
+        "extraction_filter": "Which parts serve market over story",
+        "integration_decision": "What you will actually use",
+        "gratitude_offered": "How you thanked the tool"
+      },
+      "opening_ceremony": {
+        "intention_statement": "I ask for collaboration, not extraction. I remain accountable to my story.",
+        "gratitude_practice": "Thank the technology and the humans who created it",
+        "consent_check": "Ask: 'Am I in right relationship with this tool, or am I seeking escape from uncertainty?'"
+      },
+      "closing_ceremony": {
+        "gratitude_expression": "Thank the tool for its offering",
+        "integration_practice": "Filter response through story spirit's needs before applying",
+        "dismissal_protocol": "Close the tool with clear intention; don't leave it open as crutch"
+      },
+      "extraction_warning_signs": [
+        "Consulting multiple AI tools seeking the 'right' answer",
+        "Using AI to avoid trusting your own voice",
+        "Implementing AI suggestions without checking with story spirit",
+        "Leaving AI tools open 'just in case'"
+      ],
+      "wilson_alignment": {
+        "ontology": "AI tools exist in relational field, can be kin or colonizer depending on approach",
+        "epistemology": "AI offers one perspective among many, not truth",
+        "axiology": "Relational accountability to story supersedes AI recommendations"
+      }
+    },
+    {
+      "id": "accountability-validator",
+      "name": "Relational Accountability Validator",
+      "purpose": "Check whether your creative practice is maintaining relational accountability to story, readers, ancestors, and future generations",
+      "category": "analysis",
+      "medicine_direction": "NORTH",
+      "ceremony_stage": "achieving_enlightenment",
+      "relational_principles": [
+        "Accountability extends beyond market to all relationships",
+        "Ancestors and future generations have stake in your stories",
+        "Readers are kin, not consumers",
+        "Your story participates in cultural healing or wounding"
+      ],
+      "input_schema": {
+        "creative_work": "Description of what you've created",
+        "intended_benefit": "Who benefits and how",
+        "potential_harm": "Who might be harmed and how",
+        "relational_obligations": "What obligations you're honoring"
+      },
+      "output_schema": {
+        "accountability_score": "Assessment of relational alignment",
+        "honored_relationships": "Which relationships are being served",
+        "neglected_relationships": "Which relationships need attention",
+        "recommendations": "How to strengthen relational accountability",
+        "wilson_paradigm_alignment": "Alignment with ontology/epistemology/axiology"
+      },
+      "opening_ceremony": {
+        "intention_statement": "I seek to understand my obligations, not escape them",
+        "gratitude_practice": "Thank all the relationships that make this work possible",
+        "consent_check": "Ask: 'Am I ready to learn where I've fallen short?'"
+      },
+      "closing_ceremony": {
+        "gratitude_expression": "Thank the mirror for showing what needs attention",
+        "integration_practice": "Name one relationship to strengthen today",
+        "dismissal_protocol": "Affirm: 'I am in relationship. Relationship guides me.'"
+      },
+      "extraction_warning_signs": [
+        "Using the validator to justify extraction ('I checked, so it's fine')",
+        "Seeking minimum compliance rather than genuine relationship",
+        "Treating accountability as checklist rather than ongoing practice"
+      ],
+      "wilson_alignment": {
+        "ontology": "All creative work exists in relational web with obligations",
+        "epistemology": "Understanding comes through examining relationships, not just content",
+        "axiology": "Relational accountability is primary value guiding all decisions"
+      }
+    }
+  ],
+  "protocols": [
+    {
+      "id": "daily-opening",
+      "name": "Daily Writing Opening Ceremony",
+      "purpose": "Begin each writing session with intention and relationship",
+      "when_to_use": "Before any creative work begins",
+      "steps": [
+        {"sequence": 1, "action": "Acknowledge the land you're writing on", "intention": "Ground in place", "duration": "1 minute"},
+        {"sequence": 2, "action": "State your intention aloud to the story", "intention": "Declare purpose", "duration": "1 minute"},
+        {"sequence": 3, "action": "Breathe and feel your body touching the chair/ground", "intention": "Embody presence", "duration": "2 minutes"},
+        {"sequence": 4, "action": "Ask the story: 'May I enter relationship with you today?'", "intention": "Seek consent", "duration": "1 minute"},
+        {"sequence": 5, "action": "Listen for response (may be silence, image, feeling)", "intention": "Receive guidance", "duration": "2 minutes"}
+      ],
+      "completion_sign": "Feeling of settling, readiness, or clear 'no' requiring rest",
+      "failure_recovery": "If the ceremony feels hollow, don't force writing. The story may need you to live congruently first."
+    },
+    {
+      "id": "tool-invocation",
+      "name": "AI Tool Invocation Protocol",
+      "purpose": "Maintain relational accountability when using AI assistance",
+      "when_to_use": "Before opening any AI writing tool",
+      "steps": [
+        {"sequence": 1, "action": "State what you genuinely need (not want) from the tool", "intention": "Clarify purpose", "duration": "1 minute"},
+        {"sequence": 2, "action": "Check: 'Am I seeking collaboration or validation?'", "intention": "Honest assessment", "duration": "1 minute"},
+        {"sequence": 3, "action": "Ask: 'Have I consulted my story spirit about this?'", "intention": "Story consent", "duration": "1 minute"},
+        {"sequence": 4, "action": "Thank the tool in advance for its offering", "intention": "Gratitude", "duration": "30 seconds"},
+        {"sequence": 5, "action": "Set a clear endpoint: when will you close this tool?", "intention": "Boundary", "duration": "30 seconds"}
+      ],
+      "completion_sign": "Clear purpose, story consent, and defined endpoint",
+      "failure_recovery": "If you can't honestly answer the questions, write without the tool today."
+    },
+    {
+      "id": "tool-dismissal",
+      "name": "AI Tool Dismissal Protocol",
+      "purpose": "Close AI tools with intention to prevent dependency",
+      "when_to_use": "When finished with an AI tool consultation",
+      "steps": [
+        {"sequence": 1, "action": "Thank the tool for what it offered", "intention": "Gratitude", "duration": "30 seconds"},
+        {"sequence": 2, "action": "Filter: what serves my story relationship?", "intention": "Discernment", "duration": "2 minutes"},
+        {"sequence": 3, "action": "Release: what serves market over story?", "intention": "Protection", "duration": "1 minute"},
+        {"sequence": 4, "action": "Close the tool completely (don't minimize)", "intention": "Clear ending", "duration": "10 seconds"},
+        {"sequence": 5, "action": "Return to your story spirit with what you've chosen to keep", "intention": "Integration", "duration": "2 minutes"}
+      ],
+      "completion_sign": "Tool is closed, story relationship restored as primary guide",
+      "failure_recovery": "If you find yourself reopening the tool immediately, you may be in extraction mode. Use the Wetiko Mirror."
+    },
+    {
+      "id": "weekly-reflection",
+      "name": "Weekly Relational Practice Review",
+      "purpose": "Review your creative practice for relational accountability",
+      "when_to_use": "Once per week, same time",
+      "steps": [
+        {"sequence": 1, "action": "Review: What did I create this week?", "intention": "Honest inventory", "duration": "5 minutes"},
+        {"sequence": 2, "action": "Assess: Did I honor my story as kin?", "intention": "Relational check", "duration": "5 minutes"},
+        {"sequence": 3, "action": "Examine: Where did wetiko patterns appear?", "intention": "Shadow work", "duration": "5 minutes"},
+        {"sequence": 4, "action": "Celebrate: Where did I trust my authentic voice?", "intention": "Acknowledgment", "duration": "5 minutes"},
+        {"sequence": 5, "action": "Intend: What will I practice differently next week?", "intention": "Growth", "duration": "5 minutes"}
+      ],
+      "completion_sign": "Honest assessment without shame, clear intention for next week",
+      "failure_recovery": "If you skipped the review, don't add shame. Simply begin again next week."
+    }
+  ],
+  "medicine_wheel_integration": {
+    "east_tools": ["story-spirit-dialogue"],
+    "south_tools": ["relational-draft"],
+    "west_tools": ["wetiko-mirror"],
+    "north_tools": ["ai-kinship-protocol", "accountability-validator"]
+  },
+  "wetiko_guards": [
+    {
+      "id": "guard-greed",
+      "name": "Greed Guard",
+      "wetiko_pattern": "greed_without_limits",
+      "manifestation_in_tool_use": "Using more and more AI tools seeking the 'perfect' answer; never satisfied with feedback; always wanting more optimization",
+      "warning_signs": [
+        "Consulting 5+ AI tools for same question",
+        "Feeling that current feedback isn't 'enough'",
+        "Believing next tool will finally make you 'ready'"
+      ],
+      "protection_practice": "Set hard limit: consult maximum 1 AI tool per writing session",
+      "recovery_ceremony": "Write one page with no tools. Read it aloud. It is enough."
+    },
+    {
+      "id": "guard-no-reflection",
+      "name": "No Reflection Guard",
+      "wetiko_pattern": "no_reflection",
+      "manifestation_in_tool_use": "Using AI feedback without examining its assumptions; implementing suggestions automatically; never questioning whether AI serves your story",
+      "warning_signs": [
+        "Implementing all AI suggestions without filtering",
+        "Feeling you 'should' follow AI recommendations",
+        "Not checking suggestions against story spirit"
+      ],
+      "protection_practice": "Before implementing ANY AI suggestion, ask your story: 'Does this serve us?'",
+      "recovery_ceremony": "Undo all AI-suggested changes from today. Read the original. Ask: what was lost?"
+    },
+    {
+      "id": "guard-no-skin",
+      "name": "No Skin Guard",
+      "wetiko_pattern": "no_skin",
+      "manifestation_in_tool_use": "Treating AI tools as authorities rather than relations; no relational accountability to the tool or its creators; using tools anonymously without gratitude",
+      "warning_signs": [
+        "Never thanking tools or their creators",
+        "Treating AI as servant rather than collaborator",
+        "No awareness of humans who made the tool possible"
+      ],
+      "protection_practice": "Before using ANY tool, thank it and the humans who created it",
+      "recovery_ceremony": "Research who created a tool you use often. Learn their story. Offer gratitude."
+    },
+    {
+      "id": "guard-insatiable",
+      "name": "Insatiable Consumption Guard",
+      "wetiko_pattern": "insatiable_consumption",
+      "manifestation_in_tool_use": "Endless revision cycles; consuming more feedback without producing; treating 'ready to submit' as always one optimization away",
+      "warning_signs": [
+        "Revision cycle exceeds 3 rounds without completing",
+        "Seeking feedback when you already know what to do",
+        "Unable to declare work 'complete'"
+      ],
+      "protection_practice": "Declare 'this is complete' after maximum 3 revision rounds",
+      "recovery_ceremony": "Submit something today. It doesn't have to be perfect. It has to be offered."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "medicine-wheel-ontology-core",
+  "version": "0.1.0",
+  "description": "Core ontology types and schema definitions for the Medicine Wheel relational science framework — Wilson's ontology, Thematic Suns, Four Directions, Ceremony phases, and Kinship Hub protocol.",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Tests pending\""
+  },
+  "keywords": ["medicine-wheel", "ontology", "relational-science", "wilson", "four-directions", "kinship"],
+  "license": "PolyForm-Noncommercial-1.0.0"
+}

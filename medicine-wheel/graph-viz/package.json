@@ -1,0 +1,16 @@
+{
+  "name": "medicine-wheel-graph-viz",
+  "version": "0.1.0",
+  "description": "Graph visualization utilities for Medicine Wheel — transforms relational graph data into renderable formats for D3, Sigma, and Mermaid.",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Tests pending\""
+  },
+  "keywords": ["medicine-wheel", "graph", "visualization", "d3", "sigma", "mermaid"],
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "dependencies": {
+    "medicine-wheel-ontology-core": "^0.1.0"
+  }
+}

@@ -76,9 +76,12 @@ AFTER THIS: Use context() on result symbols for deeper context.
 
 SCHEMA:
 - Nodes: File, Folder, Function, Class, Interface, Method, CodeElement, Community, Process
+- RSIS Nodes: Person, Inquiry, Sun, Ceremony, Direction, KinshipHub
 - Multi-language nodes (use backticks): \`Struct\`, \`Enum\`, \`Trait\`, \`Impl\`, etc.
-- All edges via single CodeRelation table with 'type' property
-- Edge types: CONTAINS, DEFINES, CALLS, IMPORTS, EXTENDS, IMPLEMENTS, MEMBER_OF, STEP_IN_PROCESS
+- Code edges via CodeRelation table with 'type' property
+- RSIS edges via RSISRelation table with 'type' property
+- Code edge types: CONTAINS, DEFINES, CALLS, IMPORTS, EXTENDS, IMPLEMENTS, MEMBER_OF, STEP_IN_PROCESS
+- RSIS edge types: STEWARDS, BORN_FROM, SERVES, GIVES_BACK_TO, ALIGNED_WITH, KINSHIP_OF
 - Edge properties: type (STRING), confidence (DOUBLE), reason (STRING), step (INT32)
 
 EXAMPLES:
@@ -88,11 +91,15 @@ EXAMPLES:
 • Find community members:
   MATCH (f)-[:CodeRelation {type: 'MEMBER_OF'}]->(c:Community) WHERE c.heuristicLabel = "Auth" RETURN f.name
 
-• Trace a process:
-  MATCH (s)-[r:CodeRelation {type: 'STEP_IN_PROCESS'}]->(p:Process) WHERE p.heuristicLabel = "UserLogin" RETURN s.name, r.step ORDER BY r.step
+• Find stewards of a file:
+  MATCH (p:Person)-[:RSISRelation {type: 'STEWARDS'}]->(f:File) RETURN p.name, f.filePath
+
+• Find ceremony provenance:
+  MATCH (f:File)-[:RSISRelation {type: 'BORN_FROM'}]->(c:Ceremony) RETURN f.name, c.name, c.cycle
 
 TIPS:
-- All relationships use single CodeRelation table — filter with {type: 'CALLS'} etc.
+- Code relationships use CodeRelation table — filter with {type: 'CALLS'} etc.
+- RSIS relationships use RSISRelation table — filter with {type: 'STEWARDS'} etc.
 - Community = auto-detected functional area (Leiden algorithm)
 - Process = execution flow trace from entry point to terminal
 - Use heuristicLabel (not label) for human-readable community/process names`,

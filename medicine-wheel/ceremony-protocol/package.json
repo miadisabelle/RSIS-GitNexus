@@ -1,0 +1,16 @@
+{
+  "name": "medicine-wheel-ceremony-protocol",
+  "version": "0.1.0",
+  "description": "Ceremony lifecycle protocol for Medicine Wheel — manages ceremony state, phase transitions, governance enforcement, and ceremonial review workflows.",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Tests pending\""
+  },
+  "keywords": ["medicine-wheel", "ceremony", "protocol", "governance", "kaupapa-maori"],
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "dependencies": {
+    "medicine-wheel-ontology-core": "^0.1.0"
+  }
+}

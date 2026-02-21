@@ -1,0 +1,16 @@
+{
+  "name": "medicine-wheel-relational-query",
+  "version": "0.1.0",
+  "description": "Relational query interface for Medicine Wheel — queries code knowledge graphs through relational science lenses (ceremonies, kinship, reciprocity, directions).",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Tests pending\""
+  },
+  "keywords": ["medicine-wheel", "query", "relational-science", "knowledge-graph", "kinship"],
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "dependencies": {
+    "medicine-wheel-ontology-core": "^0.1.0"
+  }
+}

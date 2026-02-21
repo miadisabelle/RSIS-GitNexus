@@ -47,3 +47,4 @@ assets/
 
 # Generated files (should not be indexed)
 repomix-output*
+.hch/

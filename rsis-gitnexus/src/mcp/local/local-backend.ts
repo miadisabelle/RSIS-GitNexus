@@ -17,6 +17,29 @@ import {
   type RegistryEntry,
 } from '../../storage/repo-manager.js';
 import { loadGovernanceConfig, checkGovernance, requiresCeremony, formatGovernanceWarning } from '../../core/rsis/governance.js';
+// Medicine Wheel package imports
+import {
+  queryStewards,
+  queryCeremonyProvenance,
+  queryInquiries,
+  queryKinshipHubs,
+  queryKinshipRelations,
+  queryDirectionAlignment,
+  queryReciprocityFlows,
+} from 'medicine-wheel-relational-query';
+import {
+  generateProvenanceNarrative,
+  generateReciprocityObservation,
+  generateDirectionObservation,
+} from 'medicine-wheel-narrative-engine';
+import {
+  toKinshipGraphLayout,
+  toMermaidDiagram,
+} from 'medicine-wheel-graph-viz';
+import type {
+  KinshipHubInfo,
+  KinshipRelation,
+} from 'medicine-wheel-ontology-core';
 // AI context generation is CLI-only (rsis-gitnexus analyze)
 // import { generateAIContextFiles } from '../../cli/ai-context.js';
 
@@ -1533,10 +1556,7 @@ export class LocalBackend {
 
     if (include.includes('ceremonies')) {
       try {
-        const rows = await executeQuery(repo.id, `
-          MATCH (n {id: '${escaped}'})-[:RSISRelation {type: 'BORN_FROM'}]->(c:Ceremony)
-          RETURN c.id AS id, c.name AS name, c.hostSun AS hostSun, c.cycle AS cycle, c.phase AS phase
-        `);
+        const rows = await executeQuery(repo.id, queryCeremonyProvenance(symId));
         rsis.ceremonies = rows.map((r: any) => ({
           id: r.id || r[0], name: r.name || r[1], hostSun: r.hostSun || r[2],
           cycle: r.cycle || r[3], phase: r.phase || r[4],
@@ -1546,10 +1566,7 @@ export class LocalBackend {
 
     if (include.includes('inquiries')) {
       try {
-        const rows = await executeQuery(repo.id, `
-          MATCH (n {id: '${escaped}'})-[:RSISRelation {type: 'SERVES'}]->(i:Inquiry)
-          RETURN i.id AS id, i.name AS name, i.sun AS sun, i.coreQuestion AS coreQuestion
-        `);
+        const rows = await executeQuery(repo.id, queryInquiries(symId));
         rsis.inquiries = rows.map((r: any) => ({
           id: r.id || r[0], name: r.name || r[1], sun: r.sun || r[2],
           coreQuestion: r.coreQuestion || r[3],
@@ -1559,10 +1576,7 @@ export class LocalBackend {
 
     if (include.includes('stewards')) {
       try {
-        const rows = await executeQuery(repo.id, `
-          MATCH (p:Person)-[:RSISRelation {type: 'STEWARDS'}]->(n {id: '${escaped}'})
-          RETURN p.id AS id, p.name AS name, p.email AS email, p.roles AS roles
-        `);
+        const rows = await executeQuery(repo.id, queryStewards(symId));
         rsis.stewards = rows.map((r: any) => ({
           id: r.id || r[0], name: r.name || r[1], email: r.email || r[2],
           roles: r.roles || r[3],
@@ -1592,10 +1606,7 @@ export class LocalBackend {
 
     if (include.includes('directions')) {
       try {
-        const rows = await executeQuery(repo.id, `
-          MATCH (n {id: '${escaped}'})-[:RSISRelation {type: 'ALIGNED_WITH'}]->(d:Direction)
-          RETURN d.name AS name, d.focus AS focus
-        `);
+        const rows = await executeQuery(repo.id, queryDirectionAlignment(symId));
         rsis.direction_alignment = rows.length > 0 ? {
           direction: rows[0].name || rows[0][0],
           focus: rows[0].focus || rows[0][1],
@@ -1621,11 +1632,7 @@ export class LocalBackend {
     // Query reciprocity flows from GIVES_BACK_TO edges
     let flows: any[] = [];
     try {
-      const rows = await executeQuery(repo.id, `
-        MATCH (p:Person)-[r:RSISRelation {type: 'GIVES_BACK_TO'}]->(target)
-        RETURN p.name AS from_name, labels(target)[0] AS target_type, target.name AS to_name, r.reason AS reason
-        LIMIT 50
-      `);
+      const rows = await executeQuery(repo.id, queryReciprocityFlows());
       flows = rows.map((r: any) => ({
         from: r.from_name || r[0],
         to: r.to_name || r[2],
@@ -1649,19 +1656,14 @@ export class LocalBackend {
       }));
     } catch { /* no stewardship data */ }
 
-    // Generate prompts — framed as invitations, never performance metrics
-    const prompts: string[] = [];
-    if (flows.length === 0 && stewardship.length === 0) {
-      prompts.push('No reciprocity data has been populated yet. Consider running rsis-gitnexus analyze with RSIS mode enabled.');
-    } else if (stewardship.length > 0) {
-      prompts.push(`${stewardship.length} steward(s) identified. This area invites reflection on how stewardship is distributed.`);
-    }
+    // Generate observation — framed as invitation, never performance metric
+    const observation = generateReciprocityObservation(stewardship.length, flows.length);
 
     return {
       scope,
       flows,
       stewardship,
-      prompts,
+      observation,
       framing: 'Results are invitations for ceremonial attention, not performance evaluations.',
     };
   }
@@ -1700,11 +1702,7 @@ export class LocalBackend {
     // Query ceremony lineage via BORN_FROM edges
     let lineage: any[] = [];
     try {
-      const rows = await executeQuery(repo.id, `
-        MATCH (n {id: '${symId}'})-[:RSISRelation {type: 'BORN_FROM'}]->(c:Ceremony)
-        RETURN c.id AS id, c.name AS name, c.hostSun AS hostSun, c.cycle AS cycle, c.phase AS phase, c.intention AS intention
-        ORDER BY c.cycle
-      `);
+      const rows = await executeQuery(repo.id, queryCeremonyProvenance(symId));
       lineage = rows.map((r: any) => ({
         ceremonyId: r.id || r[0],
         ceremonyName: r.name || r[1],
@@ -1718,10 +1716,7 @@ export class LocalBackend {
     // Query inquiry lineage via SERVES edges
     let inquiries: any[] = [];
     try {
-      const rows = await executeQuery(repo.id, `
-        MATCH (n {id: '${symId}'})-[:RSISRelation {type: 'SERVES'}]->(i:Inquiry)
-        RETURN i.id AS id, i.name AS name, i.sun AS sun, i.coreQuestion AS coreQuestion
-      `);
+      const rows = await executeQuery(repo.id, queryInquiries(symId));
       inquiries = rows.map((r: any) => ({
         id: r.id || r[0], name: r.name || r[1],
         sun: r.sun || r[2], coreQuestion: r.coreQuestion || r[3],
@@ -1731,35 +1726,15 @@ export class LocalBackend {
     // Query stewardship chain
     let stewardship_chain: any[] = [];
     try {
-      const rows = await executeQuery(repo.id, `
-        MATCH (p:Person)-[:RSISRelation {type: 'STEWARDS'}]->(n {id: '${symId}'})
-        RETURN p.name AS name, p.roles AS roles
-      `);
+      const rows = await executeQuery(repo.id, queryStewards(symId));
       stewardship_chain = rows.map((r: any) => ({
-        name: r.name || r[0], roles: r.roles || r[1],
+        name: r.name || r[1], roles: r.roles || r[3],
       }));
     } catch { /* no stewards */ }
 
-    // Generate narrative
+    // Generate narrative using medicine-wheel-narrative-engine
     const symName = sym.name || sym[1];
-    let narrative = `"${symName}" `;
-    if (lineage.length > 0) {
-      const first = lineage[0];
-      narrative += `was born in the ${first.sun || 'Unknown'} Sun during cycle ${first.cycle || 'unknown'}`;
-      if (lineage.length > 1) {
-        const last = lineage[lineage.length - 1];
-        narrative += `, most recently touched under ${last.sun || 'Unknown'} during cycle ${last.cycle || 'unknown'}`;
-      }
-      narrative += '.';
-    } else {
-      narrative += 'has no recorded ceremonial lineage yet.';
-    }
-    if (inquiries.length > 0) {
-      narrative += ` It serves ${inquiries.length} ${inquiries.length === 1 ? 'inquiry' : 'inquiries'}: ${inquiries.map(i => i.name).join(', ')}.`;
-    }
-    if (stewardship_chain.length > 0) {
-      narrative += ` Stewarded by: ${stewardship_chain.map(s => s.name).join(', ')}.`;
-    }
+    const narrative = generateProvenanceNarrative(symName, lineage, inquiries, stewardship_chain);
 
     return {
       target: { uid: sym.id || sym[0], name: symName, type: sym.type || sym[2], filePath: sym.filePath || sym[3] },
@@ -1783,12 +1758,7 @@ export class LocalBackend {
     // Query all kinship hubs
     let hubs: any[] = [];
     try {
-      const rows = await executeQuery(repo.id, `
-        MATCH (k:KinshipHub)
-        RETURN k.id AS id, k.name AS name, k.filePath AS filePath, k.identity AS identity,
-               k.lineage AS lineage, k.humanAccountabilities AS humanAccountabilities,
-               k.moreThanHumanAccountabilities AS moreThanHumanAccountabilities, k.boundaries AS boundaries
-      `);
+      const rows = await executeQuery(repo.id, queryKinshipHubs());
       hubs = rows.map((r: any) => ({
         id: r.id || r[0], name: r.name || r[1], path: r.filePath || r[2],
         identity: r.identity || r[3], lineage: r.lineage || r[4],
@@ -1801,10 +1771,7 @@ export class LocalBackend {
     // Query kinship relations
     let relations: any[] = [];
     try {
-      const rows = await executeQuery(repo.id, `
-        MATCH (a:KinshipHub)-[r:RSISRelation {type: 'KINSHIP_OF'}]->(b:KinshipHub)
-        RETURN a.name AS from_name, b.name AS to_name, r.reason AS reason
-      `);
+      const rows = await executeQuery(repo.id, queryKinshipRelations());
       relations = rows.map((r: any) => ({
         from: r.from_name || r[0], to: r.to_name || r[1], reason: r.reason || r[2],
       }));
@@ -1820,6 +1787,11 @@ export class LocalBackend {
       hubs,
       relations,
       boundaries: hubs.flatMap(h => (h.boundaries || []).map((b: string) => ({ hub: h.name, boundary: b }))),
+      // graph-viz renderable format
+      graph: toKinshipGraphLayout(
+        hubs.map(h => ({ path: h.path || '', identity: h.identity || '', lineage: h.lineage || '', humanAccountabilities: h.humanAccountabilities || [], moreThanHumanAccountabilities: h.moreThanHumanAccountabilities || [], boundaries: h.boundaries || [] }) as KinshipHubInfo),
+        relations.map(r => ({ from: r.from, to: r.to, type: r.reason || 'kinship' }) as KinshipRelation),
+      ),
     };
   }
 
@@ -1882,13 +1854,8 @@ export class LocalBackend {
       north: Math.round((counts.north / total) * 100),
     };
 
-    // Generate observation
-    const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-    const dominant = sorted[0][0];
-    const weakest = sorted[sorted.length - 1][0];
-    const directionEmoji: Record<string, string> = { east: '🌸', south: '🧠', west: '⚡', north: '🕸️' };
-    const observation = `Recent work is concentrated in ${dominant} ${directionEmoji[dominant]} (${distribution[dominant as keyof typeof distribution]}%). ` +
-      `The ecosystem may benefit from a ${weakest} ${directionEmoji[weakest]} ceremony.`;
+    // Generate observation using medicine-wheel-narrative-engine
+    const observation = generateDirectionObservation(distribution, total);
 
     return { distribution, details, observation, since, total_commits: total };
   }

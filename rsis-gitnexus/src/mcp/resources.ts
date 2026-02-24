@@ -83,6 +83,31 @@ export function getResourceTemplates(): ResourceTemplate[] {
       description: 'Step-by-step execution trace',
       mimeType: 'text/yaml',
     },
+    // RSIS relational science resources
+    {
+      uriTemplate: 'rsis-gitnexus://repo/{name}/wisdom-ledger',
+      name: 'Wisdom Ledger',
+      description: 'Links inquiries, ceremonies, code artifacts, and integrated artifacts across time',
+      mimeType: 'text/yaml',
+    },
+    {
+      uriTemplate: 'rsis-gitnexus://repo/{name}/stewards-compass',
+      name: "Steward's Compass",
+      description: 'Accumulated directional teachings, cautionary patterns, and onboarding narrative',
+      mimeType: 'text/yaml',
+    },
+    {
+      uriTemplate: 'rsis-gitnexus://repo/{name}/kinship',
+      name: 'Kinship Graph',
+      description: 'Full kinship graph for the repository — hubs, relations, and boundaries',
+      mimeType: 'text/yaml',
+    },
+    {
+      uriTemplate: 'rsis-gitnexus://repo/{name}/medicine-wheel-view',
+      name: 'Medicine Wheel View',
+      description: 'Suns, Directions, reciprocity, and kinship for Medicine Wheel UI visualization',
+      mimeType: 'application/json',
+    },
   ];
 }
 
@@ -106,6 +131,14 @@ function parseUri(uri: string): { repoName?: string; resourceType: string; param
       return { repoName, resourceType: 'process', param: decodeURIComponent(rest.replace('process/', '')) };
     }
 
+    return { repoName, resourceType: rest };
+  }
+
+  // RSIS resource URIs: rsis://repo/{name}/...
+  const rsisMatch = uri.match(/^rsis:\/\/repo\/([^/]+)\/(.+)$/);
+  if (rsisMatch) {
+    const repoName = decodeURIComponent(rsisMatch[1]);
+    const rest = rsisMatch[2];
     return { repoName, resourceType: rest };
   }
 
@@ -143,6 +176,15 @@ export async function readResource(uri: string, backend: LocalBackend): Promise<
       return getClusterDetailResource(parsed.param!, backend, repoName);
     case 'process':
       return getProcessDetailResource(parsed.param!, backend, repoName);
+    // RSIS relational science resources
+    case 'wisdom-ledger':
+      return getWisdomLedgerResource(backend, repoName);
+    case 'stewards-compass':
+      return getStewardsCompassResource(backend, repoName);
+    case 'kinship':
+      return getKinshipResource(backend, repoName);
+    case 'medicine-wheel-view':
+      return getMedicineWheelViewResource(backend, repoName);
     default:
       throw new Error(`Unknown resource: ${uri}`);
   }
@@ -223,6 +265,12 @@ async function getContextResource(backend: LocalBackend, repoName?: string): Pro
   lines.push('  - rename: Multi-file coordinated rename with confidence tags');
   lines.push('  - cypher: Raw graph queries');
   lines.push('  - list_repos: Discover all indexed repositories');
+  lines.push('  # RSIS relational science tools');
+  lines.push('  - relational_context: 360-degree relational view (ceremonies, inquiries, stewards, kinship)');
+  lines.push('  - reciprocity_view: Reciprocity patterns and balance across the codebase');
+  lines.push('  - ceremony_provenance: Trace code artifacts back to ceremonial origins');
+  lines.push('  - kinship_map: Kinship relationships between directories and repos');
+  lines.push('  - direction_alignment: Four Directions analysis of recent changes');
   lines.push('');
   lines.push('re_index: Run `npx rsis-gitnexus analyze` in terminal if data is stale');
   lines.push('');
@@ -232,6 +280,11 @@ async function getContextResource(backend: LocalBackend, repoName?: string): Pro
   lines.push(`  - rsis-gitnexus://repo/${context.projectName}/processes: All execution flows`);
   lines.push(`  - rsis-gitnexus://repo/${context.projectName}/cluster/{name}: Module details`);
   lines.push(`  - rsis-gitnexus://repo/${context.projectName}/process/{name}: Process trace`);
+  lines.push('  # RSIS relational science resources');
+  lines.push(`  - rsis-gitnexus://repo/${context.projectName}/wisdom-ledger: Inquiry-ceremony-artifact links`);
+  lines.push(`  - rsis-gitnexus://repo/${context.projectName}/stewards-compass: Directional teachings and patterns`);
+  lines.push(`  - rsis-gitnexus://repo/${context.projectName}/kinship: Full kinship graph`);
+  lines.push(`  - rsis-gitnexus://repo/${context.projectName}/medicine-wheel-view: Medicine Wheel UI data feed`);
   
   return lines.join('\n');
 }
@@ -321,6 +374,14 @@ nodes:
 
 additional_node_types: "Multi-language: Struct, Enum, Macro, Typedef, Union, Namespace, Trait, Impl, TypeAlias, Const, Static, Property, Record, Delegate, Annotation, Constructor, Template, Module (use backticks in queries: \`Struct\`, \`Enum\`, etc.)"
 
+rsis_nodes:
+  - Person: Human contributor with relational identity (steward, contributor, elder, firekeeper)
+  - Inquiry: Living question being explored across the ecosystem
+  - Sun: One of six Thematic Suns (NovelEmergence, CreativeActualization, WovenMeaning, FirstCause, EmbodiedPractice, SustainedPresence)
+  - Ceremony: Bounded ceremonial cycle with four phases (Opening, Council, Integration, Closure)
+  - Direction: One of the Four Directions (East/South/West/North)
+  - KinshipHub: Directory or repository treated as a relational accountability node
+
 relationships:
   - CONTAINS: File/Folder contains child
   - DEFINES: File defines a symbol
@@ -331,7 +392,15 @@ relationships:
   - MEMBER_OF: Symbol belongs to community
   - STEP_IN_PROCESS: Symbol is step N in process
 
-relationship_table: "All relationships use a single CodeRelation table with a 'type' property. Properties: type (STRING), confidence (DOUBLE), reason (STRING), step (INT32)"
+rsis_relationships:
+  - STEWARDS: Person → File/KinshipHub (who holds authority over code/knowledge)
+  - BORN_FROM: File/Function/Class → Inquiry/Ceremony (provenance)
+  - SERVES: File/Function/Class → Inquiry/Sun (what does this code serve?)
+  - GIVES_BACK_TO: Person → Community/KinshipHub (reciprocity tracking)
+  - ALIGNED_WITH: File → Direction (directional alignment)
+  - KINSHIP_OF: KinshipHub → KinshipHub (relational links between hubs)
+
+relationship_table: "Code relationships use CodeRelation table. RSIS relationships use RSISRelation table. Both have properties: type (STRING), confidence (DOUBLE), reason (STRING), step (INT32)"
 
 example_queries:
   find_callers: |
@@ -348,6 +417,14 @@ example_queries:
     WHERE p.heuristicLabel = "LoginFlow"
     RETURN s.name, r.step
     ORDER BY r.step
+  
+  find_stewards: |
+    MATCH (p:Person)-[:RSISRelation {type: 'STEWARDS'}]->(f:File)
+    RETURN p.name, f.filePath
+
+  find_ceremony_provenance: |
+    MATCH (f:File)-[:RSISRelation {type: 'BORN_FROM'}]->(c:Ceremony)
+    RETURN f.name, c.name, c.cycle, c.phase
 `;
 }
 
@@ -458,6 +535,11 @@ async function getSetupResource(backend: LocalBackend): Promise<string> {
       '| `rename` | Multi-file coordinated rename with confidence-tagged edits |',
       '| `cypher` | Raw graph queries |',
       '| `list_repos` | Discover indexed repos |',
+      '| `relational_context` | 360-degree relational view — ceremonies, inquiries, stewards, kinship |',
+      '| `reciprocity_view` | Reciprocity patterns and balance across the codebase |',
+      '| `ceremony_provenance` | Trace code artifacts back to ceremonial origins |',
+      '| `kinship_map` | Kinship relationships between directories and repos |',
+      '| `direction_alignment` | Four Directions analysis of recent changes |',
       '',
       '## Resources',
       '',
@@ -465,9 +547,233 @@ async function getSetupResource(backend: LocalBackend): Promise<string> {
       `- \`rsis-gitnexus://repo/${repo.name}/clusters\` — All functional areas`,
       `- \`rsis-gitnexus://repo/${repo.name}/processes\` — All execution flows`,
       `- \`rsis-gitnexus://repo/${repo.name}/schema\` — Graph schema for Cypher`,
+      `- \`rsis-gitnexus://repo/${repo.name}/wisdom-ledger\` — Inquiry-ceremony-artifact links`,
+      `- \`rsis-gitnexus://repo/${repo.name}/stewards-compass\` — Directional teachings and patterns`,
+      `- \`rsis-gitnexus://repo/${repo.name}/kinship\` — Full kinship graph`,
+      `- \`rsis-gitnexus://repo/${repo.name}/medicine-wheel-view\` — Medicine Wheel UI data feed`,
     ];
     sections.push(lines.join('\n'));
   }
   
   return sections.join('\n\n---\n\n');
+}
+
+// ─── RSIS Resource Implementations ────────────────────────────────────
+
+/**
+ * Wisdom Ledger — links inquiries, ceremonies, code artifacts, and integrated artifacts
+ */
+async function getWisdomLedgerResource(backend: LocalBackend, repoName?: string): Promise<string> {
+  try {
+    const repo = await backend.resolveRepo(repoName);
+
+    // Query inquiries from the graph via callTool
+    let inquiries: any[] = [];
+    try {
+      const result = await backend.callTool('cypher', {
+        query: 'MATCH (i:Inquiry) RETURN i.id, i.name, i.sun, i.coreQuestion, i.status',
+        repo: repo.name,
+      });
+      if (result?.rows) inquiries = result.rows;
+    } catch { /* No inquiries yet */ }
+
+    // Query ceremonies from the graph
+    let ceremonies: any[] = [];
+    try {
+      const result = await backend.callTool('cypher', {
+        query: 'MATCH (c:Ceremony) RETURN c.id, c.name, c.hostSun, c.cycle, c.phase',
+        repo: repo.name,
+      });
+      if (result?.rows) ceremonies = result.rows;
+    } catch { /* No ceremonies yet */ }
+
+    const lines: string[] = [
+      '# Wisdom Ledger',
+      '',
+      `repo: "${repo.name}"`,
+      '',
+      'inquiries:',
+    ];
+
+    if (inquiries.length === 0) {
+      lines.push('  # No inquiries registered yet. Populate via .rsis/config.json or graph ingestion.');
+    } else {
+      for (const inq of inquiries) {
+        lines.push(`  - name: "${inq['i.name'] || ''}"`, `    sun: "${inq['i.sun'] || ''}"`, `    status: "${inq['i.status'] || ''}"`);
+      }
+    }
+
+    lines.push('', 'ceremonies:');
+    if (ceremonies.length === 0) {
+      lines.push('  # No ceremonies registered yet.');
+    } else {
+      for (const cer of ceremonies) {
+        lines.push(`  - name: "${cer['c.name'] || ''}"`, `    sun: "${cer['c.hostSun'] || ''}"`, `    cycle: "${cer['c.cycle'] || ''}"`);
+      }
+    }
+
+    return lines.join('\n');
+  } catch (err: any) {
+    return `error: ${err.message}`;
+  }
+}
+
+/**
+ * Steward's Compass — accumulated directional teachings and patterns
+ */
+async function getStewardsCompassResource(backend: LocalBackend, repoName?: string): Promise<string> {
+  const lines: string[] = [
+    "# Steward's Compass",
+    '',
+    'directions:',
+    '  east:',
+    '    focus: "Vision, intention, emergence"',
+    '    guidance: "What wants to emerge? What seeds are being planted?"',
+    '  south:',
+    '    focus: "Architecture, structure, planning"',
+    '    guidance: "What structures support the vision? What patterns serve advancement?"',
+    '  west:',
+    '    focus: "Implementation, creation, manifestation"',
+    '    guidance: "What is being built? How does creation serve the inquiries?"',
+    '  north:',
+    '    focus: "Reflection, integration, wisdom"',
+    '    guidance: "What has been learned? What reciprocity needs tending?"',
+  ];
+
+  // Try to add stewardship data from the graph
+  try {
+    const repo = await backend.resolveRepo(repoName);
+    const result = await backend.callTool('cypher', {
+      query: 'MATCH (p:Person)-[:RSISRelation {type: "STEWARDS"}]->(target) RETURN p.name AS steward, labels(target)[0] AS type, COUNT(*) AS count ORDER BY count DESC LIMIT 10',
+      repo: repo.name,
+    });
+    if (result?.rows || (Array.isArray(result) && result.length > 0)) {
+      const rows = result.rows || result;
+      lines.push('', 'stewards:');
+      for (const row of rows) {
+        lines.push(`  - name: "${row.steward || row[0]}" type: "${row.type || row[1]}" count: ${row.count || row[2]}`);
+      }
+    }
+  } catch { /* no stewardship data */ }
+
+  return lines.join('\n');
+}
+
+/**
+ * Kinship Graph — full kinship hubs and relations
+ */
+async function getKinshipResource(backend: LocalBackend, repoName?: string): Promise<string> {
+  try {
+    const repo = await backend.resolveRepo(repoName);
+
+    // Query kinship hubs
+    let hubs: any[] = [];
+    try {
+      const result = await backend.callTool('cypher', {
+        query: 'MATCH (k:KinshipHub) RETURN k.id, k.name, k.filePath, k.identity, k.lineage',
+        repo: repo.name,
+      });
+      if (result?.rows) hubs = result.rows;
+    } catch { /* No kinship hubs yet */ }
+
+    // Query kinship relations
+    let relations: any[] = [];
+    try {
+      const result = await backend.callTool('cypher', {
+        query: 'MATCH (a:KinshipHub)-[r:RSISRelation {type: "KINSHIP_OF"}]->(b:KinshipHub) RETURN a.name, b.name, r.reason',
+        repo: repo.name,
+      });
+      if (result?.rows) relations = result.rows;
+    } catch { /* No relations yet */ }
+
+    const lines: string[] = [
+      '# Kinship Graph',
+      '',
+      `repo: "${repo.name}"`,
+      '',
+      'hubs:',
+    ];
+
+    if (hubs.length === 0) {
+      lines.push('  # No kinship hubs discovered. Add KINSHIP.md files to your repo.');
+    } else {
+      for (const hub of hubs) {
+        lines.push(`  - name: "${hub['k.name'] || ''}"`, `    path: "${hub['k.filePath'] || ''}"`, `    identity: "${hub['k.identity'] || ''}"`);
+      }
+    }
+
+    lines.push('', 'relations:');
+    if (relations.length === 0) {
+      lines.push('  # No kinship relations established yet.');
+    } else {
+      for (const rel of relations) {
+        lines.push(`  - from: "${rel['a.name'] || ''}" to: "${rel['b.name'] || ''}" reason: "${rel['r.reason'] || ''}"`);
+      }
+    }
+
+    return lines.join('\n');
+  } catch (err: any) {
+    return `error: ${err.message}`;
+  }
+}
+
+/**
+ * Medicine Wheel View — JSON data feed for Medicine Wheel UI
+ */
+async function getMedicineWheelViewResource(backend: LocalBackend, repoName?: string): Promise<string> {
+  const view: any = {
+    suns: [
+      { name: 'NovelEmergence', inquiryCount: 0 },
+      { name: 'CreativeActualization', inquiryCount: 0 },
+      { name: 'WovenMeaning', inquiryCount: 0 },
+      { name: 'FirstCause', inquiryCount: 0 },
+      { name: 'EmbodiedPractice', inquiryCount: 0 },
+      { name: 'SustainedPresence', inquiryCount: 0 },
+    ],
+    directions: {
+      east: { count: 0, recent: [] },
+      south: { count: 0, recent: [] },
+      west: { count: 0, recent: [] },
+      north: { count: 0, recent: [] },
+    },
+    reciprocity: { flows: [], balance: [] },
+    kinship: { hubs: [], relations: [] },
+  };
+
+  try {
+    const repo = await backend.resolveRepo(repoName);
+
+    // Try to populate inquiry counts per sun
+    try {
+      const result = await backend.callTool('cypher', {
+        query: "MATCH (i:Inquiry) RETURN i.sun AS sun, COUNT(*) AS cnt",
+        repo: repo.name,
+      });
+      if (result?.rows || Array.isArray(result)) {
+        const rows = result.rows || result;
+        for (const row of rows) {
+          const sun = row.sun || row[0];
+          const cnt = row.cnt || row[1];
+          const entry = view.suns.find((s: any) => s.name === sun);
+          if (entry) entry.inquiryCount = cnt;
+        }
+      }
+    } catch { /* no inquiry data */ }
+
+    // Try to populate kinship hubs
+    try {
+      const result = await backend.callTool('cypher', {
+        query: 'MATCH (k:KinshipHub) RETURN k.name AS name, k.filePath AS filePath, k.identity AS identity',
+        repo: repo.name,
+      });
+      if (result?.rows || Array.isArray(result)) {
+        const rows = result.rows || result;
+        view.kinship.hubs = rows.map((r: any) => ({
+          name: r.name || r[0], path: r.filePath || r[1], identity: r.identity || r[2],
+        }));
+      }
+    } catch { /* no kinship data */ }
+  } catch { /* repo not available */ }
+
+  return JSON.stringify(view, null, 2);
 }

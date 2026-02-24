@@ -53,22 +53,25 @@ export interface EmbeddingProgress {
  * Configuration for the embedding pipeline
  */
 export interface EmbeddingConfig {
-  /** Model identifier for transformers.js */
+  /** Model identifier for transformers.js (ignored when device='ollama') */
   modelId: string;
   /** Number of nodes to embed in each batch */
   batchSize: number;
   /** Embedding vector dimensions */
   dimensions: number;
-  /** Device to use for inference: 'auto' tries GPU first (DirectML on Windows, CUDA on Linux), falls back to CPU */
-  device: 'auto' | 'dml' | 'cuda' | 'cpu' | 'wasm';
+  /** Device to use for inference: 'auto' tries GPU first, 'ollama' uses local Ollama server */
+  device: 'auto' | 'dml' | 'cuda' | 'cpu' | 'wasm' | 'ollama';
   /** Maximum characters of code snippet to include */
   maxSnippetLength: number;
+  /** Ollama model name (e.g. 'mxbai-embed-large:latest'). Only used when device='ollama'. */
+  ollamaModel?: string;
+  /** Ollama server base URL. Defaults to 'http://localhost:11434'. */
+  ollamaBaseUrl?: string;
 }
 
 /**
  * Default embedding configuration
- * Uses snowflake-arctic-embed-xs for browser efficiency
- * Tries WebGPU first (fast), user can choose WASM fallback if unavailable
+ * Uses snowflake-arctic-embed-xs for transformers.js backend
  */
 export const DEFAULT_EMBEDDING_CONFIG: EmbeddingConfig = {
   modelId: 'Snowflake/snowflake-arctic-embed-xs',
@@ -76,6 +79,20 @@ export const DEFAULT_EMBEDDING_CONFIG: EmbeddingConfig = {
   dimensions: 384,
   device: 'auto',
   maxSnippetLength: 500,
+};
+
+/**
+ * Ollama embedding configuration preset
+ * Uses mxbai-embed-large (1024 dims) via local Ollama server
+ */
+export const OLLAMA_EMBEDDING_CONFIG: EmbeddingConfig = {
+  modelId: 'mxbai-embed-large:latest',
+  batchSize: 32,
+  dimensions: 1024,
+  device: 'ollama',
+  maxSnippetLength: 500,
+  ollamaModel: 'mxbai-embed-large:latest',
+  ollamaBaseUrl: 'http://localhost:11434',
 };
 
 /**

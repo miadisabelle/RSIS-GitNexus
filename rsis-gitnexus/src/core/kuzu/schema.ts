@@ -16,7 +16,9 @@ export const NODE_TABLES = [
   'File', 'Folder', 'Function', 'Class', 'Interface', 'Method', 'CodeElement', 'Community', 'Process',
   // Multi-language support
   'Struct', 'Enum', 'Macro', 'Typedef', 'Union', 'Namespace', 'Trait', 'Impl',
-  'TypeAlias', 'Const', 'Static', 'Property', 'Record', 'Delegate', 'Annotation', 'Constructor', 'Template', 'Module'
+  'TypeAlias', 'Const', 'Static', 'Property', 'Record', 'Delegate', 'Annotation', 'Constructor', 'Template', 'Module',
+  // RSIS relational science entities
+  'Person', 'Inquiry', 'Sun', 'Ceremony', 'Direction', 'KinshipHub',
 ] as const;
 export type NodeTableName = typeof NODE_TABLES[number];
 
@@ -26,7 +28,11 @@ export type NodeTableName = typeof NODE_TABLES[number];
 export const REL_TABLE_NAME = 'CodeRelation';
 
 // Valid relation types
-export const REL_TYPES = ['CONTAINS', 'DEFINES', 'IMPORTS', 'CALLS', 'EXTENDS', 'IMPLEMENTS', 'MEMBER_OF', 'STEP_IN_PROCESS'] as const;
+export const REL_TYPES = [
+  'CONTAINS', 'DEFINES', 'IMPORTS', 'CALLS', 'EXTENDS', 'IMPLEMENTS', 'MEMBER_OF', 'STEP_IN_PROCESS',
+  // RSIS relational science edges
+  'STEWARDS', 'BORN_FROM', 'SERVES', 'GIVES_BACK_TO', 'ALIGNED_WITH', 'KINSHIP_OF',
+] as const;
 export type RelType = typeof REL_TYPES[number];
 
 // ============================================================================
@@ -146,6 +152,75 @@ CREATE NODE TABLE Process (
   communities STRING[],
   entryPointId STRING,
   terminalId STRING,
+  PRIMARY KEY (id)
+)`;
+
+// ============================================================================
+// RSIS RELATIONAL SCIENCE NODE TABLE SCHEMAS
+// ============================================================================
+
+export const PERSON_SCHEMA = `
+CREATE NODE TABLE Person (
+  id STRING,
+  name STRING,
+  email STRING,
+  roles STRING[],
+  PRIMARY KEY (id)
+)`;
+
+export const INQUIRY_SCHEMA = `
+CREATE NODE TABLE Inquiry (
+  id STRING,
+  name STRING,
+  sun STRING,
+  coreQuestion STRING,
+  status STRING,
+  PRIMARY KEY (id)
+)`;
+
+export const SUN_SCHEMA = `
+CREATE NODE TABLE Sun (
+  id STRING,
+  name STRING,
+  principle STRING,
+  coreQuestion STRING,
+  valueStatement STRING,
+  PRIMARY KEY (id)
+)`;
+
+export const CEREMONY_SCHEMA = `
+CREATE NODE TABLE Ceremony (
+  id STRING,
+  name STRING,
+  hostSun STRING,
+  cycle STRING,
+  phase STRING,
+  startDate STRING,
+  endDate STRING,
+  intention STRING,
+  PRIMARY KEY (id)
+)`;
+
+export const DIRECTION_SCHEMA = `
+CREATE NODE TABLE Direction (
+  id STRING,
+  name STRING,
+  indigenousName STRING,
+  focus STRING,
+  primaryAgent STRING,
+  PRIMARY KEY (id)
+)`;
+
+export const KINSHIP_HUB_SCHEMA = `
+CREATE NODE TABLE KinshipHub (
+  id STRING,
+  name STRING,
+  filePath STRING,
+  identity STRING,
+  lineage STRING,
+  humanAccountabilities STRING[],
+  moreThanHumanAccountabilities STRING[],
+  boundaries STRING[],
   PRIMARY KEY (id)
 )`;
 
@@ -347,16 +422,55 @@ CREATE REL TABLE ${REL_TABLE_NAME} (
 )`;
 
 // ============================================================================
+// RSIS RELATIONAL SCIENCE RELATION TABLE
+// Separate table for relational science edges (Person, Inquiry, Ceremony, etc.)
+// ============================================================================
+
+export const RSIS_RELATION_SCHEMA = `
+CREATE REL TABLE RSISRelation (
+  FROM Person TO File,
+  FROM Person TO KinshipHub,
+  FROM Person TO Community,
+  FROM File TO Inquiry,
+  FROM File TO Ceremony,
+  FROM File TO Sun,
+  FROM File TO Direction,
+  FROM Function TO Inquiry,
+  FROM Function TO Ceremony,
+  FROM Function TO Sun,
+  FROM Class TO Inquiry,
+  FROM Class TO Ceremony,
+  FROM Class TO Sun,
+  FROM Method TO Inquiry,
+  FROM Method TO Ceremony,
+  FROM Method TO Sun,
+  FROM KinshipHub TO KinshipHub,
+  FROM Inquiry TO Sun,
+  FROM Ceremony TO Sun,
+  FROM Ceremony TO Direction,
+  type STRING,
+  confidence DOUBLE,
+  reason STRING,
+  step INT32
+)`;
+
+// ============================================================================
 // EMBEDDING TABLE SCHEMA
 // Separate table for vector storage to avoid copy-on-write overhead
 // ============================================================================
 
-export const EMBEDDING_SCHEMA = `
+/**
+ * Generate embedding table schema with configurable dimensions.
+ * Default 384 (snowflake-arctic-embed-xs), 1024 for mxbai-embed-large via Ollama.
+ */
+export const getEmbeddingSchema = (dims: number = 384): string => `
 CREATE NODE TABLE ${EMBEDDING_TABLE_NAME} (
   nodeId STRING,
-  embedding FLOAT[384],
+  embedding FLOAT[${dims}],
   PRIMARY KEY (nodeId)
 )`;
+
+export const EMBEDDING_SCHEMA = getEmbeddingSchema(384);
 
 /**
  * Create vector index for semantic search
@@ -400,14 +514,32 @@ export const NODE_SCHEMA_QUERIES = [
   CONSTRUCTOR_SCHEMA,
   TEMPLATE_SCHEMA,
   MODULE_SCHEMA,
+  // RSIS relational science entities
+  PERSON_SCHEMA,
+  INQUIRY_SCHEMA,
+  SUN_SCHEMA,
+  CEREMONY_SCHEMA,
+  DIRECTION_SCHEMA,
+  KINSHIP_HUB_SCHEMA,
 ];
 
 export const REL_SCHEMA_QUERIES = [
   RELATION_SCHEMA,
+  RSIS_RELATION_SCHEMA,
 ];
 
 export const SCHEMA_QUERIES = [
   ...NODE_SCHEMA_QUERIES,
   ...REL_SCHEMA_QUERIES,
   EMBEDDING_SCHEMA,
+];
+
+/**
+ * Get schema queries with configurable embedding dimensions.
+ * Use this when Ollama or another backend changes the vector size.
+ */
+export const getSchemaQueries = (embeddingDims: number = 384): string[] => [
+  ...NODE_SCHEMA_QUERIES,
+  ...REL_SCHEMA_QUERIES,
+  getEmbeddingSchema(embeddingDims),
 ];

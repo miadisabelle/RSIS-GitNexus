@@ -16,6 +16,30 @@ import {
   listRegisteredRepos,
   type RegistryEntry,
 } from '../../storage/repo-manager.js';
+import { loadGovernanceConfig, checkGovernance, requiresCeremony, formatGovernanceWarning } from '../../core/rsis/governance.js';
+// Medicine Wheel package imports
+import {
+  queryStewards,
+  queryCeremonyProvenance,
+  queryInquiries,
+  queryKinshipHubs,
+  queryKinshipRelations,
+  queryDirectionAlignment,
+  queryReciprocityFlows,
+} from 'medicine-wheel-relational-query';
+import {
+  generateProvenanceNarrative,
+  generateReciprocityObservation,
+  generateDirectionObservation,
+} from 'medicine-wheel-narrative-engine';
+import {
+  toKinshipGraphLayout,
+  toMermaidDiagram,
+} from 'medicine-wheel-graph-viz';
+import type {
+  KinshipHubInfo,
+  KinshipRelation,
+} from 'medicine-wheel-ontology-core';
 // AI context generation is CLI-only (rsis-gitnexus analyze)
 // import { generateAIContextFiles } from '../../cli/ai-context.js';
 
@@ -41,6 +65,8 @@ const VALID_NODE_LABELS = new Set([
   'Community', 'Process', 'Struct', 'Enum', 'Macro', 'Typedef', 'Union',
   'Namespace', 'Trait', 'Impl', 'TypeAlias', 'Const', 'Static', 'Property',
   'Record', 'Delegate', 'Annotation', 'Constructor', 'Template', 'Module',
+  // RSIS relational science entities
+  'Person', 'Inquiry', 'Sun', 'Ceremony', 'Direction', 'KinshipHub',
 ]);
 
 export interface CodebaseContext {
@@ -296,6 +322,17 @@ export class LocalBackend {
         return this.context(repo, { name: params?.name, ...params });
       case 'overview':
         return this.overview(repo, params);
+      // RSIS relational science tools
+      case 'relational_context':
+        return this.relationalContext(repo, params);
+      case 'reciprocity_view':
+        return this.reciprocityView(repo, params);
+      case 'ceremony_provenance':
+        return this.ceremonyProvenance(repo, params);
+      case 'kinship_map':
+        return this.kinshipMap(repo, params);
+      case 'direction_alignment':
+        return this.directionAlignment(repo, params);
       default:
         throw new Error(`Unknown tool: ${method}`);
     }
@@ -1073,6 +1110,22 @@ export class LocalBackend {
     const processCount = affectedProcesses.size;
     const risk = processCount === 0 ? 'low' : processCount <= 5 ? 'medium' : processCount <= 15 ? 'high' : 'critical';
     
+    // Check governance for changed files
+    const governanceWarnings: string[] = [];
+    try {
+      const govConfig = await loadGovernanceConfig(repo.repoPath);
+      if (govConfig) {
+        for (const file of changedFiles) {
+          const rule = checkGovernance(file, govConfig);
+          if (rule) {
+            governanceWarnings.push(formatGovernanceWarning(rule));
+          } else if (requiresCeremony(file, govConfig)) {
+            governanceWarnings.push(`⚠️ CEREMONY REQUIRED: Changes to [${file}] require ceremonial review.`);
+          }
+        }
+      }
+    } catch { /* governance config not available */ }
+
     return {
       summary: {
         changed_count: changedSymbols.length,
@@ -1082,6 +1135,7 @@ export class LocalBackend {
       },
       changed_symbols: changedSymbols,
       affected_processes: Array.from(affectedProcesses.values()),
+      ...(governanceWarnings.length > 0 ? { governance_warnings: governanceWarnings } : {}),
     };
   }
 
@@ -1472,6 +1526,338 @@ export class LocalBackend {
         step: s.step || s[3], name: s.name || s[0], type: s.type || s[1], filePath: s.filePath || s[2],
       })),
     };
+  }
+
+  // ─── RSIS Tool Implementations ──────────────────────────────────────
+
+  /**
+   * Relational Context — 360-degree relational view extending context().
+   * Composes with existing context tool, then enriches with RSIS dimensions.
+   */
+  private async relationalContext(repo: RepoHandle, params: {
+    name: string;
+    repo?: string;
+    include?: string[];
+  }): Promise<any> {
+    // Get base context first
+    const baseContext = await this.context(repo, { name: params.name });
+    if (baseContext.error || baseContext.status === 'ambiguous') {
+      return baseContext;
+    }
+
+    const symId = baseContext.symbol?.uid;
+    if (!symId) return baseContext;
+
+    const escaped = symId.replace(/'/g, "''");
+    const include = params.include || ['ceremonies', 'inquiries', 'stewards', 'kinship', 'directions', 'reciprocity'];
+
+    // Enrich with RSIS dimensions
+    const rsis: Record<string, any> = {};
+
+    if (include.includes('ceremonies')) {
+      try {
+        const rows = await executeQuery(repo.id, queryCeremonyProvenance(symId));
+        rsis.ceremonies = rows.map((r: any) => ({
+          id: r.id || r[0], name: r.name || r[1], hostSun: r.hostSun || r[2],
+          cycle: r.cycle || r[3], phase: r.phase || r[4],
+        }));
+      } catch { rsis.ceremonies = []; }
+    }
+
+    if (include.includes('inquiries')) {
+      try {
+        const rows = await executeQuery(repo.id, queryInquiries(symId));
+        rsis.inquiries = rows.map((r: any) => ({
+          id: r.id || r[0], name: r.name || r[1], sun: r.sun || r[2],
+          coreQuestion: r.coreQuestion || r[3],
+        }));
+      } catch { rsis.inquiries = []; }
+    }
+
+    if (include.includes('stewards')) {
+      try {
+        const rows = await executeQuery(repo.id, queryStewards(symId));
+        rsis.stewards = rows.map((r: any) => ({
+          id: r.id || r[0], name: r.name || r[1], email: r.email || r[2],
+          roles: r.roles || r[3],
+        }));
+      } catch { rsis.stewards = []; }
+    }
+
+    if (include.includes('kinship')) {
+      try {
+        const filePath = baseContext.symbol?.filePath;
+        if (filePath) {
+          const fpEscaped = filePath.replace(/'/g, "''");
+          const rows = await executeQuery(repo.id, `
+            MATCH (k:KinshipHub)
+            WHERE '${fpEscaped}' STARTS WITH k.filePath
+            RETURN k.id AS id, k.name AS name, k.identity AS identity, k.boundaries AS boundaries
+            LIMIT 1
+          `);
+          rsis.kinship = rows.length > 0 ? {
+            hub: rows[0].name || rows[0][1],
+            identity: rows[0].identity || rows[0][2],
+            boundaries: rows[0].boundaries || rows[0][3],
+          } : null;
+        }
+      } catch { rsis.kinship = null; }
+    }
+
+    if (include.includes('directions')) {
+      try {
+        const rows = await executeQuery(repo.id, queryDirectionAlignment(symId));
+        rsis.direction_alignment = rows.length > 0 ? {
+          direction: rows[0].name || rows[0][0],
+          focus: rows[0].focus || rows[0][1],
+        } : null;
+      } catch { rsis.direction_alignment = null; }
+    }
+
+    return { ...baseContext, rsis };
+  }
+
+  /**
+   * Reciprocity View — surfaces contribution flows framed as invitations for tending.
+   */
+  private async reciprocityView(repo: RepoHandle, params: {
+    repo?: string;
+    scope?: string;
+    period?: string;
+  }): Promise<any> {
+    await this.ensureInitialized(repo.id);
+
+    const scope = params.scope || 'community';
+
+    // Query reciprocity flows from GIVES_BACK_TO edges
+    let flows: any[] = [];
+    try {
+      const rows = await executeQuery(repo.id, queryReciprocityFlows());
+      flows = rows.map((r: any) => ({
+        from: r.from_name || r[0],
+        to: r.to_name || r[2],
+        type: r.reason || r[3] || 'contribution',
+        target_type: r.target_type || r[1],
+      }));
+    } catch { /* no flows yet */ }
+
+    // Query stewardship distribution
+    let stewardship: any[] = [];
+    try {
+      const rows = await executeQuery(repo.id, `
+        MATCH (p:Person)-[:RSISRelation {type: 'STEWARDS'}]->(target)
+        RETURN p.name AS steward, COUNT(*) AS count
+        ORDER BY count DESC
+        LIMIT 20
+      `);
+      stewardship = rows.map((r: any) => ({
+        steward: r.steward || r[0],
+        count: r.count || r[1],
+      }));
+    } catch { /* no stewardship data */ }
+
+    // Generate observation — framed as invitation, never performance metric
+    const observation = generateReciprocityObservation(stewardship.length, flows.length);
+
+    return {
+      scope,
+      flows,
+      stewardship,
+      observation,
+      framing: 'Results are invitations for ceremonial attention, not performance evaluations.',
+    };
+  }
+
+  /**
+   * Ceremony Provenance — traces a code artifact back to ceremonial origins.
+   */
+  private async ceremonyProvenance(repo: RepoHandle, params: {
+    target: string;
+    repo?: string;
+    depth?: number;
+  }): Promise<any> {
+    await this.ensureInitialized(repo.id);
+
+    const target = params.target;
+    const escaped = target.replace(/'/g, "''");
+
+    // Find the target symbol or file
+    let symbols: any[] = [];
+    try {
+      symbols = await executeQuery(repo.id, `
+        MATCH (n)
+        WHERE n.name = '${escaped}' OR n.filePath CONTAINS '${escaped}'
+        RETURN n.id AS id, n.name AS name, labels(n)[0] AS type, n.filePath AS filePath
+        LIMIT 5
+      `);
+    } catch { /* not found */ }
+
+    if (symbols.length === 0) {
+      return { error: `Target '${target}' not found in the knowledge graph.` };
+    }
+
+    const sym = symbols[0];
+    const symId = (sym.id || sym[0]).replace(/'/g, "''");
+
+    // Query ceremony lineage via BORN_FROM edges
+    let lineage: any[] = [];
+    try {
+      const rows = await executeQuery(repo.id, queryCeremonyProvenance(symId));
+      lineage = rows.map((r: any) => ({
+        ceremonyId: r.id || r[0],
+        ceremonyName: r.name || r[1],
+        sun: r.hostSun || r[2],
+        cycle: r.cycle || r[3],
+        phase: r.phase || r[4],
+        intention: r.intention || r[5],
+      }));
+    } catch { /* no lineage */ }
+
+    // Query inquiry lineage via SERVES edges
+    let inquiries: any[] = [];
+    try {
+      const rows = await executeQuery(repo.id, queryInquiries(symId));
+      inquiries = rows.map((r: any) => ({
+        id: r.id || r[0], name: r.name || r[1],
+        sun: r.sun || r[2], coreQuestion: r.coreQuestion || r[3],
+      }));
+    } catch { /* no inquiries */ }
+
+    // Query stewardship chain
+    let stewardship_chain: any[] = [];
+    try {
+      const rows = await executeQuery(repo.id, queryStewards(symId));
+      stewardship_chain = rows.map((r: any) => ({
+        name: r.name || r[1], roles: r.roles || r[3],
+      }));
+    } catch { /* no stewards */ }
+
+    // Generate narrative using medicine-wheel-narrative-engine
+    const symName = sym.name || sym[1];
+    const narrative = generateProvenanceNarrative(symName, lineage, inquiries, stewardship_chain);
+
+    return {
+      target: { uid: sym.id || sym[0], name: symName, type: sym.type || sym[2], filePath: sym.filePath || sym[3] },
+      lineage,
+      inquiries,
+      stewardship_chain,
+      narrative,
+    };
+  }
+
+  /**
+   * Kinship Map — visualizes kinship relationships between directories/repos.
+   */
+  private async kinshipMap(repo: RepoHandle, params: {
+    root?: string;
+    depth?: number;
+    repo?: string;
+  }): Promise<any> {
+    await this.ensureInitialized(repo.id);
+
+    // Query all kinship hubs
+    let hubs: any[] = [];
+    try {
+      const rows = await executeQuery(repo.id, queryKinshipHubs());
+      hubs = rows.map((r: any) => ({
+        id: r.id || r[0], name: r.name || r[1], path: r.filePath || r[2],
+        identity: r.identity || r[3], lineage: r.lineage || r[4],
+        humanAccountabilities: r.humanAccountabilities || r[5],
+        moreThanHumanAccountabilities: r.moreThanHumanAccountabilities || r[6],
+        boundaries: r.boundaries || r[7],
+      }));
+    } catch { /* no hubs */ }
+
+    // Query kinship relations
+    let relations: any[] = [];
+    try {
+      const rows = await executeQuery(repo.id, queryKinshipRelations());
+      relations = rows.map((r: any) => ({
+        from: r.from_name || r[0], to: r.to_name || r[1], reason: r.reason || r[2],
+      }));
+    } catch { /* no relations */ }
+
+    // Filter by root if specified
+    if (params.root && hubs.length > 0) {
+      const root = params.root;
+      hubs = hubs.filter(h => h.path?.startsWith(root) || h.name === root);
+    }
+
+    return {
+      hubs,
+      relations,
+      boundaries: hubs.flatMap(h => (h.boundaries || []).map((b: string) => ({ hub: h.name, boundary: b }))),
+      // graph-viz renderable format
+      graph: toKinshipGraphLayout(
+        hubs.map(h => ({ path: h.path || '', identity: h.identity || '', lineage: h.lineage || '', humanAccountabilities: h.humanAccountabilities || [], moreThanHumanAccountabilities: h.moreThanHumanAccountabilities || [], boundaries: h.boundaries || [] }) as KinshipHubInfo),
+        relations.map(r => ({ from: r.from, to: r.to, type: r.reason || 'kinship' }) as KinshipRelation),
+      ),
+    };
+  }
+
+  /**
+   * Direction Alignment — analyzes recent changes through the Four Directions lens.
+   */
+  private async directionAlignment(repo: RepoHandle, params: {
+    repo?: string;
+    since?: string;
+    scope?: string;
+  }): Promise<any> {
+    await this.ensureInitialized(repo.id);
+
+    const { execSync } = await import('child_process');
+    const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+    const since = params.since || new Date(Date.now() - WEEK_MS).toISOString().slice(0, 10);
+
+    // Get recent commits with changed files
+    let commits: Array<{ message: string; files: string[] }> = [];
+    try {
+      const logOutput = execSync(
+        `git log --since="${since}" --pretty=format:"%H|||%s" --name-only`,
+        { cwd: repo.repoPath, encoding: 'utf-8' }
+      );
+      const blocks = logOutput.trim().split('\n\n').filter(b => b.trim());
+      for (const block of blocks) {
+        const lines = block.trim().split('\n');
+        if (lines.length === 0) continue;
+        // Format: "hash|||message"
+        const [_hash, message] = (lines[0] || '').split('|||');
+        const files = lines.slice(1).filter(f => f.trim());
+        if (message) commits.push({ message, files });
+      }
+    } catch { /* git log failed */ }
+
+    if (commits.length === 0) {
+      return {
+        distribution: { east: 0, south: 0, west: 0, north: 0 },
+        details: [],
+        observation: `No commits found since ${since}.`,
+      };
+    }
+
+    // Classify each commit using the direction classifier
+    const { classifyDirection } = await import('../../core/rsis/index.js');
+    const details: Array<{ commit: string; direction: string; reason: string }> = [];
+    const counts: Record<string, number> = { east: 0, south: 0, west: 0, north: 0 };
+
+    for (const commit of commits) {
+      const result = classifyDirection(commit.message, commit.files);
+      details.push({ commit: commit.message, direction: result.direction, reason: result.reason });
+      counts[result.direction]++;
+    }
+
+    const total = commits.length;
+    const distribution = {
+      east: Math.round((counts.east / total) * 100),
+      south: Math.round((counts.south / total) * 100),
+      west: Math.round((counts.west / total) * 100),
+      north: Math.round((counts.north / total) * 100),
+    };
+
+    // Generate observation using medicine-wheel-narrative-engine
+    const observation = generateDirectionObservation(distribution, total);
+
+    return { distribution, details, observation, since, total_commits: total };
   }
 
   async disconnect(): Promise<void> {

@@ -1,129 +1,73 @@
 # Ecosystem Integration
 
-Connectors between RSIS-GitNexus and the broader IAIP ecosystem: Structural Tension Charts (coaia-narrative), IAIP-MCP (Four Directions), Kinship Hub protocol, and Medicine Wheel UI.
+How rsis-gitnexus feeds data into `mcp-medicine-wheel-ui` and connects to coaia-narrative charts.
 
 ## Desired Outcome
 
-RSIS-GitNexus participates as a living organ within the Ceremonial Inquiry Ecosystem — feeding code-relational intelligence into ceremonies, charts, and kinship maps; and receiving ceremonial context (active inquiries, current cycle phase, directional guidance) that shapes how it presents information.
+A human working in `mcp-medicine-wheel-ui` sees **live relational intelligence from their repos** — which directions recent work aligned with, which ceremonies birthed which modules, where reciprocity invites tending — rendered via the `medicine-wheel-*` React components that the UI already imports.
 
-## Current Reality
+## Data Flow
 
-- `coaia-narrative` MCP manages structural tension charts as JSONL files in `.coaia/` directories
-- `iaip-mcp` provides Four Directions guidance and relational alignment assessment
-- `mcp-medicine-wheel` and `mcp-medicine-wheel-ui` are emerging as the visual/interactive layer
-- `KINSHIP.md` and `KINSHIP.list.txt` files are manually maintained
-- No automated connection between these systems and GitNexus's code graph
+```
+git repo
+  ↓ rsis-gitnexus analyze (indexes into KuzuDB)
+  ↓ rsis-gitnexus mcp (serves MCP tools + resources)
+  ↓
+mcp-medicine-wheel (MCP server, reads rsis resources)
+  ↓
+mcp-medicine-wheel-ui (Next.js, renders via medicine-wheel-ui-components)
+  uses: <MedicineWheelGraph data={MWGraphData} />
+  uses: <DirectionCard direction={...} />
+  uses: <BeatTimeline beats={NarrativeBeat[]} />
+  uses: <WilsonMeter alignment={number} />
+  uses: <OcapBadge compliant={boolean} />
+```
 
 ## Integration Points
 
-### 1. Structural Tension Charts ↔ Code Artifacts
+### 1. Medicine Wheel View → UI
 
-**Behavior**: When RSIS-GitNexus indexes a repo, it reads `.coaia/` chart files and creates `BORN_FROM` and `SERVES` edges linking code artifacts to chart IDs.
+**Resource**: `rsis://repo/{name}/medicine-wheel-view`
+**Returns**: `MWGraphData` (from `medicine-wheel-graph-viz`)
+**UI renders**: `<MedicineWheelGraph data={data} showOcapIndicators showWilsonHalos />`
 
-**Mechanism**:
-- Parse `.coaia/*.coaia-narrative.jsonl` files during indexing
-- Extract chart IDs, desired outcomes, action steps
-- Match action steps to code changes via commit message mining (Phase 4 RISE methodology)
-- Create graph edges: `File/Function --SERVES--> chart_id`
+No transformation needed. The resource returns the exact prop type.
 
-**Configuration**: Chart file paths specified in `.rsis/config.json` under `charts[]` key, or auto-discovered from `.coaia/` directories.
+### 2. Direction Alignment → DirectionCard
 
-### 2. Four Directions ↔ Commit Classification
+**Tool**: `direction_alignment`
+**Returns**: `distribution: Record<DirectionName, number>`
+**UI renders**: Four `<DirectionCard>` components, one per direction, with count/percentage
 
-**Behavior**: Commits are automatically classified by directional alignment based on commit message patterns and file change types.
+### 3. Ceremony Provenance → BeatTimeline
 
-**Classification Heuristics**:
-- **East** 🌸: Commits touching vision docs, README, intention files, `.md` in root
-- **South** 🧠: Commits touching architecture, schemas, types, configs, `rispecs/`
-- **West** ⚡: Commits touching implementation code, tests, scripts
-- **North** 🕸️: Commits touching docs, changelogs, reflection files, `KINSHIP.md`
+**Tool**: `ceremony_provenance`
+**Returns**: `lineage: CeremonyLog[]` → converted to `NarrativeBeat[]` by narrative-engine
+**UI renders**: `<BeatTimeline beats={beats} />`
 
-**Override**: Commit messages can include directional tags: `[east]`, `[south]`, `[west]`, `[north]` for explicit classification.
+### 4. Reciprocity → WilsonMeter
 
-**Storage**: Direction stored as `ALIGNED_WITH` edge from Commit node to Direction node.
+**Tool**: `reciprocity_view`
+**Returns**: `report: AccountabilityReport` with `averageWilsonAlignment`
+**UI renders**: `<WilsonMeter alignment={report.averageWilsonAlignment} />`
 
-### 3. Kinship Hub Auto-Discovery
+### 5. Coaia-narrative Charts ↔ Inquiries
 
-**Behavior**: RSIS-GitNexus reads `KINSHIP.md` and `.mia/kinship/KINSHIP.list.txt` files to populate KinshipHub nodes and KINSHIP_OF edges.
+**Indexing behavior**: When `rsis-gitnexus analyze` runs with `.rsis/config.json` listing chart paths:
+- Parse `.coaia/*.coaia-narrative.jsonl` files
+- Extract chart `desired_outcome` as Inquiry nodes
+- Match commits to action steps via commit message mining
+- Create `SERVES` edges: File → Inquiry
 
-**Discovery**:
-- Scan for `KINSHIP.md` files in repo and referenced paths
-- Parse identity, lineage, accountabilities, boundaries from each file
-- Create KinshipHub nodes in the graph
-- Establish KINSHIP_OF edges between hubs based on declared relationships
+### 6. Commit Direction Classification
 
-**Behavior on Index**: Kinship discovery runs as a post-indexing step. If kinship files change, a re-index of the kinship layer updates graph nodes without full code re-indexing.
+Commits auto-tagged with `DirectionName` via heuristics or explicit `[east]`/`[south]`/`[west]`/`[north]` tags. Stored as `ALIGNED_WITH` edges. Feeds `direction_alignment` tool and the direction distribution view in the UI.
 
-### 4. Medicine Wheel UI Data Feed
+## What `mcp-medicine-wheel-ui` needs to add
 
-**Behavior**: RSIS-GitNexus exposes a JSON endpoint (via MCP resource or HTTP when `rsis-gitnexus serve` runs) that Medicine Wheel UI consumes for visualization.
+To consume rsis-gitnexus data, the UI needs:
+1. An MCP client that reads `rsis://` resources (or fetches from `rsis-gitnexus serve` HTTP)
+2. A "Repository View" page that renders the medicine-wheel-view resource
+3. Wire existing components (`MedicineWheelGraph`, `DirectionCard`, `BeatTimeline`, `WilsonMeter`, `OcapBadge`) to rsis-gitnexus data
 
-**Data Shape**:
-```
-{
-  "suns": [...],           // Six Thematic Suns with inquiry counts
-  "directions": {          // Four Directions distribution
-    "east": { "count": N, "recent": [...] },
-    "south": { "count": N, "recent": [...] },
-    "west":  { "count": N, "recent": [...] },
-    "north": { "count": N, "recent": [...] }
-  },
-  "reciprocity": {         // Reciprocity flow summary
-    "flows": [...],
-    "balance": {...}
-  },
-  "kinship": {             // Kinship graph for visualization
-    "hubs": [...],
-    "relations": [...]
-  }
-}
-```
-
-**Resource URI**: `rsis://repo/{name}/medicine-wheel-view`
-
-### 5. Ceremony Phase Awareness
-
-**Behavior**: When a ceremony is active (defined in `.rsis/ceremony.json` or retrieved from coaia-narrative charts), RSIS-GitNexus tools adjust their output framing:
-
-- **Opening phase**: Tools emphasize intention and vision (what wants to emerge)
-- **Council phase**: Tools show cross-Sun perspectives on code relationships
-- **Integration phase**: Tools help produce synthesis artifacts (lineage diagrams, woven insights)
-- **Closure phase**: Tools surface reciprocity summaries and seeding observations
-
-**Mechanism**: Ceremony state read from local config. Tool output templates include ceremony-phase-aware framing sections.
-
-## Configuration File: `.rsis/config.json`
-
-```json
-{
-  "enabled": true,
-  "charts": [
-    ".coaia/charts.coaia-narrative.jsonl"
-  ],
-  "kinship_paths": [
-    "KINSHIP.md",
-    ".mia/kinship/KINSHIP.list.txt"
-  ],
-  "ceremony": {
-    "current_cycle": "2026-02",
-    "host_sun": "EmbodiedPractice",
-    "phase": "council"
-  },
-  "directions": {
-    "auto_classify_commits": true,
-    "heuristics": "default"
-  },
-  "governance": {
-    "protected_paths": [],
-    "ceremony_required_paths": []
-  }
-}
-```
-
-## Implementation Notes
-
-- Integration layer lives in new `rsis-gitnexus/src/core/rsis/` directory
-- Does not modify existing GitNexus core — extends via hooks in the indexing pipeline
-- Chart parsing uses line-delimited JSON reader (same as coaia-narrative)
-- Kinship parsing uses markdown frontmatter + section extraction
-- Medicine Wheel data feed is a computed view, not stored — regenerated on request from graph queries
+The packages are already installed. The data shapes already match. The missing piece is the fetch + render wiring.

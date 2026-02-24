@@ -10,6 +10,7 @@ import { runPipelineFromRepo } from '../core/ingestion/pipeline.js';
 import { initKuzu, loadGraphToKuzu, getKuzuStats, executeQuery, executeWithReusedStatement, closeKuzu, createFTSIndex, loadCachedEmbeddings } from '../core/kuzu/kuzu-adapter.js';
 import { runEmbeddingPipeline } from '../core/embeddings/embedding-pipeline.js';
 import { disposeEmbedder } from '../core/embeddings/embedder.js';
+import { OLLAMA_EMBEDDING_CONFIG } from '../core/embeddings/types.js';
 import { getStoragePaths, saveMeta, loadMeta, addToGitignore, registerRepo, getGlobalRegistryPath } from '../storage/repo-manager.js';
 import { getCurrentCommit, isGitRepo, getGitRoot } from '../storage/git.js';
 import { generateAIContextFiles } from './ai-context.js';
@@ -124,7 +125,8 @@ export const analyzeCommand = async (
   }
 
   const t0Kuzu = Date.now();
-  await initKuzu(kuzuPath);
+  const useOllama = process.env.RSIS_EMBED_DEVICE === 'ollama';
+  await initKuzu(kuzuPath, useOllama ? OLLAMA_EMBEDDING_CONFIG.dimensions : undefined);
   let kuzuMsgCount = 0;
   const kuzuResult = await loadGraphToKuzu(pipelineResult.graph, pipelineResult.fileContents, storagePath, (msg) => {
     kuzuMsgCount++;
@@ -190,7 +192,7 @@ export const analyzeCommand = async (
         const label = progress.phase === 'loading-model' ? 'Loading embedding model...' : `Embedding ${progress.nodesProcessed || 0}/${progress.totalNodes || '?'}`;
         bar.update(scaled, { phase: label });
       },
-      {},
+      useOllama ? OLLAMA_EMBEDDING_CONFIG : {},
       cachedEmbeddingNodeIds.size > 0 ? cachedEmbeddingNodeIds : undefined,
     );
     embeddingTime = ((Date.now() - t0Emb) / 1000).toFixed(1);

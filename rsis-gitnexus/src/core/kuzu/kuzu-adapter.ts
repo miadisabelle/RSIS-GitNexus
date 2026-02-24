@@ -8,6 +8,7 @@ import {
   SCHEMA_QUERIES,
   EMBEDDING_TABLE_NAME,
   NodeTableName,
+  getSchemaQueries,
 } from './schema.js';
 import { generateAllCSVs } from './csv-generator.js';
 
@@ -16,7 +17,7 @@ let conn: kuzu.Connection | null = null;
 
 const normalizeCopyPath = (filePath: string): string => filePath.replace(/\\/g, '/');
 
-export const initKuzu = async (dbPath: string) => {
+export const initKuzu = async (dbPath: string, embeddingDims?: number) => {
   if (conn) return { db, conn };
 
   // kuzu v0.11 stores the database as a single file (not a directory).
@@ -46,7 +47,8 @@ export const initKuzu = async (dbPath: string) => {
   db = new kuzu.Database(dbPath);
   conn = new kuzu.Connection(db);
 
-  for (const schemaQuery of SCHEMA_QUERIES) {
+  const queries = embeddingDims ? getSchemaQueries(embeddingDims) : SCHEMA_QUERIES;
+  for (const schemaQuery of queries) {
     try {
       await conn.query(schemaQuery);
     } catch (err) {

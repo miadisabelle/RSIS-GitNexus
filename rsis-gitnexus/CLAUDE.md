@@ -1,7 +1,7 @@
 <!-- rsis-gitnexus:start -->
 # GitNexus MCP
 
-This project is indexed by GitNexus as **GitnexusV2** (1312 symbols, 3315 relationships, 101 execution flows).
+This project is indexed by GitNexus as **rsis-gitnexus** (635 symbols, 1693 relationships, 51 execution flows).
 
 GitNexus provides a knowledge graph over this codebase — call chains, blast radius, execution flows, and semantic search.
 
@@ -35,11 +35,6 @@ For any task involving code understanding, debugging, impact analysis, or refact
 | `rename` | Multi-file coordinated rename with confidence-tagged edits |
 | `cypher` | Raw graph queries (read `rsis-gitnexus://repo/{name}/schema` first) |
 | `list_repos` | Discover indexed repos |
-| `relational_context` | 360-degree relational view — ceremonies, inquiries, stewards, kinship |
-| `reciprocity_view` | Reciprocity patterns and balance across the codebase |
-| `ceremony_provenance` | Trace code artifacts back to ceremonial origins |
-| `kinship_map` | Kinship relationships between directories and repos |
-| `direction_alignment` | Four Directions analysis of recent changes |
 
 ## Resources Reference
 
@@ -53,17 +48,11 @@ Lightweight reads (~100-500 tokens) for navigation:
 | `rsis-gitnexus://repo/{name}/processes` | All execution flows |
 | `rsis-gitnexus://repo/{name}/process/{processName}` | Step-by-step trace |
 | `rsis-gitnexus://repo/{name}/schema` | Graph schema for Cypher |
-| `rsis-gitnexus://repo/{name}/wisdom-ledger` | Inquiry-ceremony-artifact links |
-| `rsis-gitnexus://repo/{name}/stewards-compass` | Directional teachings and patterns |
-| `rsis-gitnexus://repo/{name}/kinship` | Full kinship graph |
-| `rsis-gitnexus://repo/{name}/medicine-wheel-view` | Medicine Wheel UI data feed |
 
 ## Graph Schema
 
 **Nodes:** File, Function, Class, Interface, Method, Community, Process
-**RSIS Nodes:** Person, Inquiry, Sun, Ceremony, Direction, KinshipHub
 **Edges (via CodeRelation.type):** CALLS, IMPORTS, EXTENDS, IMPLEMENTS, DEFINES, MEMBER_OF, STEP_IN_PROCESS
-**RSIS Edges (via RSISRelation.type):** STEWARDS, BORN_FROM, SERVES, GIVES_BACK_TO, ALIGNED_WITH, KINSHIP_OF
 
 ```cypher
 MATCH (caller)-[:CodeRelation {type: 'CALLS'}]->(f:Function {name: "myFunc"})

@@ -459,12 +459,18 @@ CREATE REL TABLE RSISRelation (
 // Separate table for vector storage to avoid copy-on-write overhead
 // ============================================================================
 
-export const EMBEDDING_SCHEMA = `
+/**
+ * Generate embedding table schema with configurable dimensions.
+ * Default 384 (snowflake-arctic-embed-xs), 1024 for mxbai-embed-large via Ollama.
+ */
+export const getEmbeddingSchema = (dims: number = 384): string => `
 CREATE NODE TABLE ${EMBEDDING_TABLE_NAME} (
   nodeId STRING,
-  embedding FLOAT[384],
+  embedding FLOAT[${dims}],
   PRIMARY KEY (nodeId)
 )`;
+
+export const EMBEDDING_SCHEMA = getEmbeddingSchema(384);
 
 /**
  * Create vector index for semantic search
@@ -526,4 +532,14 @@ export const SCHEMA_QUERIES = [
   ...NODE_SCHEMA_QUERIES,
   ...REL_SCHEMA_QUERIES,
   EMBEDDING_SCHEMA,
+];
+
+/**
+ * Get schema queries with configurable embedding dimensions.
+ * Use this when Ollama or another backend changes the vector size.
+ */
+export const getSchemaQueries = (embeddingDims: number = 384): string[] => [
+  ...NODE_SCHEMA_QUERIES,
+  ...REL_SCHEMA_QUERIES,
+  getEmbeddingSchema(embeddingDims),
 ];
